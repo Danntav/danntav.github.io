@@ -3,198 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daniel Tavares - Engenharia de Computação</title>
+    <title>Daniel Tavares</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            /* COR DE FUNDO: Um cinza escuro e sólido. Mais profissional e menos cansativo. */
-            background-color: #111827; 
-            color: #f8fafc;
-            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            color: #2c3e50;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            min-height: 100vh;
             padding: 20px;
-            position: relative;
-            overflow: hidden;
         }
 
-        /* EFEITO DE FUNDO SUTIL: Um brilho estático, sem animações que distraem. */
-        body::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            left: -20%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.1), transparent 70%);
-            z-index: 0;
-        }
-        
         .container {
-            background: rgba(17, 24, 39, 0.8); /* Cor do container um pouco mais clara que o fundo */
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 16px;
-            padding: 50px 40px;
-            max-width: 500px;
+            max-width: 480px;
             width: 100%;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            background: white;
+            padding: 45px 35px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
         }
-        
-        /* AVATAR SIMPLIFICADO: Sem gradiente, apenas uma borda e texto. Muito mais elegante. */
-        .avatar {
-            width: 100px;
-            height: 100px;
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-img {
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
+            background: #34495e;
             margin: 0 auto 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
+            font-size: 44px;
+            color: white;
             font-weight: 600;
-            color: #f8fafc;
-            border: 2px solid #3b82f6; /* Borda sólida ao invés de fundo gradiente */
-            background-color: #1f2937; /* Fundo interno sólido */
+            border: 3px solid #f0f0f0;
         }
-        
+
         h1 {
-            color: #f8fafc;
-            margin-bottom: 4px;
-            font-size: 2em;
+            font-size: 26px;
+            margin-bottom: 6px;
+            color: #2c3e50;
             font-weight: 600;
         }
-        
+
         .subtitle {
-            color: #94a3b8;
-            margin-bottom: 24px;
-            font-size: 1.1em;
-            font-weight: 400;
+            color: #7f8c8d;
+            font-size: 15px;
+            margin-bottom: 20px;
+            line-height: 1.4;
         }
-        
-        /* DESCRIÇÃO SIMPLES: Apenas o texto, sem fundo ou bordas extras. Direto ao ponto. */
-        .description {
-            color: #cbd5e1;
+
+        .bio {
+            text-align: center;
+            color: #555;
             line-height: 1.6;
-            margin-bottom: 30px;
-            font-size: 1.05em;
+            margin-bottom: 25px;
+            font-size: 14px;
         }
-        
-        .links {
+
+        .social-links {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
+            align-items: center;
         }
-        
-        /* BOTÕES SEM GRADIENTE: Cores sólidas, efeito de hover sutil. Mais profissional. */
-        .link-button {
+
+        .social-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 12px;
-            padding: 14px;
-            background-color: #3b82f6; /* Cor azul sólida */
+            padding: 14px 20px;
+            background: white;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 280px;
+            justify-content: center;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .social-btn.github {
+            background: #24292e;
+        }
+
+        .social-btn.linkedin {
+            background: #0077b5;
+        }
+
+        .social-btn.instagram {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        .social-btn.email {
+            background: #ea4335;
+        }
+
+        .cv-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            background: #2ecc71;
             color: white;
             text-decoration: none;
             border-radius: 8px;
-            font-size: 1em;
-            font-weight: 500;
-            transition: all 0.2s ease-in-out;
-            border: 1px solid transparent;
-        }
-        
-        .link-button:hover {
-            transform: translateY(-2px); /* Efeito de elevação sutil */
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
-            background-color: #2563eb; /* Azul um pouco mais escuro no hover */
-        }
-        
-        .link-button.github {
-            background-color: #334155; /* Cor sólida para o GitHub */
-            border: 1px solid #475569;
-        }
-        
-        .link-button.github:hover {
-            background-color: #475569;
-            box-shadow: 0 8px 20px rgba(71, 85, 105, 0.3);
-        }
-        
-        .link-button.email {
-            background-color: transparent; /* Botão de email "vazado", mais sutil */
-            border: 1px solid #4f46e5;
-            color: #a5b4fc;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(46, 204, 113, 0.3);
         }
 
-        .link-button.email:hover {
-            background-color: #4f46e5;
-            color: white;
-            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+        .cv-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4);
         }
-        
+
         .icon {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
-        footer {
+
+        .footer {
+            text-align: center;
             margin-top: 30px;
-            color: #64748b;
-            font-size: 0.9em;
             padding-top: 20px;
-            border-top: 1px solid rgba(59, 130, 246, 0.1);
+            border-top: 1px solid #e0e0e0;
+            color: #95a5a6;
+            font-size: 13px;
         }
-        
-        @media (max-width: 600px) {
+
+        @media (max-width: 480px) {
             .container {
-                padding: 40px 25px;
+                padding: 35px 25px;
             }
+
             h1 {
-                font-size: 1.8em;
+                font-size: 24px;
+            }
+
+            .profile-img {
+                width: 100px;
+                height: 100px;
+                font-size: 40px;
             }
         }
     </style>
 </head>
 <body>
-    
     <div class="container">
-        <div class="avatar">DT</div>
-        
-        <h1>Daniel Oliveira Tavares</h1>
-        <p class="subtitle">Engenharia de Computação • UNIVIÇOSA</p>
-        
-        <p class="description">
-            Foco em Robótica Autônoma
+        <div class="header">
+            <div class="profile-img">DT</div>
+            <h1>Daniel Tavares</h1>
+            <p class="subtitle">Engenharia de Computação<br>Robótica & Automação</p>
+            <div style="text-align: center;">
+                <a href="cv.pdf" class="cv-btn" download>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download CV
+                </a>
+            </div>
+        </div>
+
+        <p class="bio">
+            Entre em contato através das redes abaixo.
         </p>
-        
-        <div class="links">
-            <a href="https://linkedin.com/in/daniel-otavares" class="link-button" target="_blank" rel="noopener">
-                <svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                LinkedIn
+
+        <div class="social-links">
+            <a href="https://github.com/Danntav" class="social-btn github" target="_blank">
+                <span class="icon">
+                    <svg fill="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </span>
+                <span>GitHub</span>
             </a>
-            
-            <a href="https://github.com/Danntav" class="link-button github" target="_blank" rel="noopener">
-                <svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                GitHub
+
+            <a href="https://www.linkedin.com/in/daniel-tavares-40b655343/" class="social-btn linkedin" target="_blank">
+                <span class="icon">
+                    <svg fill="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </span>
+                <span>LinkedIn</span>
             </a>
-            
-            <a href="mailto:danieloftavares@gmail.com" class="link-button email">
-                <svg class="icon" fill="currentColor" viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z"/></svg>
-                Email
+
+            <a href="mailto:danieltavares.contato@gmail.com" class="social-btn email">
+                <span class="icon">
+                    <svg fill="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                        <path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z"/>
+                    </svg>
+                </span>
+                <span>E-mail</span>
             </a>
         </div>
-        
-        <footer>
-            Trabalho de Conclusão de Curso • 2025
-        </footer>
+
+        <div class="footer">
+            © 2025 Daniel Tavares
+        </div>
     </div>
 </body>
 </html>
