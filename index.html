@@ -1,233 +1,1227 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daniel O. Tavares</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel O. Tavares</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
-            color: #2c3e50;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+:root {
+  --black:   #111111;
+  --gray:    #444444;
+  --muted:   #888888;
+  --line:    #e0e0e0;
+  --bg:      #fafafa;
+  --white:   #ffffff;
+  --accent:  #c0392b;   /* muted red accent — change to any color you like */
+  --max:     860px;
+  --serif:   'Lora', Georgia, serif;
+  --sans:    'DM Sans', system-ui, sans-serif;
+}
 
-        .container {
-            max-width: 480px;
-            width: 100%;
-            background: white;
-            padding: 45px 35px;
-            border-radius: 12px;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
-        }
+html { scroll-behavior: smooth; }
 
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+body {
+  background: var(--bg);
+  color: var(--black);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+}
 
-        .profile-img {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            background: #34495e;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 44px;
-            color: white;
-            font-weight: 600;
-            border: 3px solid #f0f0f0;
-        }
+a { color: inherit; text-decoration: none; }
 
-        h1 {
-            font-size: 26px;
-            margin-bottom: 6px;
-            color: #2c3e50;
-            font-weight: 600;
-        }
+img { display: block; max-width: 100%; }
 
-        .subtitle {
-            color: #7f8c8d;
-            font-size: 15px;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
+/* ── LAYOUT WRAPPER ── */
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
 
-        .bio {
-            text-align: center;
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
+/* ══════════════════════════════════════
+   HEADER
+══════════════════════════════════════ */
+#site-header {
+  position: relative;
+  height: 320px;
+  background: var(--black) center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
 
-        .social-links {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            align-items: center;
-        }
+/* dark overlay so text is always readable */
+#site-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.15) 0%, rgba(0,0,0,.55) 100%);
+}
 
-        .social-btn {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 20px;
-            background: white;
-            border-radius: 8px;
-            text-decoration: none;
-            color: white;
-            font-weight: 500;
-            font-size: 15px;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 280px;
-            justify-content: center;
-        }
+.header-content {
+  position: relative;
+  z-index: 1;
+  padding: 0 28px 28px;
+  color: var(--white);
+}
 
-        .social-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
+.header-name {
+  font-family: var(--serif);
+  font-size: clamp(26px, 5vw, 38px);
+  font-weight: 600;
+  letter-spacing: -.5px;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
 
-        .social-btn.github {
-            background: #24292e;
-        }
+.header-role {
+  font-size: 14px;
+  opacity: .85;
+  letter-spacing: .5px;
+}
 
-        .social-btn.linkedin {
-            background: #0077b5;
-        }
+.header-social {
+  display: flex;
+  gap: 16px;
+  margin-top: 14px;
+}
 
-        .social-btn.instagram {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-        }
+.header-social a {
+  color: rgba(255,255,255,.8);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color .15s;
+}
 
-        .social-btn.email {
-            background: #ea4335;
-        }
+.header-social a:hover { color: #fff; }
 
-        .cv-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 28px;
-            background: #2ecc71;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 15px;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(46, 204, 113, 0.3);
-        }
+.header-social svg { flex-shrink: 0; }
 
-        .cv-btn:hover {
-            background: #27ae60;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4);
-        }
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
+#site-nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 
-        .icon {
-            width: 22px;
-            height: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.nav-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
 
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #e0e0e0;
-            color: #95a5a6;
-            font-size: 13px;
-        }
+.nav-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray);
+  padding: 14px 18px;
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
 
-        @media (max-width: 480px) {
-            .container {
-                padding: 35px 25px;
-            }
+.nav-link:hover { color: var(--black); }
 
-            h1 {
-                font-size: 24px;
-            }
+.nav-link.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
 
-            .profile-img {
-                width: 100px;
-                height: 100px;
-                font-size: 40px;
-            }
-        }
-    </style>
+/* ══════════════════════════════════════
+   MAIN CONTENT
+══════════════════════════════════════ */
+#main {
+  min-height: 70vh;
+  padding: 44px 0 80px;
+}
+
+/* ── Section visibility ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ── Section heading ── */
+.page-title {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 32px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* ══════════════════════════════════════
+   HOME
+══════════════════════════════════════ */
+.bio-block {
+  max-width: 620px;
+  margin-bottom: 36px;
+}
+
+.bio-block p {
+  font-size: 17px;
+  color: var(--gray);
+  line-height: 1.75;
+  margin-bottom: 14px;
+}
+
+.recent-heading {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
+.recent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.recent-card {
+  border: 1px solid var(--line);
+  background: var(--white);
+  padding: 20px;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.recent-card:hover {
+  border-color: #bbb;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+
+.recent-card-tag {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.recent-card h3 {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.35;
+}
+
+.recent-card p {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.55;
+}
+
+/* ── Standalone snippet / Gist (Home page) ── */
+.snippet-heading {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 36px 0 18px;
+}
+
+.snippet-card {
+  border: 1px solid var(--line);
+  background: var(--white);
+  padding: 20px;
+}
+
+.snippet-card-title {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.snippet-card-desc {
+  font-size: 13px;
+  color: var(--gray);
+  margin-bottom: 14px;
+}
+
+.snippet-card iframe {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+/* ══════════════════════════════════════
+   PROJECTS — list
+══════════════════════════════════════ */
+.proj-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.proj-row {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: baseline;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  transition: background .12s;
+  margin: 0 -12px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.proj-row:hover { background: rgba(0,0,0,.025); }
+
+.proj-year {
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.proj-row-body {}
+
+.proj-row-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  transition: color .15s;
+}
+
+.proj-row:hover .proj-row-title { color: var(--accent); }
+
+.proj-row-summary {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+.proj-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.proj-tag {
+  font-size: 11px;
+  color: var(--muted);
+  background: #f0f0f0;
+  padding: 2px 8px;
+  border-radius: 2px;
+}
+
+.proj-arrow {
+  font-size: 18px;
+  color: var(--muted);
+  transition: transform .15s, color .15s;
+}
+
+.proj-row:hover .proj-arrow {
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+/* ── Project detail (sub-page) ── */
+.proj-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 28px;
+  cursor: pointer;
+  transition: color .15s;
+}
+
+.proj-back:hover { color: var(--accent); }
+
+.proj-detail-title {
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.proj-detail-meta {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+
+.proj-detail-cover {
+  width: 100%;
+  aspect-ratio: 16/7;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  margin-bottom: 32px;
+  background: #e8e8e8;
+}
+
+.proj-body-text {
+  max-width: 640px;
+}
+
+/* ── Content blocks (used inside proj-body-text) ── */
+.block-text {
+  font-size: 16px;
+  color: var(--gray);
+  line-height: 1.8;
+  margin-bottom: 22px;
+  white-space: pre-line;
+}
+
+.block-image {
+  margin-bottom: 22px;
+}
+
+.block-image img {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #e8e8e8;
+}
+
+.block-image-caption {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 8px;
+  text-align: center;
+}
+
+.block-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.block-images img {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #e8e8e8;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+}
+
+@media (max-width: 520px) {
+  .block-images { grid-template-columns: 1fr; }
+}
+
+.block-video {
+  margin-bottom: 22px;
+}
+
+.block-video video {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #000;
+  display: block;
+}
+
+.block-code {
+  background: #1e1e1e;
+  border-radius: 4px;
+  margin-bottom: 22px;
+  overflow-x: auto;
+}
+
+.block-code-lang {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #888;
+  padding: 8px 16px 0;
+}
+
+.block-code pre {
+  margin: 0;
+  padding: 10px 16px 16px;
+  font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #e0e0e0;
+}
+
+.block-gist {
+  margin-bottom: 22px;
+}
+
+.block-gist iframe {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.block-img-placeholder, .block-img-placeholder-half {
+  background: #f0f0f0;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  padding: 16px;
+}
+
+.block-img-placeholder { aspect-ratio: 16/8; margin-bottom: 22px; }
+.block-img-placeholder-half { aspect-ratio: 4/3; }
+
+.proj-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 1px;
+  transition: opacity .15s;
+  margin-top: 8px;
+}
+
+.proj-link:hover { opacity: .7; }
+
+/* ══════════════════════════════════════
+   RESUME
+══════════════════════════════════════ */
+.cv-block { margin-bottom: 40px; }
+
+.cv-block-title {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.cv-entry {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 12px 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+@media (max-width: 520px) { .cv-entry { grid-template-columns: 1fr; } }
+
+.cv-period {
+  font-size: 13px;
+  color: var(--muted);
+  padding-top: 2px;
+}
+
+.cv-entry-title {
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.cv-entry-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.cv-entry-desc {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.55;
+}
+
+.skills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-chip {
+  font-size: 13px;
+  color: var(--gray);
+  border: 1px solid var(--line);
+  padding: 5px 14px;
+  border-radius: 2px;
+  background: var(--white);
+}
+
+.cv-dl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 10px 22px;
+  transition: background .15s, color .15s;
+}
+
+.cv-dl-btn:hover {
+  background: var(--accent);
+  color: var(--white);
+}
+
+/* ══════════════════════════════════════
+   ABOUT
+══════════════════════════════════════ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 48px;
+  align-items: start;
+}
+
+@media (max-width: 620px) { .about-grid { grid-template-columns: 1fr; } }
+
+.about-text p {
+  font-size: 16px;
+  color: var(--gray);
+  line-height: 1.8;
+  margin-bottom: 16px;
+  white-space: pre-line;
+}
+
+.about-side-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.about-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 28px;
+}
+
+.about-table td {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.about-table td:first-child {
+  color: var(--muted);
+  width: 110px;
+  padding-right: 12px;
+}
+
+.about-table td:last-child { color: var(--black); }
+
+.exploring-list {
+  list-style: none;
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1;
+}
+
+.exploring-list li {
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.exploring-list li::before {
+  content: '→';
+  color: var(--accent);
+  font-size: 13px;
+}
+
+/* ══════════════════════════════════════
+   BOOKS
+══════════════════════════════════════ */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 28px 20px;
+}
+
+.book-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.book-cover {
+  width: 100%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  display: block;
+  background: #e8e8e8;
+  border: 1px solid var(--line);
+  margin-bottom: 10px;
+}
+
+/* placeholder when no cover image is set */
+.book-cover-placeholder {
+  width: 100%;
+  aspect-ratio: 2/3;
+  background: #f0f0f0;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  padding: 8px;
+  line-height: 1.4;
+}
+
+.book-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 2px;
+  margin-bottom: 6px;
+  align-self: flex-start;
+}
+
+.book-badge.rec     { background: #e8f5e2; color: #3a7d2c; }
+.book-badge.read    { background: #f0f0f0; color: var(--muted); }
+.book-badge.reading { background: #e8f0fc; color: #2a5ab5; }
+
+.book-title {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 3px;
+}
+
+.book-author {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.book-stars {
+  font-size: 12px;
+  color: #d4a017;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.book-note {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════════════
+   CONTACT
+══════════════════════════════════════ */
+.contact-intro {
+  font-size: 16px;
+  color: var(--gray);
+  line-height: 1.7;
+  max-width: 540px;
+  margin-bottom: 36px;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 460px;
+}
+
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--black);
+  transition: color .15s;
+}
+
+.contact-row:hover { color: var(--accent); }
+
+.contact-icon {
+  width: 36px;
+  height: 36px;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background .15s;
+}
+
+.contact-row:hover .contact-icon { background: #fdecea; }
+
+.contact-info {}
+
+.contact-label {
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.contact-handle {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.contact-row:hover .contact-handle { color: var(--accent); }
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+#site-footer {
+  border-top: 1px solid var(--line);
+  padding: 20px 24px;
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media (max-width: 600px) {
+  #site-header { height: 240px; }
+  .header-name { font-size: 24px; }
+  .proj-row { grid-template-columns: 60px 1fr auto; }
+  .nav-link { padding: 13px 12px; font-size: 13px; }
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="profile-img">DT</div>
-            <h1>Daniel O. Tavares</h1>
-            <p class="subtitle">Engenharia de Computação<br>Robótica & Automação</p>
-            <div style="text-align: center;">
-                <a href="cv.pdf" class="cv-btn" download>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    Download CV
-                </a>
-            </div>
+
+<!-- ══ HEADER ══ -->
+<header id="site-header">
+  <div class="header-content">
+    <div class="header-name" id="hdr-name"></div>
+    <div class="header-role" id="hdr-role"></div>
+    <div class="header-social" id="hdr-social"></div>
+  </div>
+</header>
+
+<!-- ══ NAV ══ -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <span class="nav-link active" data-page="home">Home</span>
+    <span class="nav-link" data-page="projects">Projects</span>
+    <span class="nav-link" data-page="resume">Resume</span>
+    <span class="nav-link" data-page="about">About</span>
+    <span class="nav-link" data-page="books">Books</span>
+    <span class="nav-link" data-page="contact">Contact</span>
+  </div>
+</nav>
+
+<!-- ══ MAIN ══ -->
+<main id="main">
+  <div class="wrap">
+
+    <!-- HOME -->
+    <section class="page active" id="page-home">
+      <div class="bio-block">
+        <p id="bio-text"></p>
+      </div>
+      <p class="recent-heading">Recent projects</p>
+      <div class="recent-grid" id="recent-grid"></div>
+
+      <div id="snippet-section"></div>
+    </section>
+
+    <!-- PROJECTS (list) -->
+    <section class="page" id="page-projects">
+      <h1 class="page-title">Projects</h1>
+      <div class="proj-list" id="proj-list"></div>
+    </section>
+
+    <!-- PROJECT (detail) -->
+    <section class="page" id="page-proj-detail">
+      <span class="proj-back" id="proj-back">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to projects
+      </span>
+      <div id="proj-detail-content"></div>
+    </section>
+
+    <!-- RESUME -->
+    <section class="page" id="page-resume">
+      <h1 class="page-title">Resume</h1>
+      <div id="cv-education" class="cv-block"></div>
+      <div id="cv-experience" class="cv-block"></div>
+      <div id="cv-skills" class="cv-block"></div>
+      <div id="cv-languages" class="cv-block"></div>
+      <div>
+        <a id="cv-download" class="cv-dl-btn">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download CV (PDF)
+        </a>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="page" id="page-about">
+      <h1 class="page-title">About</h1>
+      <div class="about-grid">
+        <div class="about-text" id="about-text"></div>
+        <div>
+          <p class="about-side-label">Info</p>
+          <table class="about-table" id="about-table"></table>
+          <p class="about-side-label">Currently exploring</p>
+          <ul class="exploring-list" id="exploring-list"></ul>
         </div>
+      </div>
+    </section>
 
-        <p class="bio">
-            Entre em contato através das redes abaixo.
-        </p>
+    <!-- BOOKS -->
+    <section class="page" id="page-books">
+      <h1 class="page-title">Books</h1>
+      <div class="books-grid" id="books-grid"></div>
+    </section>
 
-        <div class="social-links">
-            <a href="https://github.com/Danntav" class="social-btn github" target="_blank">
-                <span class="icon">
-                    <svg fill="currentColor" viewBox="0 0 24 24" width="22" height="22">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                </span>
-                <span>GitHub</span>
-            </a>
+    <!-- CONTACT -->
+    <section class="page" id="page-contact">
+      <h1 class="page-title">Contact</h1>
+      <p class="contact-intro">
+        I'm open to internship opportunities, collaborations on robotics
+        and automation projects, and knowledge sharing. I usually reply
+        via email or LinkedIn within 48 hours.
+      </p>
+      <div class="contact-list" id="contact-list"></div>
+    </section>
 
-            <a href="https://www.linkedin.com/in/daniel-otavares/" class="social-btn linkedin" target="_blank">
-                <span class="icon">
-                    <svg fill="currentColor" viewBox="0 0 24 24" width="22" height="22">
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                    </svg>
-                </span>
-                <span>LinkedIn</span>
-            </a>
+  </div><!-- /wrap -->
+</main>
 
-            <a href="mailto:danieloftavares@gmail.com" class="social-btn email">
-                <span class="icon">
-                    <svg fill="currentColor" viewBox="0 0 24 24" width="22" height="22">
-                        <path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z"/>
-                    </svg>
-                </span>
-                <span>E-mail</span>
-            </a>
-        </div>
+<footer id="site-footer"></footer>
 
-        <div class="footer">
-            © 2025 Daniel O. Tavares
-        </div>
+<!-- config.js must be loaded before this script -->
+<script src="config.js"></script>
+<script>
+/* ══════════════════════════════════════════════════
+   RENDER — reads SITE_CONFIG and builds the DOM
+══════════════════════════════════════════════════ */
+const C = SITE_CONFIG;
+
+/* ── Header ── */
+document.getElementById('hdr-name').textContent = C.name;
+document.getElementById('hdr-role').textContent = C.role + ' — ' + C.subrole;
+if (C.headerImage) {
+  document.getElementById('site-header').style.backgroundImage = `url('${C.headerImage}')`;
+}
+
+/* Social icons (inline SVG, no external requests) */
+const ICONS = {
+  github: `<svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.23c-3.34.72-4.03-1.42-4.03-1.42-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>`,
+  linkedin: `<svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0H5C2.24 0 0 2.24 0 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5V5c0-2.76-2.24-5-5-5zM8 19H5V8h3v11zm-1.5-12.27c-.97 0-1.75-.79-1.75-1.76s.78-1.76 1.75-1.76 1.75.79 1.75 1.76-.78 1.76-1.75 1.76zM19 19h-3v-5.6c0-3.37-4-3.11-4 0V19h-3V8h3v1.77C13.4 7.19 19 6.99 19 12.48V19z"/></svg>`,
+  email: `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`,
+};
+
+const hdrSocial = document.getElementById('hdr-social');
+C.social.forEach(s => {
+  const a = document.createElement('a');
+  a.href = s.url;
+  if (!s.url.startsWith('mailto')) a.target = '_blank';
+  a.innerHTML = (ICONS[s.icon] || '') + s.label;
+  hdrSocial.appendChild(a);
+});
+
+/* ── Bio ── */
+document.getElementById('bio-text').textContent = C.bio;
+
+/* ── Recent grid (last 4 projects) ── */
+const recentGrid = document.getElementById('recent-grid');
+C.projects.slice(0, 4).forEach(p => {
+  const card = document.createElement('div');
+  card.className = 'recent-card';
+  card.innerHTML = `<div class="recent-card-tag">${p.year}</div>
+    <h3>${p.title}</h3>
+    <p>${p.summary}</p>`;
+  card.onclick = () => openProject(p.id);
+  recentGrid.appendChild(card);
+});
+
+/* ── Standalone snippet / Gist ── */
+if (C.snippet && C.snippet.url) {
+  document.getElementById('snippet-section').innerHTML = `
+    <p class="snippet-heading">Snippet</p>
+    <div class="snippet-card">
+      ${C.snippet.title ? `<div class="snippet-card-title">${C.snippet.title}</div>` : ''}
+      ${C.snippet.description ? `<div class="snippet-card-desc">${C.snippet.description}</div>` : ''}
+      ${renderGistBlock(C.snippet.url)}
+    </div>`;
+}
+
+/* ── Project list ── */
+const projList = document.getElementById('proj-list');
+C.projects.forEach(p => {
+  const row = document.createElement('div');
+  row.className = 'proj-row';
+  row.innerHTML = `
+    <span class="proj-year">${p.year}</span>
+    <div class="proj-row-body">
+      <div class="proj-row-title">${p.title}</div>
+      <div class="proj-row-summary">${p.summary}</div>
+      <div class="proj-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
     </div>
+    <span class="proj-arrow">→</span>`;
+  row.onclick = () => openProject(p.id);
+  projList.appendChild(row);
+});
+
+/* ── Render a single content block (used inside project detail) ── */
+function renderBlock(block) {
+  switch (block.type) {
+    case 'text':
+      return `<p class="block-text">${block.value}</p>`;
+
+    case 'image':
+      if (!block.src) {
+        return `<div class="block-img-placeholder">[ Add "src" to this image block in config.js ]</div>`;
+      }
+      return `<div class="block-image">
+        <img src="${block.src}" alt="${block.caption || ''}">
+        ${block.caption ? `<div class="block-image-caption">${block.caption}</div>` : ''}
+      </div>`;
+
+    case 'images':
+      return `<div class="block-images">${
+        (block.srcs || []).filter(Boolean).map(src => `<img src="${src}" alt="">`).join('')
+        || '<div class="block-img-placeholder-half">[ image 1 ]</div><div class="block-img-placeholder-half">[ image 2 ]</div>'
+      }</div>`;
+
+    case 'video':
+      if (!block.src) {
+        return `<div class="block-img-placeholder">[ Add "src" to this video block in config.js ]</div>`;
+      }
+      return `<div class="block-video">
+        <video controls src="${block.src}"></video>
+        ${block.caption ? `<div class="block-image-caption">${block.caption}</div>` : ''}
+      </div>`;
+
+    case 'code':
+      return `<div class="block-code">
+        ${block.lang ? `<div class="block-code-lang">${block.lang}</div>` : ''}
+        <pre><code>${escapeHtml(block.value || '')}</code></pre>
+      </div>`;
+
+    case 'gist':
+      return renderGistBlock(block.url);
+
+    default:
+      return '';
+  }
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/* Embeds a GitHub Gist using its official embed script inside an iframe,
+   so it doesn't conflict with the rest of the page's styles/scripts. */
+function renderGistBlock(gistUrl) {
+  if (!gistUrl) return '';
+  const cleanUrl = gistUrl.split('#')[0];
+  const iframeId = 'gist-frame-' + Math.random().toString(36).slice(2, 9);
+  return `<div class="block-gist">
+    <iframe id="${iframeId}" frameborder="0" scrolling="no" style="width:100%;min-height:200px;"></iframe>
+  </div>
+  <script>
+    (function() {
+      var doc = document.getElementById('${iframeId}').contentWindow.document;
+      doc.open();
+      doc.write('<html><head><base target="_blank"></head><body style="margin:0;background:#fff;">' +
+        '<script src="${cleanUrl}.js"><\\/script></body></html>');
+      doc.close();
+      var resize = function() {
+        try {
+          var h = doc.body.scrollHeight;
+          document.getElementById('${iframeId}').style.height = (h + 20) + 'px';
+        } catch(e) {}
+      };
+      var iv = setInterval(resize, 300);
+      setTimeout(function(){ clearInterval(iv); }, 6000);
+    })();
+  <\/script>`;
+}
+
+/* ── Open project detail ── */
+function openProject(id) {
+  const p = C.projects.find(x => x.id === id);
+  if (!p) return;
+
+  const cover = p.coverImage
+    ? `<img class="proj-detail-cover" src="${p.coverImage}" alt="${p.title}">`
+    : '';
+
+  const blocksHtml = (p.content && p.content.length)
+    ? p.content.map(renderBlock).join('')
+    : `<p class="block-text">${p.summary}</p>`;
+
+  document.getElementById('proj-detail-content').innerHTML = `
+    <div class="proj-detail-title">${p.title}</div>
+    <div class="proj-detail-meta">${p.year} &nbsp;·&nbsp; ${p.tags.join(' · ')}</div>
+    ${cover}
+    <div class="proj-body-text">
+      ${blocksHtml}
+      ${p.github ? `<a href="${p.github}" target="_blank" class="proj-link">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.23c-3.34.72-4.03-1.42-4.03-1.42-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub
+      </a>` : ''}
+    </div>`;
+
+  showPage('page-proj-detail');
+}
+
+document.getElementById('proj-back').onclick = () => showPage('page-projects');
+
+/* ── Resume ── */
+function buildCvBlock(containerId, title, items, renderFn) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = `<div class="cv-block-title">${title}</div>` + items.map(renderFn).join('');
+}
+
+buildCvBlock('cv-education', 'Education', C.education, e => `
+  <div class="cv-entry">
+    <div class="cv-period">${e.period}</div>
+    <div>
+      <div class="cv-entry-title">${e.degree}</div>
+      <div class="cv-entry-sub">${e.institution}</div>
+      <div class="cv-entry-desc">${e.description}</div>
+    </div>
+  </div>`);
+
+buildCvBlock('cv-experience', 'Experience', C.experience, e => `
+  <div class="cv-entry">
+    <div class="cv-period">${e.period}</div>
+    <div>
+      <div class="cv-entry-title">${e.role}</div>
+      <div class="cv-entry-sub">${e.company}</div>
+      <div class="cv-entry-desc">${e.description}</div>
+    </div>
+  </div>`);
+
+document.getElementById('cv-skills').innerHTML = `
+  <div class="cv-block-title">Skills</div>
+  <div class="skills-wrap">${C.skills.map(s => `<span class="skill-chip">${s}</span>`).join('')}</div>`;
+
+document.getElementById('cv-languages').innerHTML = `
+  <div class="cv-block-title">Languages</div>
+  <div class="skills-wrap">${C.languages.map(l => `<span class="skill-chip">${l.lang} — ${l.level}</span>`).join('')}</div>`;
+
+const dlBtn = document.getElementById('cv-download');
+dlBtn.href = C.cvFile;
+dlBtn.download = '';
+
+/* ── About ── */
+const aboutText = document.getElementById('about-text');
+C.about.paragraphs.forEach(p => {
+  const el = document.createElement('p');
+  el.textContent = p;
+  aboutText.appendChild(el);
+});
+
+const aboutTable = document.getElementById('about-table');
+C.about.tableData.forEach(row => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>${row.label}</td><td>${row.value}</td>`;
+  aboutTable.appendChild(tr);
+});
+
+const exploringList = document.getElementById('exploring-list');
+C.about.currentlyExploring.forEach(item => {
+  const li = document.createElement('li');
+  li.textContent = item;
+  exploringList.appendChild(li);
+});
+
+/* ── Books ── */
+const BADGE_LABELS = { rec: '★ Recommend', read: 'Already read', reading: 'Reading' };
+const booksGrid = document.getElementById('books-grid');
+C.books.forEach(b => {
+  const card = document.createElement('div');
+  card.className = 'book-card';
+  const cover = b.cover
+    ? `<img class="book-cover" src="${b.cover}" alt="${b.title}">`
+    : `<div class="book-cover-placeholder">Add cover in<br>config.js → cover</div>`;
+  card.innerHTML = `
+    ${cover}
+    <span class="book-badge ${b.status}">${BADGE_LABELS[b.status] || b.status}</span>
+    <div class="book-title">${b.title}</div>
+    <div class="book-author">${b.author}</div>
+    <div class="book-stars">${'★'.repeat(b.stars)}${'☆'.repeat(5 - b.stars)}</div>
+    <div class="book-note">${b.note}</div>`;
+  booksGrid.appendChild(card);
+});
+
+/* ── Contact ── */
+const contactList = document.getElementById('contact-list');
+C.social.forEach(s => {
+  const a = document.createElement('a');
+  a.className = 'contact-row';
+  a.href = s.url;
+  if (!s.url.startsWith('mailto')) a.target = '_blank';
+  a.innerHTML = `
+    <div class="contact-icon">${ICONS[s.icon] || ''}</div>
+    <div class="contact-info">
+      <div class="contact-label">${s.label}</div>
+      <div class="contact-handle">${s.url.replace('mailto:', '')}</div>
+    </div>`;
+  contactList.appendChild(a);
+});
+
+/* ── Footer ── */
+document.getElementById('site-footer').textContent =
+  `© ${new Date().getFullYear()} ${C.name}`;
+
+/* ══════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════ */
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+    showPage('page-' + link.dataset.page);
+  });
+});
+</script>
 </body>
 </html>
