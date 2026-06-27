@@ -7,7 +7,7 @@ const SITE_CONFIG = {
   bio: `Computer Engineering`,
 
   /* Header background image path. */
-  headerImage: "assets/images/general/header-bg.jpg",
+  headerImage: "assets/images/header-bg.jpg",
 
   /* ── SOCIAL LINKS (shown in header and Contact tab) ──────── */
   social: [
@@ -51,6 +51,7 @@ const SITE_CONFIG = {
       summary: "One-line summary — shows up in the project list and on the Home page.",
       tags: ["Arduino", "C"],
       github: "https://github.com/Danntav",
+      feature: true,
       coverImage: "",   /* e.g. "assets/images/starter-project/cover.jpg" */
       content: [
         { type: "text", value: "Write the first part here: what motivated you to build this, the context it came from." },
@@ -69,6 +70,7 @@ const SITE_CONFIG = {
       summary: "4-DOF manipulator with computer vision for object classification.",
       tags: ["ROS", "OpenCV", "Python", "C++", "SolidWorks", "Arduino"],
       github: "https://github.com/Danntav",
+      feature: true,
       coverImage: "",
       content: [
         { type: "text", value: "Built during an undergraduate research project at UFSJ's Automation Lab. The goal was to create an automated manipulation system to sort parts on a simulated assembly line." },
@@ -129,7 +131,7 @@ const SITE_CONFIG = {
       title: "DIY Quadcopter",
       year: "2023",
       summary: "Drone built from scratch with PX4 firmware and autonomous MAVLink missions.",
-      tags: ["PX4", "MAVLink", "C++", "Python", "QGroundControl"],
+      tags: ["PX4", "MAVLink", "Python", "QGroundControl", "PID"],
       github: "https://github.com/Danntav",
       coverImage: "",
       content: [

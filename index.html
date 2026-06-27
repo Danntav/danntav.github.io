@@ -961,15 +961,15 @@ C.social.forEach(s => {
 /* ── Bio ── */
 document.getElementById('bio-text').textContent = C.bio;
 
-/* ── Recent grid (last 4 projects) ── */
+/* ── Recent grid (projects marked featured: true in config.js) ── */
 const recentGrid = document.getElementById('recent-grid');
-C.projects.slice(0, 4).forEach(p => {
+C.projects.filter(p => p.featured).forEach(p => {
   const card = document.createElement('div');
   card.className = 'recent-card';
   card.innerHTML = `<div class="recent-card-tag">${p.year}</div>
     <h3>${p.title}</h3>
     <p>${p.summary}</p>`;
-  card.onclick = () => openProject(p.id);
+  card.onclick = () => { location.hash = '#project/' + p.id; };
   recentGrid.appendChild(card);
 });
 
@@ -997,7 +997,7 @@ C.projects.forEach(p => {
       <div class="proj-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
     </div>
     <span class="proj-arrow">→</span>`;
-  row.onclick = () => openProject(p.id);
+  row.onclick = () => { location.hash = '#project/' + p.id; };
   projList.appendChild(row);
 });
 
@@ -1077,8 +1077,9 @@ function renderGistBlock(gistUrl) {
   <\/script>`;
 }
 
-/* ── Open project detail ── */
-function openProject(id) {
+/* ── Render project detail content (navigation is handled separately
+   by the hash router — see routeFromHash()) ── */
+function renderProjectDetail(id) {
   const p = C.projects.find(x => x.id === id);
   if (!p) return;
 
@@ -1101,11 +1102,7 @@ function openProject(id) {
         View on GitHub
       </a>` : ''}
     </div>`;
-
-  showPage('page-proj-detail');
 }
-
-document.getElementById('proj-back').onclick = () => showPage('page-projects');
 
 /* ── Resume ── */
 function buildCvBlock(containerId, title, items, renderFn) {
@@ -1207,21 +1204,84 @@ document.getElementById('site-footer').textContent =
   `© ${new Date().getFullYear()} ${C.name}`;
 
 /* ══════════════════════════════════════
-   NAVIGATION
+   NAVIGATION (hash-based routing)
+══════════════════════════════════════
+   URLs now look like:
+     #home
+     #projects
+     #project/robotic-arm   (a specific project's detail page)
+     #resume
+     #about
+     #books
+     #contact
+
+   This means pages can be bookmarked/shared, the browser's
+   back/forward buttons work, and refreshing the page keeps
+   you on the same tab. No server or build step needed — it's
+   all done with the URL hash (the part after #).
 ══════════════════════════════════════ */
+
+const VALID_PAGES = ['home', 'projects', 'resume', 'about', 'books', 'contact'];
+
 function showPage(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(pageId).classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function setActiveNavLink(pageName) {
+  document.querySelectorAll('.nav-link').forEach(l => {
+    l.classList.toggle('active', l.dataset.page === pageName);
+  });
+}
+
+/* Reads the current location.hash and shows the matching page.
+   Called on load, and every time the hash changes (including
+   browser back/forward navigation). */
+function routeFromHash() {
+  const hash = location.hash.replace(/^#/, '');
+
+  /* #project/<id> → open that project's detail page */
+  if (hash.startsWith('project/')) {
+    const id = hash.slice('project/'.length);
+    const exists = C.projects.some(p => p.id === id);
+    if (exists) {
+      renderProjectDetail(id);
+      showPage('page-proj-detail');
+      setActiveNavLink('projects');
+      return;
+    }
+    /* Unknown project id — fall back to the projects list */
+    location.hash = '#projects';
+    return;
+  }
+
+  /* #home, #projects, #resume, #about, #books, #contact */
+  const page = VALID_PAGES.includes(hash) ? hash : 'home';
+  showPage('page-' + page);
+  setActiveNavLink(page);
+}
+
+/* Nav links just update the hash — routeFromHash() does the rest
+   via the 'hashchange' listener below. */
 document.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', () => {
-    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-    link.classList.add('active');
-    showPage('page-' + link.dataset.page);
+    location.hash = '#' + link.dataset.page;
   });
 });
+
+document.getElementById('proj-back').addEventListener('click', () => {
+  location.hash = '#projects';
+});
+
+window.addEventListener('hashchange', routeFromHash);
+window.addEventListener('DOMContentLoaded', routeFromHash);
+
+/* In case DOMContentLoaded already fired by the time this script
+   runs (script is at the end of <body>, so it usually has), also
+   route immediately. */
+routeFromHash();
+
 </script>
 </body>
 </html>
