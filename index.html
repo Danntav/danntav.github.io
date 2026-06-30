@@ -1113,28 +1113,20 @@ function renderTableBlock(block) {
    so it doesn't conflict with the rest of the page's styles/scripts. */
 function renderGistBlock(gistUrl) {
   if (!gistUrl) return '';
+
   const cleanUrl = gistUrl.split('#')[0];
-  const iframeId = 'gist-frame-' + Math.random().toString(36).slice(2, 9);
-  return `<div class="block-gist">
-    <iframe id="${iframeId}" frameborder="0" scrolling="no" style="width:100%;min-height:200px;"></iframe>
-  </div>
-  <script>
-    (function() {
-      var doc = document.getElementById('${iframeId}').contentWindow.document;
-      doc.open();
-      doc.write('<html><head><base target="_blank"></head><body style="margin:0;background:#fff;">' +
-        '<script src="${cleanUrl}.js"><\\/script></body></html>');
-      doc.close();
-      var resize = function() {
-        try {
-          var h = doc.body.scrollHeight;
-          document.getElementById('${iframeId}').style.height = (h + 20) + 'px';
-        } catch(e) {}
-      };
-      var iv = setInterval(resize, 300);
-      setTimeout(function(){ clearInterval(iv); }, 6000);
-    })();
-  <\/script>`;
+  const id = 'gist-' + Math.random().toString(36).slice(2);
+
+  setTimeout(() => {
+    const container = document.getElementById(id);
+    if (!container) return;
+
+    const script = document.createElement('script');
+    script.src = cleanUrl + '.js';
+    container.appendChild(script);
+  }, 0);
+
+  return `<div id="${id}" class="block-gist"></div>`;
 }
 
 /* ── Render project detail content (navigation is handled separately
