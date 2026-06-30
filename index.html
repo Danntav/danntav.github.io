@@ -1113,32 +1113,48 @@ function renderTableBlock(block) {
    so it doesn't conflict with the rest of the page's styles/scripts. */
 function renderGistBlock(gistUrl) {
   if (!gistUrl) return '';
-
+  
   const cleanUrl = gistUrl.split('#')[0];
   const iframeId = 'gist-frame-' + Math.random().toString(36).slice(2, 9);
-
+  
+  // Executa logo após o HTML ser inserido na página
   setTimeout(() => {
     const iframe = document.getElementById(iframeId);
     if (!iframe) return;
-
+    
     const doc = iframe.contentDocument || iframe.contentWindow.document;
-
+    
     doc.open();
     doc.write(`
       <!DOCTYPE html>
       <html>
       <head><base target="_blank"></head>
-      <body style="margin:0">
+      <body style="margin:0;background:#fff;">
         <script src="${cleanUrl}.js"><\/script>
       </body>
       </html>
     `);
     doc.close();
+    
+    // Lógica de redimensionamento automático
+    const resize = function() {
+      try {
+        const h = doc.body.scrollHeight;
+        if (h > 0) {
+          iframe.style.height = (h + 20) + 'px';
+        }
+      } catch(e) {}
+    };
+    
+    const iv = setInterval(resize, 300);
+    setTimeout(function(){ clearInterval(iv); }, 6000);
   }, 0);
 
-  return `<div class="block-gist">
-    <iframe id="${iframeId}" frameborder="0" scrolling="no" style="width:100%;min-height:200px;"></iframe>
-  </div>`;
+  return `
+    <div class="block-gist">
+      <iframe id="${iframeId}" frameborder="0" scrolling="no" style="width:100%;min-height:200px;"></iframe>
+    </div>
+  `;
 }
 
 /* ── Render project detail content (navigation is handled separately

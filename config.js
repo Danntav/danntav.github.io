@@ -140,9 +140,12 @@ const SITE_CONFIG = {
       coverImage: "",
       content: [
         { type: "text", value: "Capstone project for an embedded systems course. Learned the full stack: power electronics, ESCs, flight control, telemetry, and autonomous waypoint missions." },
-        { type: "image", src: "", caption: "Assembled drone" },
+        { type: "image", src: "assets/projects/project_001_drone/ESC", caption: "ESC" },
+        { type: "image", src: "assets/projects/project_001_drone/drone_workspace", caption: "" },
+        { type: "image", src: "assets/projects/project_001_drone/FC", caption: "Assembled drone" },
+        { type: "video", src: "assets/projects/project_001_drone/test_flight.mp4", caption: "flight test" },
         { type: "text", value: "450 mm carbon fiber frame, 2212 motors, 30A ESCs, Pixhawk flight controller, u-blox GPS, 433 MHz telemetry radio. Custom PX4 firmware." },
-        { type: "text", value: "Stable flights of up to 15 minutes. Functional autonomous waypoint missions." },
+        { type: "text", value: "Stable flights of up to 10 minutes. Functional autonomous waypoint missions." },
       ],
     },
   ],
@@ -211,7 +214,7 @@ const SITE_CONFIG = {
       period: "2022 — 2024",
       role: "Network Engineer Intern",
       company: "PadTec S.A",
-      description: "Configured, monitored, and validated networking equipment (Cisco, Juniper, Arista, Cumulus),
+      description: "Configured, monitored, and validated networking equipment (Cisco, Juniper, Arista, Cumulus).",
     },
   ],
 
