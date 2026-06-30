@@ -17,7 +17,7 @@
   --bg:      #fafafa;
   --white:   #ffffff;
   --accent:  #c0392b;   /* muted red accent — change to any color you like */
-  --max:     860px;
+  --max:     1100px;
   --serif:   'Lora', Georgia, serif;
   --sans:    'DM Sans', system-ui, sans-serif;
 }
@@ -470,6 +470,41 @@ img { display: block; max-width: 100%; }
   width: 100%;
   border: 1px solid var(--line);
   border-radius: 4px;
+}
+
+.block-table-wrap {
+  margin-bottom: 22px;
+  overflow-x: auto;
+}
+
+.block-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.block-table th,
+.block-table td {
+  text-align: left;
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+}
+
+.block-table thead th {
+  background: #f5f5f5;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.block-table tbody td {
+  color: var(--gray);
+}
+
+.block-table tbody tr:nth-child(even) {
+  background: #fafafa;
 }
 
 .block-img-placeholder, .block-img-placeholder-half {
@@ -1037,6 +1072,9 @@ function renderBlock(block) {
         <pre><code>${escapeHtml(block.value || '')}</code></pre>
       </div>`;
 
+    case 'table':
+      return renderTableBlock(block);
+
     case 'gist':
       return renderGistBlock(block.url);
 
@@ -1047,6 +1085,28 @@ function renderBlock(block) {
 
 function escapeHtml(str) {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/* Renders a simple data table block.
+   { type: "table", caption: "Optional caption",
+     headers: ["Col A", "Col B"],
+     rows: [["a1", "b1"], ["a2", "b2"]] } */
+function renderTableBlock(block) {
+  const headers = block.headers || [];
+  const rows = block.rows || [];
+  if (!headers.length && !rows.length) {
+    return `<div class="block-img-placeholder">[ Add "headers" and "rows" to this table block in config.js ]</div>`;
+  }
+  const theadHtml = headers.length
+    ? `<thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>`
+    : '';
+  const tbodyHtml = `<tbody>${
+    rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')
+  }</tbody>`;
+  return `<div class="block-table-wrap">
+    <table class="block-table">${theadHtml}${tbodyHtml}</table>
+    ${block.caption ? `<div class="block-image-caption">${block.caption}</div>` : ''}
+  </div>`;
 }
 
 /* Embeds a GitHub Gist using its official embed script inside an iframe,
@@ -1142,13 +1202,25 @@ const dlBtn = document.getElementById('cv-download');
 dlBtn.href = C.cvFile;
 dlBtn.download = '';
 
-/* ── About ── */
+/* ── About ──
+   Supports the same flexible block system as Projects (text, image,
+   images, table, code, gist, video) via about.content — so you can mix
+   a photo right in with the text, in whatever order you like.
+
+   Backward compatible: if config.js still uses the older
+   about.paragraphs format (plain text only, no photo), that still
+   works too — it just won't have inline images. */
 const aboutText = document.getElementById('about-text');
-C.about.paragraphs.forEach(p => {
-  const el = document.createElement('p');
-  el.textContent = p;
-  aboutText.appendChild(el);
-});
+if (C.about.content && C.about.content.length) {
+  aboutText.innerHTML = C.about.content.map(renderBlock).join('');
+} else if (C.about.paragraphs) {
+  C.about.paragraphs.forEach(p => {
+    const el = document.createElement('p');
+    el.className = 'block-text';
+    el.textContent = p;
+    aboutText.appendChild(el);
+  });
+}
 
 const aboutTable = document.getElementById('about-table');
 C.about.tableData.forEach(row => {

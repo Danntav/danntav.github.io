@@ -28,9 +28,13 @@ const SITE_CONFIG = {
    *   { type: "text",   value: "A paragraph of text." }
    *   { type: "image",  src: "assets/images/<id>/photo.jpg", caption: "Optional caption" }
    *   { type: "images", srcs: ["assets/images/<id>/a.jpg", "assets/images/<id>/b.jpg"] }  // side by side
+   *   { type: "table",  headers: ["Col A", "Col B"], rows: [["a1","b1"], ["a2","b2"]], caption: "Optional caption" }
    *   { type: "code",   lang: "python", value: "print('hi')" }
    *   { type: "gist",   url: "https://gist.github.com/username/gist-id" }
    *   { type: "video",  src: "assets/videos/demo.mp4", caption: "Optional caption" }
+   *
+   * This same block system also powers the "about.content" field below —
+   * so you can mix text, photos, and tables on the About page too.
    *
    * Mix as many blocks as you want, in whatever order tells the story
    * of the project best. coverImage is the large image at the top of
@@ -248,11 +252,20 @@ const SITE_CONFIG = {
 
 
   /* ── ABOUT ──────────────────────────────────────────────── */
+  /*
+   * Same flexible block system as Projects (see the comment above
+   * "projects:"). Mix text, photos, tables, etc. in any order —
+   * e.g. paragraph → photo → paragraph → table → paragraph.
+   *
+   * Available block types: text, image, images, table, code, gist, video.
+   * See the "PROJECTS" comment above for the exact syntax of each.
+   */
   about: {
-    paragraphs: [
-      `Hi! I'm Daniel, a Computer Engineering student, from Minas Gerais, Brazil. I'm passionate about robotics, embedded systems, and automation.`,
-      `I like the edge between the physical and digital worlds.`,
-      `Outside of engineering, I enjoy reading philosophy and theology, listening to music and camping.`,
+    content: [
+      { type: "text", value: "Hi! I'm Daniel, a Computer Engineering student, from Minas Gerais, Brazil. I'm passionate about robotics, embedded systems, and automation." },
+      { type: "image", src: "", caption: "" },   /* e.g. src: "assets/images/general/me.jpg" */
+      { type: "text", value: "I like the edge between the physical and digital worlds." },
+      { type: "text", value: "Outside of engineering, I enjoy reading philosophy and theology, listening to music and camping." },
     ],
     currentlyExploring: [
       "FPGA",
