@@ -3,7 +3,7 @@ const SITE_CONFIG = {
   /* ── PERSONAL INFO ──────────────────────────────────────── */
   name: "Daniel O. Tavares",
   role: "Computer Engineering",
-  subrole: "Embedded Software || Hardware || FPGA || Robotics || ",
+  subrole: "Embedded Software || Hardware || FPGA || Robotics",
   bio: `Computer Engineering`,
 
   /* Header background image path. */
@@ -164,7 +164,7 @@ const SITE_CONFIG = {
   education: [
     {
       period: "2021 — 2026",
-      degree: "Computer Engineering",
+      degree: "B.S. Computer Engineering",
       institution: "Viçosa University Center",
       description: "Focus on embedded systems, IoT and Low Level development (Assembly, FPGA, C).",
     },
@@ -188,6 +188,30 @@ const SITE_CONFIG = {
       role: "Software Engineer",
       company: "RobotichTech",
       description: "Software developer for computer vision solutions.",
+    },
+    {
+      period: "2025 — 2026",
+      role: "Embedded System Engineering Intern",
+      company: "J2S Solutions",
+      description: "Embedded Engineer intern responsible for the entire product pipeline (hardware, firmware, communication, tests)",
+    },
+    {
+      period: "2025",
+      role: "Automation Engineer Intern",
+      company: "testRigot",
+      description: "Automated self-tests for Chrome & Android/iOS apps using TestRigor’s framework.",
+    },
+    {
+      period: "2",
+      role: "Robotics Assistant",
+      company: "NERo - UFV's Robotics Specialization Center.",
+      description: "Hardware and firmware optimizations for educational robot used in public schools competition.",
+    },
+    {
+      period: "2022 — 2024",
+      role: "Network Engineer Intern",
+      company: "PadTec S.A",
+      description: "Configured, monitored, and validated networking equipment (Cisco, Juniper, Arista, Cumulus),
     },
   ],
 
@@ -229,7 +253,7 @@ const SITE_CONFIG = {
       author: "Igor Zhirkov",
       status: "reading",
       stars: 5,
-      cover: "/assets/books/Low_level_Zhirkov",
+      cover: "/assets/books/Low_level_Zhirkov.jpg",
       note: "",
     },
     {
@@ -238,7 +262,7 @@ const SITE_CONFIG = {
       status: "read",
       stars: 5,
       cover: "/assets/books/C_Programming_Language_Kernighan.jpg",
-      note: "Top1 must go book for everyone.",
+      note: "Top1 must read book for low level programmer.",
     },
 
 

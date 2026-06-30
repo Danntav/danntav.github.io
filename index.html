@@ -1115,18 +1115,30 @@ function renderGistBlock(gistUrl) {
   if (!gistUrl) return '';
 
   const cleanUrl = gistUrl.split('#')[0];
-  const id = 'gist-' + Math.random().toString(36).slice(2);
+  const iframeId = 'gist-frame-' + Math.random().toString(36).slice(2, 9);
 
   setTimeout(() => {
-    const container = document.getElementById(id);
-    if (!container) return;
+    const iframe = document.getElementById(iframeId);
+    if (!iframe) return;
 
-    const script = document.createElement('script');
-    script.src = cleanUrl + '.js';
-    container.appendChild(script);
+    const doc = iframe.contentDocument || iframe.contentWindow.document;
+
+    doc.open();
+    doc.write(`
+      <!DOCTYPE html>
+      <html>
+      <head><base target="_blank"></head>
+      <body style="margin:0">
+        <script src="${cleanUrl}.js"><\/script>
+      </body>
+      </html>
+    `);
+    doc.close();
   }, 0);
 
-  return `<div id="${id}" class="block-gist"></div>`;
+  return `<div class="block-gist">
+    <iframe id="${iframeId}" frameborder="0" scrolling="no" style="width:100%;min-height:200px;"></iframe>
+  </div>`;
 }
 
 /* ── Render project detail content (navigation is handled separately
