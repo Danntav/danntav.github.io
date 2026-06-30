@@ -3,7 +3,7 @@ const SITE_CONFIG = {
   /* ── PERSONAL INFO ──────────────────────────────────────── */
   name: "Daniel O. Tavares",
   role: "Computer Engineering",
-  subrole: "Embedded Software || Hardware || Robotics || FPGA",
+  subrole: "Embedded Software || Hardware || FPGA || Robotics || ",
   bio: `Computer Engineering`,
 
   /* Header background image path. */
@@ -36,7 +36,7 @@ const SITE_CONFIG = {
    * This same block system also powers the "about.content" field below —
    * so you can mix text, photos, and tables on the About page too.
    *
-   * Mix as many blocks as you want, in whatever order tells the story
+   * Mix as many blocks as liked, in whatever order tells the story
    * of the project best. coverImage is the large image at the top of
    * the project page (optional).
    */
@@ -154,52 +154,53 @@ const SITE_CONFIG = {
    * Leave url: "" to hide this section.
    */
   snippet: {
-    title: "Useful snippet",
-    description: "A piece of code I use often.",
-    url: "",   /* e.g. "https://gist.github.com/Danntav/abcd1234efgh" */
+    title: "Win 10 / 11 debloat script",
+    description: "Created this snippet to automate removing all win10/11 garbage that comes pre-installed. Just have to run it on privillege powershell.",
+    url: "https://gist.github.com/Danntav/e94b0fdbe18dc917c23f4330165a841f",   /* e.g. "https://gist.github.com/Danntav/abcd1234efgh" */
   },
 
 
   /* ── RESUME ─────────────────────────────────────────────── */
   education: [
     {
-      period: "2022 — present",
+      period: "2021 — 2026",
       degree: "Computer Engineering",
-      institution: "Federal University of São João del-Rei (UFSJ)",
-      description: "Focus on robotics, embedded systems, and industrial automation.",
+      institution: "Viçosa University Center",
+      description: "Focus on embedded systems, IoT and Low Level development (Assembly, FPGA, C).",
     },
     {
-      period: "2019 — 2021",
-      degree: "Technical High School Diploma in Electronics",
-      institution: "IFMG — Federal Institute of Minas Gerais",
-      description: "Electronics technician program integrated with high school.",
+      period: "2016 — 2018",
+      degree: "Federal High School Diploma",
+      institution: "Coluni — Federal University College of Viçosa",
+      description: "Brazil's top 1 HighSchool between 2005-2018",
     },
   ],
 
   experience: [
     {
-      period: "2023 — present",
-      role: "Member — Robotics Team",
-      company: "Robotics Research Group / UFSJ",
-      description: "Development of robotics projects for competitions and academic research.",
+      period: "2026 — present",
+      role: "Member — Research Team",
+      company: "FPGA Research Group / UFV",
+      description: "Development of embedded projects for academic research.",
     },
     {
-      period: "2024",
-      role: "Undergraduate Research Assistant",
-      company: "UFSJ — Automation Lab",
-      description: "Research on robotic system control using computer vision.",
+      period: "2026 — present",
+      role: "Software Engineer",
+      company: "RobotichTech",
+      description: "Software developer for computer vision solutions.",
     },
   ],
 
   skills: [
-    "Python", "C / C++", "ROS / ROS2", "Arduino", "ESP32",
-    "OpenCV", "Linux", "Git / GitHub", "SolidWorks", "MATLAB",
+    "Python", "C", "ROS / ROS2", "Arduino", "ESP32",
+    "OpenCV", "Linux", "Git / GitHub", "SolidWorks",
     "Electronics", "MQTT / IoT",
   ],
 
   languages: [
     { lang: "Portuguese", level: "Native" },
-    { lang: "English",    level: "Intermediate" },
+    { lang: "English",    level: "Advanced/Professional" },
+    { lang: "German",     level: "Basic"},
   ],
 
 
@@ -221,32 +222,25 @@ const SITE_CONFIG = {
       status: "read",
       stars: 3,
       cover: "/assets/books/Prog_Sistemas_Embarcados_Almeida_etal.jpg",
-      note: "Introduction to the topic, with intersting glances of hard concepts. Many typos either in code and text, so I couldn't really trust on it.",
+      note: "Introduction to the topic, with glances of hard concepts. Many typos either in code and text, so I couldn't really trust on it.",
     },
     {
-      title: "Clean Code",
-      author: "Robert C. Martin",
-      status: "rec",
+      title: "Low Level Programming",
+      author: "Igor Zhirkov",
+      status: "reading",
       stars: 5,
-      cover: "",
-      note: "Changed the way I write code. Required reading for any serious developer.",
+      cover: "/assets/books/Low_level_Zhirkov",
+      note: "",
     },
     {
-      title: "Automate the Boring Stuff with Python",
-      author: "Al Sweigart",
-      status: "rec",
-      stars: 5,
-      cover: "",
-      note: "Practical Python for automating everything. Free online. Was my first serious programming book.",
-    },
-    {
-      title: "Introduction to AI Robotics",
-      author: "Robin Murphy",
+      title: "C Programming Language",
+      author: "Brian W. Kernighan, Dennis M. Ritchie",
       status: "read",
-      stars: 4,
-      cover: "",
-      note: "Good introduction to autonomous robotics. Covers the fundamentals of AI for robots well.",
+      stars: 5,
+      cover: "/assets/books/C_Programming_Language_Kernighan.jpg",
+      note: "Top1 must go book for everyone.",
     },
+
 
   ],
 
@@ -262,10 +256,10 @@ const SITE_CONFIG = {
    */
   about: {
     content: [
-      { type: "text", value: "Hi! I'm Daniel, a Computer Engineering student, from Minas Gerais, Brazil. I'm passionate about robotics, embedded systems, and automation." },
+      { type: "text", value: "Hi! I'm Daniel, a Computer Engineering student, from Minas Gerais, Brazil." },
       { type: "image", src: "", caption: "" },   /* e.g. src: "assets/images/general/me.jpg" */
-      { type: "text", value: "I like the edge between the physical and digital worlds." },
-      { type: "text", value: "Outside of engineering, I enjoy reading philosophy and theology, listening to music and camping." },
+      { type: "text", value: "For me, understanding the low level world and how everything comes together as a whole, is the real magic." },
+      { type: "text", value: "Outside of engineering, I really enjoy camping and music. On my free time, sometimes I read philosophy/theology." },
     ],
     currentlyExploring: [
       "FPGA",
@@ -278,7 +272,7 @@ const SITE_CONFIG = {
       { label: "Location",      value: "Minas Gerais, Brazil" },
       { label: "Major",         value: "Computer Engineering" },
       { label: "University",    value: "Univicosa" },
-      { label: "Interests",     value: "FPGA, Low-Level, Robotics, Automation, RF" },
+      { label: "Interests",     value: "FPGA, Low-Level, Robotics, IoT, Hardware, RF" },
     ],
   },
 

@@ -5,19 +5,15 @@
 ```
 danntav.github.io/
 ├── index.html              ← page structure & styling (don't edit this)
-├── config.js               ← ALL your content (edit this!)
+├── config.js               ← content (edit this!)
 ├── README.md              
 └── assets/
-    ├── images/		    → general images
+    ├── images/		        → general images
     ├── books/              → book cover images
-    ├── videos/             → video clips (demos, etc.)
-    ├── schematics/         → circuit diagrams, wiring, CAD exports
     ├── pdfs/               → cv.pdf, datasheets, reports
-    ├── code/               → standalone code files you want to link to
-    ├── projects/
-	 │
+    └── projects/
 	 ├── project_01_name/          → media for project XX
-         ├── project_02_name/   
+     ├── project_02_name/   
 		.
 		.
 		.
@@ -25,20 +21,19 @@ danntav.github.io/
 
 ```
 
-Each project gets its own folder under `assets/images/<project-id>/` — drop all
-images for that project in there, no need for further subfolders. Anything
-generic (header background, avatar, etc.) goes in `assets/images/`.
+Each project gets its own folder under `assets/images/<project-id>/`.
+Anything generic (header background, avatar, etc.) goes in `assets/`.
 
 ---
 
 ## How to update the site
 
-You only ever need to edit `config.js`. You should never need to touch `index.html`.
+Only ever need to edit `config.js`. Do not need to touch `index.html`.
 
 ### Add a new project (with mixed text, images, code…)
 
-Each project has a `content` field: a **list of blocks**, in whatever order you
-want. Mix as many as you like to tell the story of the project.
+Each project has a `content` field: a **list of blocks**, in whatever order liked.
+want. Mix them to tell the story of the project.
 
 Available block types:
 
@@ -73,10 +68,7 @@ Full example:
 },
 ```
 
-There's already an example project called **"My First Project"**
-(`id: "starter-project"`) at the top of the list — just fill in the text and
-the `src`/`url` fields with your own images, or delete the whole block if you
-don't need it.
+There's already an example project called **"My First Project"** (`id: "starter-project"`)
 
 ### Add a book (with a cover)
 
@@ -89,19 +81,18 @@ Inside `books: [ ... ]`:
   status: "rec",    // "rec" = recommend | "read" = already read | "reading" = reading now
   stars:  5,         // 1 to 5
   cover:  "assets/images/books/book-title.jpg",
-  note:   "Why you recommend it / what you thought.",
+  note:   "Opnion...",
 },
 ```
 
 Books are shown in a **grid** (like a bookshelf), cover on top. If `cover` is
 left empty (`""`), a gray placeholder shows instead — the site won't break.
 
-You can photograph your physical copy or download the official cover and drop
-it into `assets/images/books/`.
+Drop the books cover into `assets/images/books/`.
 
 ### Add a GitHub Gist
 
-You can use a Gist in two ways:
+Two possible ways to use Gist:
 
 **1. Standalone, on the Home page** (not tied to any project) — edit the
 `snippet` object near the top of `config.js`:
@@ -110,7 +101,7 @@ You can use a Gist in two ways:
 snippet: {
   title: "Useful snippet",
   description: "A piece of code I use often.",
-  url: "https://gist.github.com/Danntav/YOUR_GIST_ID",
+  url: "https://gist.github.com/Danntav/GIST_ID",
 },
 ```
 
@@ -119,11 +110,10 @@ Leave `url: ""` to hide this section.
 **2. Inside a project's page**, as another block in `content`:
 
 ```js
-{ type: "gist", url: "https://gist.github.com/Danntav/YOUR_GIST_ID" }
+{ type: "gist", url: "https://gist.github.com/Danntav/GIST_ID" }
 ```
 
-In both cases, just paste the full Gist URL (the same one shown in your
-browser's address bar when viewing the Gist on GitHub).
+In both cases, just paste the full Gist URL (the same one shown the browser's address bar).
 
 ### Add a video to a project
 
@@ -135,21 +125,8 @@ Drop the video file into `assets/videos/` first.
 
 ### Change the header background image
 
-Replace the file at `assets/images/general/header-bg.jpg` with any image you like.
-If you want to use a different filename, also update it in `config.js`:
-
-```js
-headerImage: "assets/images/general/my-photo.jpg",
-```
+Replace the file at `assets/images/general/header-bg.jpg` with any image preferred.
 
 ### Change the accent color
 
-In `index.html`, near line 15, change `--accent: #c0392b;` to any color you prefer.
-
----
-
-## Publish to GitHub Pages
-
-1. Upload everything in this folder to the `danntav.github.io` repository
-2. In Settings → Pages → Source: select the `main` branch / `/ (root)`
-3. Your site will be live at `https://danntav.github.io`
+In `index.html`, near line 15, change `--accent: #c0392b;` to any color preferred.
