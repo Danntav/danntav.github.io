@@ -7,7 +7,7 @@ const SITE_CONFIG = {
   bio: `Computer Engineering`,
 
   /* Header background image path. */
-  headerImage: "assets/images/header-bg.jpg",
+  headerImage: "assets/images/general/header-bg.jpg",
 
   /* ── SOCIAL LINKS (shown in header and Contact tab) ──────── */
   social: [
