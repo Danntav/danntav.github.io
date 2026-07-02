@@ -2,9 +2,9 @@ const SITE_CONFIG = {
 
   /* ── PERSONAL INFO ──────────────────────────────────────── */
   name: "Daniel O. Tavares",
-  role: "Computer Engineering",
+  role: "Master Computer Engineering student",
   subrole: "Embedded Software || Hardware || FPGA || Robotics",
-  bio: `Computer Engineering`,
+  bio: `Master Computer Engineering student who loves to do projects.`,
 
   /* Header background image path. */
   headerImage: "assets/images/general/header-bg.jpg",
@@ -98,7 +98,7 @@ const SITE_CONFIG = {
     },
     {
       id: "drone",
-      title: "DIY Quadcopter",
+      title: "DIY Racing Quadcopter",
       year: "2023",
       summary: "Drone built from scratch with PX4 firmware and autonomous MAVLink missions.",
       tags: ["Drone", "PID", "BetaFlight", "QGroundControl"],
@@ -108,22 +108,23 @@ const SITE_CONFIG = {
         { type: "text", value: "Capstone project for an embedded systems course. Learned the full stack: power electronics, ESCs, flight control, telemetry, and autonomous waypoint missions." },
         { type: "image", src: "assets/projects/project_001_drone/ESC.jpg", caption: "ESC" },
         { type: "image", src: "assets/projects/project_001_drone/drone_workspace.jpg", caption: "" },
+        { type: "images", srcs: ["assets/projects/project_001_drone/diagram.jpg", "assets/projects/project_001_drone/layout.jpg"]},
         { type: "table",  headers: ["Part", "Model"], rows: 
             [["Frame","PhiSital Mark5 MK5 DC DeadCat"],
-            ["Motor","Rcinpower EX2306 Plus 1800"],
+            ["Motor","Rcinpower EX2306 Plus 1800kv"],
             ["Battery","CNHL Lipo Battery 4S 1500mah 100C"],
             ["Stack ESC+FC","SpeedyBee F405 V3 50A"],
-            ["Camera","Foxeer Razer NANO"],
-            ["VTX","Jhemcu VTX20-600 vtx20 5.8g 40ch"],
+            ["Camera","Foxeer Razer Nano"],
+            ["VTX","Jhemcu VTX20-600 5.8G 40ch"],
             ["Receiver","ELRS MINI Receiver EPW5 2.4G"],
             ["Props","iFlight Nazgul F5 5,1 inches"],
             ["Antenna","5.8G Lollipop 4 RHCP"],
-            ["GPS","M80 PRO"],
-            ["Radio","TPRO ELRS 1000mW"],
-            ["Googles","Eachine EV800D 5.8G 40CH"],
-            ["Finder Buzzer","Iflight yr50b_s"],
+            ["GPS","M80 Pro"],
+            ["Radio","T-Pro v2 ELRS 1000mW"],
+            ["Googles","Eachine EV800D 5.8G 40ch"],
+            ["Finder Buzzer","IFlight YR50B_S"],
             ["Smart Smoke Stopper","iFlight XT60 Smart Smoke"],
-            ["Antenna Cable adapter","SMA F to MMCX M90"]],
+            ["Antenna Cable adapter","SMA-F to MMCX M90"]],
             caption: "Used parts in my drone"},
 
         { type: "image", src: "assets/projects/project_001_drone/FC.jpg", caption: "Assembled drone" },
@@ -143,12 +144,18 @@ const SITE_CONFIG = {
   snippet: {
     title: "Win 10 / 11 debloat script",
     description: "Created this snippet to automate removing all win10/11 garbage that comes pre-installed. Just have to run it on privillege powershell.",
-    url: "https://gist.github.com/Danntav/e94b0fdbe18dc917c23f4330165a841f",   /* e.g. "https://gist.github.com/Danntav/abcd1234efgh" */
+    url: "https://gist.github.com/Danntav/89c987fa4f38316d2ad1c35134075970",   /* e.g. "https://gist.github.com/Danntav/abcd1234efgh" */
   },
 
 
   /* ── RESUME ─────────────────────────────────────────────── */
   education: [
+      {
+      period: "2026 — 2028",
+      degree: "M.Sc. Computer Science",
+      institution: "Federal University of Viçosa",
+      description: "",
+    },
     {
       period: "2021 — 2026",
       degree: "B.S. Computer Engineering",
@@ -189,7 +196,7 @@ const SITE_CONFIG = {
       description: "Automated self-tests for Chrome & Android/iOS apps using TestRigor’s framework.",
     },
     {
-      period: "2",
+      period: "2025",
       role: "Robotics Assistant",
       company: "NERo - UFV's Robotics Specialization Center.",
       description: "Hardware and firmware optimizations for educational robot used in public schools competition.",
@@ -203,7 +210,7 @@ const SITE_CONFIG = {
   ],
 
   skills: [
-    "Python", "C", "ROS / ROS2", "Arduino", "ESP32",
+    "Python", "C", "ROS / ROS2", "ESP32",
     "OpenCV", "Linux", "Git / GitHub", "SolidWorks",
     "Electronics", "MQTT / IoT",
   ],
