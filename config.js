@@ -26,8 +26,26 @@ const SITE_CONFIG = {
    * you want them to appear. Available block types:
    *
    *   { type: "text",   value: "A paragraph of text." }
+   *
+   *     Optional text modifiers (mix any of these):
+   *       align: "center"   → center the paragraph
+   *       bold: true        → bold weight, darker color
+   *       size: "large"     → bigger text (great for a title/emphasis line)
+   *     e.g. a section title:
+   *       { type: "text", value: "Design Overview", bold: true, size: "large" }
+   *     e.g. a centered pull-quote:
+   *       { type: "text", value: "Built in 3 weeks.", align: "center", bold: true }
+   *
+   *   { type: "list",   items: ["First point", "Second point"], ordered: false }
+   *     Renders as bullet points. Set ordered: true for a numbered list.
+   *
    *   { type: "image",  src: "assets/images/<id>/photo.jpg", caption: "Optional caption" }
    *   { type: "images", srcs: ["assets/images/<id>/a.jpg", "assets/images/<id>/b.jpg"] }  // side by side
+   *     Note: side-by-side images now keep their original proportions
+   *     (no more forced square crop). If the two images have very
+   *     different shapes/aspect ratios, they may look uneven sitting
+   *     next to each other — in that case, prefer two separate "image"
+   *     blocks stacked instead of one "images" block.
    *   { type: "table",  headers: ["Col A", "Col B"], rows: [["a1","b1"], ["a2","b2"]], caption: "Optional caption" }
    *   { type: "code",   lang: "python", value: "print('hi')" }
    *   { type: "gist",   url: "https://gist.github.com/username/gist-id" }

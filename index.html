@@ -379,7 +379,7 @@ img { display: block; max-width: 100%; }
 }
 
 .proj-body-text {
-  max-width: 640px;
+  max-width: 720px;
 }
 
 /* ── Content blocks (used inside proj-body-text) ── */
@@ -389,6 +389,39 @@ img { display: block; max-width: 100%; }
   line-height: 1.8;
   margin-bottom: 22px;
   white-space: pre-line;
+}
+
+.block-text.align-center {
+  text-align: center;
+}
+
+.block-text.text-bold {
+  font-weight: 700;
+  color: var(--dark, #1a1a1a);
+}
+
+.block-text.text-large {
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+.block-text.text-large.text-bold {
+  font-size: 26px;
+  line-height: 1.4;
+  margin-bottom: 16px;
+}
+
+/* ── Bullet / numbered list block ── */
+.block-list {
+  font-size: 16px;
+  color: var(--gray);
+  line-height: 1.8;
+  margin: 0 0 22px 0;
+  padding-left: 22px;
+}
+
+.block-list li {
+  margin-bottom: 6px;
 }
 
 .block-image {
@@ -413,14 +446,15 @@ img { display: block; max-width: 100%; }
   grid-template-columns: 1fr 1fr;
   gap: 12px;
   margin-bottom: 22px;
+  align-items: start;
 }
 
 .block-images img {
   width: 100%;
   border: 1px solid var(--line);
   background: #e8e8e8;
-  aspect-ratio: 4/3;
-  object-fit: cover;
+  /* No forced aspect-ratio/crop: each image keeps its natural
+     proportions and just scales to fit its column's width. */
 }
 
 @media (max-width: 520px) {
@@ -1038,8 +1072,19 @@ C.projects.forEach(p => {
 /* ── Render a single content block (used inside project detail) ── */
 function renderBlock(block) {
   switch (block.type) {
-    case 'text':
-      return `<p class="block-text">${block.value}</p>`;
+    case 'text': {
+      const classes = ['block-text'];
+      if (block.align === 'center') classes.push('align-center');
+      if (block.bold) classes.push('text-bold');
+      if (block.size === 'large') classes.push('text-large');
+      return `<p class="${classes.join(' ')}">${block.value}</p>`;
+    }
+
+    case 'list': {
+      const tag = block.ordered ? 'ol' : 'ul';
+      const items = (block.items || []).map(item => `<li>${item}</li>`).join('');
+      return `<${tag} class="block-list">${items}</${tag}>`;
+    }
 
     case 'image':
       if (!block.src) {
