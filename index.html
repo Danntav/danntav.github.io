@@ -411,6 +411,16 @@ img { display: block; max-width: 100%; }
   margin-bottom: 16px;
 }
 
+.block-text a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.block-text a:hover {
+  opacity: 0.75;
+}
+
 /* ── Bullet / numbered list block ── */
 .block-list {
   font-size: 16px;
@@ -439,6 +449,18 @@ img { display: block; max-width: 100%; }
   color: var(--muted);
   margin-top: 8px;
   text-align: center;
+}
+
+.block-gif {
+  margin-bottom: 22px;
+}
+
+.block-gif img,
+.block-gif video {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #e8e8e8;
+  display: block;
 }
 
 .block-images {
@@ -1031,7 +1053,7 @@ document.getElementById('bio-text').textContent = C.bio;
 
 /* ── Recent grid (projects marked featured: true in config.js) ── */
 const recentGrid = document.getElementById('recent-grid');
-C.projects.filter(p => p.featured).forEach(p => {
+C.projects.filter(p => p.feature).forEach(p => {
   const card = document.createElement('div');
   card.className = 'recent-card';
   card.innerHTML = `<div class="recent-card-tag">${p.year}</div>
@@ -1084,6 +1106,20 @@ function renderBlock(block) {
       const tag = block.ordered ? 'ol' : 'ul';
       const items = (block.items || []).map(item => `<li>${item}</li>`).join('');
       return `<${tag} class="block-list">${items}</${tag}>`;
+    }
+
+    case 'gif': {
+      if (!block.src) {
+        return `<div class="block-img-placeholder">[ Add "src" to this gif block in config.js ]</div>`;
+      }
+      const isVideoFile = /\.(mp4|webm|mov)$/i.test(block.src);
+      const media = isVideoFile
+        ? `<video src="${block.src}" autoplay muted loop playsinline></video>`
+        : `<img src="${block.src}" alt="${block.caption || ''}">`;
+      return `<div class="block-gif">
+        ${media}
+        ${block.caption ? `<div class="block-image-caption">${block.caption}</div>` : ''}
+      </div>`;
     }
 
     case 'image':

@@ -39,6 +39,12 @@ const SITE_CONFIG = {
    *   { type: "list",   items: ["First point", "Second point"], ordered: false }
    *     Renders as bullet points. Set ordered: true for a numbered list.
    *
+   *   { type: "gif",    src: "assets/images/<id>/demo.gif", caption: "Optional caption" }
+   *     Also accepts a video file (src ending in .mp4/.webm/.mov) — it will
+   *     autoplay muted on loop with no controls, just like a gif but far
+   *     smaller in file size. Use this if your gif is a screen recording
+   *     or demo clip; real animated .gif files work fine too.
+   *
    *   { type: "image",  src: "assets/images/<id>/photo.jpg", caption: "Optional caption" }
    *   { type: "images", srcs: ["assets/images/<id>/a.jpg", "assets/images/<id>/b.jpg"] }  // side by side
    *     Note: side-by-side images now keep their original proportions
@@ -287,7 +293,7 @@ const SITE_CONFIG = {
    * "projects:"). Mix text, photos, tables, etc. in any order —
    * e.g. paragraph → photo → paragraph → table → paragraph.
    *
-   * Available block types: text, image, images, table, code, gist, video.
+   * Available block types: text, list, image, images, gif, table, code, gist, video.
    * See the "PROJECTS" comment above for the exact syntax of each.
    */
   about: {
