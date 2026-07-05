@@ -29,6 +29,7 @@ const SITE_CONFIG = {
    *
    *     Optional text modifiers (mix any of these):
    *       align: "center"   → center the paragraph
+   *       align: "justify"  → justify text (even left/right edges, like Word)
    *       bold: true        → bold weight, darker color
    *       size: "large"     → bigger text (great for a title/emphasis line)
    *     e.g. a section title:
@@ -62,7 +63,9 @@ const SITE_CONFIG = {
    *
    * Mix as many blocks as liked, in whatever order tells the story
    * of the project best. coverImage is the large image at the top of
-   * the project page (optional).
+   * the project page (optional), and — if set — also shows as a small
+   * static thumbnail on this project's card on the Home page, but only
+   * for projects marked feature: true.
    */
   projects: [
 
@@ -73,23 +76,52 @@ const SITE_CONFIG = {
        once you're done.
     ───────────────────────────────────────────────────── */
     {
-      id: "robotic-arm",
-      title: "Robotic Arm",
-      year: "2024",
-      summary: "4-DOF manipulator with computer vision for object classification.",
-      tags: ["ROS", "OpenCV", "Python", "C++", "SolidWorks", "Arduino"],
+      id: "ur10-vision-manipulation",
+      title: "Robotic Manipulation System Based on Computer Vision",
+      year: "2025",
+      summary: "Simulated UR10 pick-and-place system combining PID/LQR control with an OpenCV vision pipeline for color-based object classification.",
+      tags: ["Python", "OpenCV", "CoppeliaSim", "PID", "LQR", "Computer Vision", "Robotics"],
       github: "https://github.com/Danntav",
       feature: true,
       coverImage: "",
       content: [
-        { type: "text", value: "Built during an undergraduate research project at UFSJ's Automation Lab. The goal was to create an automated manipulation system to sort parts on a simulated assembly line." },
-        { type: "image", src: "", caption: "Overview of the manipulator" },
-        { type: "text", value: "Mechanical design in SolidWorks, 3D-printed parts, servo motor drive electronics, inverse kinematics control in Python, and OpenCV integration for object detection via camera." },
-        { type: "code", lang: "python", value: "# simplified color detection snippet\nmask = cv2.inRange(hsv, lower, upper)\ncontours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)" },
+        { type: "text", value: "My undergraduate capstone project (TCC) at Univiçosa: a simulated UR10 robotic arm that picks up cubes and sorts them by color, using a computer vision pipeline for perception and an optimal controller for motion." },
+
+        { type: "text", value: "Setup", bold: true, size: "large" },
+        { type: "text", value: "Everything runs in Python, connected to CoppeliaSim through its ZMQ remote API. The UR10's kinematics were modeled with the Denavit-Hartenberg convention and cross-checked against the simulator's own pose data — errors came out under a millimeter, confirming the model matched reality closely enough to build on." },
+        { type: "image", src: "", caption: "UR10 kinematic structure and coordinate frames" },
+
+        { type: "text", value: "Choosing a controller: PID vs. LQR", bold: true, size: "large" },
+        { type: "text", value: "I implemented both a classic PID (tuned manually per joint group) and an LQR built on a simplified per-joint model, then compared them head-to-head on two tests: a step response and a 3D sinusoidal trajectory." },
         { type: "images", srcs: ["", ""] },
-        { type: "text", value: "Result: 94% accuracy classifying objects by color and shape, at 8 parts per minute. Presented at UFSJ's Undergraduate Research Symposium." },
+        { type: "text", value: "Step response (left) and trajectory tracking (right): PID vs. LQR", align: "center" },
+        { type: "list", items: [
+            "Step response: LQR cut the ITAE index (penalizes lingering error) by about 45% vs. PID",
+            "Trajectory tracking: LQR cut ITAE by about 72% and ITSE by about 78%",
+            "LQR stayed consistently smoother and more accurate across every metric tested"
+          ] },
+        { type: "text", value: "Based on those results, the LQR was the clear choice for the final integrated system." },
+
+        { type: "text", value: "Vision pipeline", bold: true, size: "large" },
+        { type: "text", value: "An orthogonal (top-down) virtual camera removes perspective distortion, so pixel coordinates map to real-world coordinates with simple math. Each frame is converted to HSV, thresholded by color, cleaned up with morphological filtering, and reduced down to a centroid and orientation per object." },
+        { type: "image", src: "", caption: "Pipeline: capture → HSV → segmentation → contours → centroid → world coordinates" },
+        { type: "code", lang: "python", value: "hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)\nmask = cv2.inRange(hsv, lower, upper)\nmask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)\ncontours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)" },
+
+        { type: "text", value: "Putting it together", bold: true, size: "large" },
+        { type: "text", value: "With the LQR controller and vision system combined, the arm detects a randomly placed cube, reads its color and position, and sorts it into the matching bin — red, green, or blue — repeating the cycle fully on its own." },
+        { type: "video", src: "", caption: "Autonomous pick-and-place cycle" },
+
+        { type: "text", value: "Results", bold: true, size: "large" },
+        { type: "list", items: [
+            "Kinematic model validated against the simulator with sub-millimeter accuracy",
+            "LQR outperformed PID on every tracking metric tested",
+            "Reliable color detection across varying object positions and orientations",
+            "Fully autonomous pick-and-place cycles, no manual intervention needed"
+          ] },
+        { type: "text", value: "Built entirely with open-source tools, the goal was to keep this kind of vision-guided manipulation approachable for study and further experimentation — not locked behind expensive proprietary hardware. Next up: testing on a real arm, a fuller dynamic model for the LQR, and swapping color-threshold detection for a YOLO-based detector to handle messier, less controlled scenes." },
       ],
     },
+
     {
       id: "line-follower",
       title: "Line Follower Robot",
@@ -122,21 +154,24 @@ const SITE_CONFIG = {
     },
     {
       id: "drone",
-      title: "MACH1 - Custom 5-inch FPV Drone Racer",
+      title: "MACHv1 - Custom 5-inch FPV Drone Racer",
       year: "2023",
       summary: "Drone built from scratch for High-Speed and (future) ArduPilot",
       tags: ["Drone", "PID", "BetaFlight", "ArduPilot", "QGroundControl"],
       github: "https://github.com/Danntav",
-      coverImage: "",
+      feature: true,
+      coverImage: "assets/projects/project_001_drone/closeup.jpg",
       content: [
-        { type: "text", value: "Nicknamed 'Mach1', this is a drone built from scratch with the aim of achieving high speeds while also being highly maneuverable."},
-        { type: "text", value: "'MACH1' stands for 'Maneuverable Aerial Craft for High-Speed', and the '1' refers to the first version built. Therefore, improvements or a v2 are being considered."},
+        { type: "text", value: "Nicknamed 'MACHv1', this is a drone built from scratch with the aim of achieving high speeds while also being highly maneuverable.", align: "justify"},
+        { type: "text", value: "Build", bold: true, size: "large" },
+        { type: "text", value: "'MACHv1' stands for 'Maneuverable Aerial Craft for High-Speed', and the 'v1' refers to the first version built. Therefore, improvements or a v2 are being considered.", align: "justify"},
         { type: "image", src: "assets/projects/project_001_drone/drone_workspace.jpg", caption: "Workspace" },
-        { type: "text", value: "The MACH1 was inspired by a video where I first discovered the world of drones back in 2022. I don't recall exactly which video was, but" +
-          "it featured a guy performing various maneuvers and flying at high speeds inside an abandoned factory. I had always liked the concept but didn't think building a drone was actually feasible." +
-          " Drones like the DJI Phantom 3 seemed a bit boring—too sluggish and unexciting—which is why speed was a key factor for me."},
-        { type: "text", value: "Initially I bought a super cheap drone on Aliexpress, those 'E99' for a few bucks. Crashed the same day and recycle the pieces for future projects." },
-        { type: "text", value: "The majority of the pieces I bought was from Aliexpress. The list below shows most part of the components used:" },      
+        { type: "text", value: "The MACHv1 was inspired by a video where I first discovered the world of drones back in 2022. I don't recall exactly which video was, but" +
+          " it featured a guy performing various maneuvers and flying at high speeds inside an abandoned factory. I had always liked the concept but didn't think building a drone was actually feasible." +
+          " Drones like the DJI Phantom 3 seemed a bit boring—too sluggish and unexciting—which is why speed was a key factor for me.", align: "justify"},
+        { type: "text", value: "Initially I bought a super cheap drone on Aliexpress, those 'E99' for a few bucks. Crashed the same day and recycle the pieces for future projects." , align: "justify"},
+        { type: "text", value: "Parts List", bold: true, size: "large" },
+        { type: "text", value: "The majority of the pieces I bought for this project was from Aliexpress. The list below shows most part of the components used:", align: "justify" },      
         { type: "table",  headers: ["Part", "Model"], rows: 
             [["Frame","PhiSital Mark5 MK5 DC DeadCat"],
             ["Motor","Rcinpower EX2306 Plus 1800kv"],
@@ -154,17 +189,24 @@ const SITE_CONFIG = {
             ["Smart Smoke Stopper","iFlight XT60 Smart Smoke"],
             ["Antenna Cable adapter","SMA-F to MMCX M90"]],
             caption: "Used parts in my drone"},
-        { type: "text", value: "The component connections followed the diagrams below (official images of the SpeedyBee FC+ESC stack):" },
+        { type: "text", value: "The component connections followed the diagrams below (official images of the SpeedyBee FC+ESC stack):", align: "justify" },
         { type: "images", srcs: ["assets/projects/project_001_drone/diagram.jpg", "assets/projects/project_001_drone/layout.jpg"]},
         { type: "text", value: "If you want to build your drone based on mine, just follow the shopping list and build your own. I encourage you to do so." +
-        "Remember, even though the process to build it is 'simple', it requires some experience with solder, since you can damage your Flight Controller. So be careful while doing so." },
+        " Remember, even though the process to build it is 'simple', it requires some experience with solder, since you can damage your Flight Controller. So be careful while doing so." , align: "justify"},
         { type: "image", src: "assets/projects/project_001_drone/ESC.jpg", caption: "ESC" },
-        { type: "image", src: "assets/projects/project_001_drone/FC.jpg", caption: "Assembled drone" },
-        { type: "text", value: "Also, since I'm using an analog video transmitter (VTX), the image is not so crispy as a digital VTX, but it fits my budget and my taste this way." +
-        "This video shows a flight test I took after the drone being assembled." },
+        { type: "image", src: "assets/projects/project_001_drone/FC.jpg", caption: "Drone in construction" },
+        { type: "text", value: "This frame didn't come with a GPS mount, so I designed and 3D-printed a support for it. The support includes 2 more spaces, one for the battery connector" +
+        " and another for the antenna holder. I will upload the STL and SLDPRT file soon." , align: "justify"},
+        { type: "text", value: "Flight Test", bold: true, size: "large" },
+        { type: "text", value: "Since I'm using an analog video transmitter (VTX), the image is not so crispy as a digital VTX, but it fits my budget and my taste this way." +
+        " This video shows a flight test I took after the drone being assembled." },
         { type: "video", src: "assets/projects/project_001_drone/test_flight.mp4", caption: "Flight Test" },
-        { type: "text", value: "I used BetaFlight to set most of the drone's config. Much has being done, much still needs to be fine-tuned." },
-        { type: "text", value: "Stable flights of up to 10 minutes. Functional autonomous waypoint missions." },
+        { type: "text", value: "Results", bold: true, size: "large" },
+        { type: "text", value: "I got some issues with the drone's receiver, the antenna plug broke and I have to use an alternative receiver, but the quality isn't that great." +
+        " As results of this project, the drone's top speed reached so far was around 115kmh (~71.5mph) and distance around 1km. The two main components causing problems are the VTX" +
+        " and the receiver. There's some kind of interference making me losing connection over and over that I haven't figure it out yet. Soon I'll buy better versions of these two components." , align: "justify"},
+        { type: "text", value: "I used BetaFlight to set most of the drone's config. Much has being done, much still needs to be fine-tuned. Next steps Id say to add automation, like waypoints, via ArduPilot or QGroundControl." , align: "justify"},
+        { type: "gif",    src: "assets/projects/project_001_drone/gif_assembling_drone.mp4", caption: "Assembling process" },
       ],
     },
   ],

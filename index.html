@@ -203,6 +203,15 @@ img { display: block; max-width: 100%; }
   transition: border-color .15s, box-shadow .15s;
 }
 
+.recent-card-thumb {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  margin-bottom: 14px;
+  display: block;
+}
+
 .recent-card:hover {
   border-color: #bbb;
   box-shadow: 0 2px 10px rgba(0,0,0,.06);
@@ -393,6 +402,12 @@ img { display: block; max-width: 100%; }
 
 .block-text.align-center {
   text-align: center;
+}
+
+.block-text.align-justify {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
 }
 
 .block-text.text-bold {
@@ -1056,7 +1071,8 @@ const recentGrid = document.getElementById('recent-grid');
 C.projects.filter(p => p.feature).forEach(p => {
   const card = document.createElement('div');
   card.className = 'recent-card';
-  card.innerHTML = `<div class="recent-card-tag">${p.year}</div>
+  const thumb = p.coverImage ? `<img class="recent-card-thumb" src="${p.coverImage}" alt="${p.title}">` : '';
+  card.innerHTML = `${thumb}<div class="recent-card-tag">${p.year}</div>
     <h3>${p.title}</h3>
     <p>${p.summary}</p>`;
   card.onclick = () => { location.hash = '#project/' + p.id; };
@@ -1097,6 +1113,7 @@ function renderBlock(block) {
     case 'text': {
       const classes = ['block-text'];
       if (block.align === 'center') classes.push('align-center');
+      if (block.align === 'justify') classes.push('align-justify');
       if (block.bold) classes.push('text-bold');
       if (block.size === 'large') classes.push('text-large');
       return `<p class="${classes.join(' ')}">${block.value}</p>`;
