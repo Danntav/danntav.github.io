@@ -122,17 +122,21 @@ const SITE_CONFIG = {
     },
     {
       id: "drone",
-      title: "DIY Racing Quadcopter",
+      title: "MACH1 - Custom 5-inch FPV Drone Racer",
       year: "2023",
-      summary: "Drone built from scratch with PX4 firmware and autonomous MAVLink missions.",
-      tags: ["Drone", "PID", "BetaFlight", "QGroundControl"],
+      summary: "Drone built from scratch for High-Speed and (future) ArduPilot",
+      tags: ["Drone", "PID", "BetaFlight", "ArduPilot", "QGroundControl"],
       github: "https://github.com/Danntav",
       coverImage: "",
       content: [
-        { type: "text", value: "Capstone project for an embedded systems course. Learned the full stack: power electronics, ESCs, flight control, telemetry, and autonomous waypoint missions." },
-        { type: "image", src: "assets/projects/project_001_drone/ESC.jpg", caption: "ESC" },
-        { type: "image", src: "assets/projects/project_001_drone/drone_workspace.jpg", caption: "" },
-        { type: "images", srcs: ["assets/projects/project_001_drone/diagram.jpg", "assets/projects/project_001_drone/layout.jpg"]},
+        { type: "text", value: "Nicknamed 'Mach1', this is a drone built from scratch with the aim of achieving high speeds while also being highly maneuverable."},
+        { type: "text", value: "'MACH1' stands for 'Maneuverable Aerial Craft for High-Speed', and the '1' refers to the first version built. Therefore, improvements or a v2 are being considered."},
+        { type: "image", src: "assets/projects/project_001_drone/drone_workspace.jpg", caption: "Workspace" },
+        { type: "text", value: "The MACH1 was inspired by a video where I first discovered the world of drones back in 2022. I don't recall exactly which video was, but" +
+          "it featured a guy performing various maneuvers and flying at high speeds inside an abandoned factory. I had always liked the concept but didn't think building a drone was actually feasible." +
+          " Drones like the DJI Phantom 3 seemed a bit boring—too sluggish and unexciting—which is why speed was a key factor for me."},
+        { type: "text", value: "Initially I bought a super cheap drone on Aliexpress, those 'E99' for a few bucks. Crashed the same day and recycle the pieces for future projects." },
+        { type: "text", value: "The majority of the pieces I bought was from Aliexpress. The list below shows most part of the components used:" },      
         { type: "table",  headers: ["Part", "Model"], rows: 
             [["Frame","PhiSital Mark5 MK5 DC DeadCat"],
             ["Motor","Rcinpower EX2306 Plus 1800kv"],
@@ -150,10 +154,16 @@ const SITE_CONFIG = {
             ["Smart Smoke Stopper","iFlight XT60 Smart Smoke"],
             ["Antenna Cable adapter","SMA-F to MMCX M90"]],
             caption: "Used parts in my drone"},
-
+        { type: "text", value: "The component connections followed the diagrams below (official images of the SpeedyBee FC+ESC stack):" },
+        { type: "images", srcs: ["assets/projects/project_001_drone/diagram.jpg", "assets/projects/project_001_drone/layout.jpg"]},
+        { type: "text", value: "If you want to build your drone based on mine, just follow the shopping list and build your own. I encourage you to do so." +
+        "Remember, even though the process to build it is 'simple', it requires some experience with solder, since you can damage your Flight Controller. So be careful while doing so." },
+        { type: "image", src: "assets/projects/project_001_drone/ESC.jpg", caption: "ESC" },
         { type: "image", src: "assets/projects/project_001_drone/FC.jpg", caption: "Assembled drone" },
+        { type: "text", value: "Also, since I'm using an analog video transmitter (VTX), the image is not so crispy as a digital VTX, but it fits my budget and my taste this way." +
+        "This video shows a flight test I took after the drone being assembled." },
         { type: "video", src: "assets/projects/project_001_drone/test_flight.mp4", caption: "Flight Test" },
-        { type: "text", value: "I used BetaFlight to set most of the drone's config." },
+        { type: "text", value: "I used BetaFlight to set most of the drone's config. Much has being done, much still needs to be fine-tuned." },
         { type: "text", value: "Stable flights of up to 10 minutes. Functional autonomous waypoint missions." },
       ],
     },
