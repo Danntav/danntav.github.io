@@ -76,7 +76,7 @@ const SITE_CONFIG = {
        once you're done.
     ───────────────────────────────────────────────────── */
     {
-      id: "ur10-vision-manipulation",
+      id: "ur10-tcc",
       title: "Robotic Manipulation System Based on Computer Vision",
       year: "2025",
       summary: "Simulated UR10 pick-and-place system combining PID/LQR control with an OpenCV vision pipeline for color-based object classification.",
@@ -85,14 +85,15 @@ const SITE_CONFIG = {
       feature: true,
       coverImage: "",
       content: [
-        { type: "text", value: "My undergraduate capstone project (TCC) at Univiçosa: a simulated UR10 robotic arm that picks up cubes and sorts them by color, using a computer vision pipeline for perception and an optimal controller for motion." },
-
+        { type: "text", value: "My undergraduate capstone project (TCC) at college: a simulated UR10 robotic arm that picks up cubes and sorts them by color," +
+        " using a computer vision pipeline for perception and an optimal controller for motion.", align: "justify" },
         { type: "text", value: "Setup", bold: true, size: "large" },
-        { type: "text", value: "Everything runs in Python, connected to CoppeliaSim through its ZMQ remote API. The UR10's kinematics were modeled with the Denavit-Hartenberg convention and cross-checked against the simulator's own pose data — errors came out under a millimeter, confirming the model matched reality closely enough to build on." },
+        { type: "text", value: "Everything runs in Python, connected to CoppeliaSim through its ZMQ remote API. There's some LUA scripts inside Coppelia, but they are just for configuration." +
+        " The UR10's kinematics were modeled with the Denavit-Hartenberg convention and cross-checked against the simulator's own pose data — errors came out under a millimeter, confirming the model matched reality closely enough to build on.", align: "justify"},
         { type: "image", src: "", caption: "UR10 kinematic structure and coordinate frames" },
 
         { type: "text", value: "Choosing a controller: PID vs. LQR", bold: true, size: "large" },
-        { type: "text", value: "I implemented both a classic PID (tuned manually per joint group) and an LQR built on a simplified per-joint model, then compared them head-to-head on two tests: a step response and a 3D sinusoidal trajectory." },
+        { type: "text", value: "I implemented both a classic PID (tuned manually per joint group) and an LQR built on a simplified per-joint model, then compared them head-to-head on two tests: a step response and a 3D sinusoidal trajectory.", align: "justify" },
         { type: "images", srcs: ["", ""] },
         { type: "text", value: "Step response (left) and trajectory tracking (right): PID vs. LQR", align: "center" },
         { type: "list", items: [
@@ -153,19 +154,19 @@ const SITE_CONFIG = {
       ],
     },
     {
-      id: "drone",
+      id: "machv1",
       title: "MACHv1 - Custom 5-inch FPV Drone Racer",
       year: "2023",
       summary: "Drone built from scratch for High-Speed and (future) ArduPilot",
       tags: ["Drone", "PID", "BetaFlight", "ArduPilot", "QGroundControl"],
       github: "https://github.com/Danntav",
       feature: true,
-      coverImage: "assets/projects/project_001_drone/closeup.jpg",
+      coverImage: "assets/projects/project_machv1/closeup.jpg",
       content: [
         { type: "text", value: "Nicknamed 'MACHv1', this is a drone built from scratch with the aim of achieving high speeds while also being highly maneuverable.", align: "justify"},
         { type: "text", value: "Build", bold: true, size: "large" },
         { type: "text", value: "'MACHv1' stands for 'Maneuverable Aerial Craft for High-Speed', and the 'v1' refers to the first version built. Therefore, improvements or a v2 are being considered.", align: "justify"},
-        { type: "image", src: "assets/projects/project_001_drone/drone_workspace.jpg", caption: "Workspace" },
+        { type: "image", src: "assets/projects/project_machv1/drone_workspace.jpg", caption: "Workspace" },
         { type: "text", value: "The MACHv1 was inspired by a video where I first discovered the world of drones back in 2022. I don't recall exactly which video was, but" +
           " it featured a guy performing various maneuvers and flying at high speeds inside an abandoned factory. I had always liked the concept but didn't think building a drone was actually feasible." +
           " Drones like the DJI Phantom 3 seemed a bit boring—too sluggish and unexciting—which is why speed was a key factor for me.", align: "justify"},
@@ -190,23 +191,23 @@ const SITE_CONFIG = {
             ["Antenna Cable adapter","SMA-F to MMCX M90"]],
             caption: "Used parts in my drone"},
         { type: "text", value: "The component connections followed the diagrams below (official images of the SpeedyBee FC+ESC stack):", align: "justify" },
-        { type: "images", srcs: ["assets/projects/project_001_drone/diagram.jpg", "assets/projects/project_001_drone/layout.jpg"]},
+        { type: "images", srcs: ["assets/projects/project_machv1/diagram.jpg", "assets/projects/project_machv1/layout.jpg"]},
         { type: "text", value: "If you want to build your drone based on mine, just follow the shopping list and build your own. I encourage you to do so." +
         " Remember, even though the process to build it is 'simple', it requires some experience with solder, since you can damage your Flight Controller. So be careful while doing so." , align: "justify"},
-        { type: "image", src: "assets/projects/project_001_drone/ESC.jpg", caption: "ESC" },
-        { type: "image", src: "assets/projects/project_001_drone/FC.jpg", caption: "Drone in construction" },
+        { type: "image", src: "assets/projects/project_machv1/ESC.jpg", caption: "ESC" },
+        { type: "image", src: "assets/projects/project_machv1/FC.jpg", caption: "Drone in construction" },
         { type: "text", value: "This frame didn't come with a GPS mount, so I designed and 3D-printed a support for it. The support includes 2 more spaces, one for the battery connector" +
         " and another for the antenna holder. I will upload the STL and SLDPRT file soon." , align: "justify"},
         { type: "text", value: "Flight Test", bold: true, size: "large" },
         { type: "text", value: "Since I'm using an analog video transmitter (VTX), the image is not so crispy as a digital VTX, but it fits my budget and my taste this way." +
         " This video shows a flight test I took after the drone being assembled." },
-        { type: "video", src: "assets/projects/project_001_drone/test_flight.mp4", caption: "Flight Test" },
+        { type: "video", src: "assets/projects/project_machv1/test_flight.mp4", caption: "Flight Test" },
         { type: "text", value: "Results", bold: true, size: "large" },
         { type: "text", value: "I got some issues with the drone's receiver, the antenna plug broke and I have to use an alternative receiver, but the quality isn't that great." +
         " As results of this project, the drone's top speed reached so far was around 115kmh (~71.5mph) and distance around 1km. The two main components causing problems are the VTX" +
         " and the receiver. There's some kind of interference making me losing connection over and over that I haven't figure it out yet. Soon I'll buy better versions of these two components." , align: "justify"},
         { type: "text", value: "I used BetaFlight to set most of the drone's config. Much has being done, much still needs to be fine-tuned. Next steps Id say to add automation, like waypoints, via ArduPilot or QGroundControl." , align: "justify"},
-        { type: "gif",    src: "assets/projects/project_001_drone/gif_assembling_drone.mp4", caption: "Assembling process" },
+        { type: "gif",    src: "assets/projects/project_machv1/gif_assembling_drone.mp4", caption: "Assembling process" },
       ],
     },
   ],
