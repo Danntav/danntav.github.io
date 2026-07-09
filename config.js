@@ -83,18 +83,18 @@ const SITE_CONFIG = {
       tags: ["Python", "OpenCV", "CoppeliaSim", "PID", "LQR", "Computer Vision", "Robotics"],
       github: "https://github.com/Danntav",
       feature: true,
-      coverImage: "",
+      coverImage: "assets/projects/project_ur10-tcc/cover.png",
       content: [
         { type: "text", value: "My undergraduate capstone project (TCC) at college: a simulated UR10 robotic arm that picks up cubes and sorts them by color," +
         " using a computer vision pipeline for perception and an optimal controller for motion.", align: "justify" },
         { type: "text", value: "Setup", bold: true, size: "large" },
         { type: "text", value: "Everything runs in Python, connected to CoppeliaSim through its ZMQ remote API. There's some LUA scripts inside Coppelia, but they are just for configuration." +
         " The UR10's kinematics were modeled with the Denavit-Hartenberg convention and cross-checked against the simulator's own pose data — errors came out under a millimeter, confirming the model matched reality closely enough to build on.", align: "justify"},
-        { type: "image", src: "", caption: "UR10 kinematic structure and coordinate frames" },
+        { type: "image", src: "assets/projects/project_ur10-tcc/ur10-description.png", caption: "UR10 kinematic structure and coordinate frames" },
 
         { type: "text", value: "Choosing a controller: PID vs. LQR", bold: true, size: "large" },
         { type: "text", value: "I implemented both a classic PID (tuned manually per joint group) and an LQR built on a simplified per-joint model, then compared them head-to-head on two tests: a step response and a 3D sinusoidal trajectory.", align: "justify" },
-        { type: "images", srcs: ["", ""] },
+        { type: "images", srcs: ["assets/projects/project_ur10-tcc/graphs.jpg", "assets/projects/project_ur10-tcc/3d-trajectory.png"] },
         { type: "text", value: "Step response (left) and trajectory tracking (right): PID vs. LQR", align: "center" },
         { type: "list", items: [
             "Step response: LQR cut the ITAE index (penalizes lingering error) by about 45% vs. PID",
@@ -105,12 +105,12 @@ const SITE_CONFIG = {
 
         { type: "text", value: "Vision pipeline", bold: true, size: "large" },
         { type: "text", value: "An orthogonal (top-down) virtual camera removes perspective distortion, so pixel coordinates map to real-world coordinates with simple math. Each frame is converted to HSV, thresholded by color, cleaned up with morphological filtering, and reduced down to a centroid and orientation per object." },
-        { type: "image", src: "", caption: "Pipeline: capture → HSV → segmentation → contours → centroid → world coordinates" },
+        { type: "image", src: "assets/projects/project_ur10-tcc/vision_pipeline.png", caption: "Pipeline: capture → HSV → segmentation → contours → centroid → world coordinates" },
         { type: "code", lang: "python", value: "hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)\nmask = cv2.inRange(hsv, lower, upper)\nmask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)\ncontours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)" },
 
         { type: "text", value: "Putting it together", bold: true, size: "large" },
         { type: "text", value: "With the LQR controller and vision system combined, the arm detects a randomly placed cube, reads its color and position, and sorts it into the matching bin — red, green, or blue — repeating the cycle fully on its own." },
-        { type: "video", src: "", caption: "Autonomous pick-and-place cycle" },
+        { type: "video", src: "assets/projects/project_ur10-tcc/final_scene.mp4", caption: "Autonomous pick-and-place cycle" },
 
         { type: "text", value: "Results", bold: true, size: "large" },
         { type: "list", items: [
@@ -198,14 +198,17 @@ const SITE_CONFIG = {
         { type: "image", src: "assets/projects/project_machv1/FC.jpg", caption: "Drone in construction" },
         { type: "text", value: "This frame didn't come with a GPS mount, so I designed and 3D-printed a support for it. The support includes 2 more spaces, one for the battery connector" +
         " and another for the antenna holder. I will upload the STL and SLDPRT file soon." , align: "justify"},
+        { type: "gif",    src: "assets/projects/project_machv1/gif_sldprt.mp4", caption: "3D mount part in SolidWorks" },
         { type: "text", value: "Flight Test", bold: true, size: "large" },
         { type: "text", value: "Since I'm using an analog video transmitter (VTX), the image is not so crispy as a digital VTX, but it fits my budget and my taste this way." +
-        " This video shows a flight test I took after the drone being assembled." },
+        " This video shows a flight test I took after the drone being assembled. Also, this VTX doesn't have the pin for SmartAudio, so the video has no audio." },
         { type: "video", src: "assets/projects/project_machv1/test_flight.mp4", caption: "Flight Test" },
+        { type: "text", value: "If you pay attention on the bottom left of the screen, those informations were a little wrong, either the direction and the altitude." +
+        " I have ajusted that since the last flight.", align: "justify" },
         { type: "text", value: "Results", bold: true, size: "large" },
-        { type: "text", value: "I got some issues with the drone's receiver, the antenna plug broke and I have to use an alternative receiver, but the quality isn't that great." +
-        " As results of this project, the drone's top speed reached so far was around 115kmh (~71.5mph) and distance around 1km. The two main components causing problems are the VTX" +
-        " and the receiver. There's some kind of interference making me losing connection over and over that I haven't figure it out yet. Soon I'll buy better versions of these two components." , align: "justify"},
+        { type: "text", value: "I got some issues with the drone's receiver, the antenna plug broke and I had to use an alternative receiver, but the quality isn't that great." +
+        " As for the results of this project, the drone's top speed reached so far was around 115kmh (~71.5mph) and distance around 1km. The two main components causing problems are the VTX" +
+        " and the receiver. There's some kind of interference making me lose connection over and over that I haven't figured out yet. Soon I'll buy better versions of these two components." , align: "justify"},
         { type: "text", value: "I used BetaFlight to set most of the drone's config. Much has being done, much still needs to be fine-tuned. Next steps Id say to add automation, like waypoints, via ArduPilot or QGroundControl." , align: "justify"},
         { type: "gif",    src: "assets/projects/project_machv1/gif_assembling_drone.mp4", caption: "Assembling process" },
       ],
