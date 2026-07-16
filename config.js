@@ -104,12 +104,12 @@ const SITE_CONFIG = {
         { type: "text", value: "Based on those results, the LQR was the clear choice for the final integrated system." },
 
         { type: "text", value: "Vision pipeline", bold: true, size: "large" },
-        { type: "text", value: "An orthogonal (top-down) virtual camera removes perspective distortion, so pixel coordinates map to real-world coordinates with simple math. Each frame is converted to HSV, thresholded by color, cleaned up with morphological filtering, and reduced down to a centroid and orientation per object." },
+        { type: "text", value: "An orthogonal (top-down) virtual camera removes perspective distortion, so pixel coordinates map to real-world coordinates with simple math. Each frame is converted to HSV, thresholded by color, cleaned up with morphological filtering, and reduced down to a centroid and orientation per object.", align: "justify"},
         { type: "image", src: "assets/projects/project_ur10-tcc/vision_pipeline.png", caption: "Pipeline: capture → HSV → segmentation → contours → centroid → world coordinates" },
         { type: "code", lang: "python", value: "hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)\nmask = cv2.inRange(hsv, lower, upper)\nmask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)\ncontours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)" },
 
         { type: "text", value: "Putting it together", bold: true, size: "large" },
-        { type: "text", value: "With the LQR controller and vision system combined, the arm detects a randomly placed cube, reads its color and position, and sorts it into the matching bin — red, green, or blue — repeating the cycle fully on its own." },
+        { type: "text", value: "With the LQR controller and vision system combined, the arm detects a randomly placed cube, reads its color and position, and sorts it into the matching bin — red, green, or blue — repeating the cycle fully on its own.", align: "justify"},
         { type: "video", src: "assets/projects/project_ur10-tcc/final_scene.mp4", caption: "Autonomous pick-and-place cycle" },
 
         { type: "text", value: "Results", bold: true, size: "large" },
@@ -119,40 +119,36 @@ const SITE_CONFIG = {
             "Reliable color detection across varying object positions and orientations",
             "Fully autonomous pick-and-place cycles, no manual intervention needed"
           ] },
-        { type: "text", value: "Built entirely with open-source tools, the goal was to keep this kind of vision-guided manipulation approachable for study and further experimentation — not locked behind expensive proprietary hardware. Next up: testing on a real arm, a fuller dynamic model for the LQR, and swapping color-threshold detection for a YOLO-based detector to handle messier, less controlled scenes." },
+        { type: "text", value: "Built entirely with open-source tools, the goal was to keep this kind of vision-guided manipulation approachable for study and further experimentation — not locked behind expensive proprietary hardware. Next up: testing on a real arm, a fuller dynamic model for the LQR, and swapping color-threshold detection for a YOLO-based detector to handle messier, less controlled scenes.", align: "justify"},
       ],
     },
 
     {
-      id: "line-follower",
+      id: "tagbot",
       title: "Line Follower Robot",
-      year: "2023",
-      summary: "Competition robot with PID control and an STM32 microcontroller.",
-      tags: ["C", "STM32", "PID", "Electronics", "IR Sensors"],
-      github: "https://github.com/Danntav",
-      coverImage: "",
-      content: [
-        { type: "text", value: "Built for university robotics competitions. The challenge: build the fastest robot that can follow a line in the shortest time." },
-        { type: "image", src: "", caption: "Robot on the test track" },
-        { type: "text", value: "Compact mechanical design, STM32F4, 8 analog IR sensors, DC motors with encoders, and PID control tuned empirically. Firmware written in plain C." },
-        { type: "text", value: "Result: 2nd place at the regional championship. Top speed of 2.3 m/s through tight corners with stable PID control." },
-      ],
-    },
-    {
-      id: "object-detection",
-      title: "Object Detection (CV)",
       year: "2025",
-      summary: "YOLOv8 pipeline for real-time industrial quality inspection.",
-      tags: ["Python", "YOLOv8", "OpenCV", "Roboflow", "Jetson Nano"],
-      github: "https://github.com/Danntav",
-      coverImage: "",
+      summary: "Improving an education robot used on public school competition.",
+      tags: ["C", "ESP32", "Firmware", "PID", "Electronics", "IR Sensors", "Line Follower"],
+      github: "https://github.com/MutantHardware/TagBot",
+      feature: true,
+      coverImage: "assets/projects/project_tagbot/KiCAD.jpeg",
       content: [
-        { type: "text", value: "Research project in partnership with a local company to automate visual quality inspection on the production line." },
-        { type: "text", value: "Custom dataset with 2,000+ labeled images, YOLOv8 fine-tuning on Roboflow, deployed on an industrial camera with inference running on a Jetson Nano." },
-        { type: "image", src: "", caption: "Example of real-time detection" },
-        { type: "text", value: "91% mAP on defect detection. 60% reduction in manual inspection time. System currently in testing at the partner company." },
+        { type: "text", value: "Built robotics competitions. The challenge: build the fastest robot that can follow a line in the shortest time.", align: "justify"},
+        { type: "text", value: "Background", bold: true, size: "large" },
+        { type: "text", value: "This project involved improving an educational robot used in public school competitions in Brazil. It was a specific assignment where I collaborated to make the robot more robust. The goal was to create a robot that could be easily assembled and disassembled by middle and high school students. Consequently, it needed to be sturdy enough to handle all the challenge's tasks—such as overcoming obstacles, maintaining Bluetooth connectivity with a custom mobile app, reacting to stalled wheels or other obstructions, ensuring long battery life, and featuring a chassis capable of withstanding drops and repeated assembly cycles.", align: "justify"},
+        { type: "image", src: "assets/projects/project_tagbot/cable_manager.jpg", caption: "Disassembled Robot" },
+        { type: "text", value: "Improvements", bold: true, size: "large" },
+        { type: "text", value: "The robot didn't need to be ultra-fast; it simply had to complete the course, which was an advantage for us as developers. By the time I joined the project, much of the work was already done: Version 1 was complete, functional, and operational.", align: "justify"},
+        { type: "image", src: "assets/projects/project_tagbot/Connections.jpeg", caption: "Connections" },
+        { type: "text", value: "However, there was room for improvement: adding an accelerometer and a fallback mechanism, optimizing component layout on the PCB, designing a PCB that was easier to assemble, using more durable boards and connectors suitable for children and teenagers, adding IR sensors, and so on. Since the aim was to keep costs low, the PCB was fabricated manually using copper-clad board and transparency film; as a result, the PCB traces ended up being quite wide—some were 1mm thick, if I recall correctly.", align: "justify"},
+        { type: "images", srcs: ["assets/projects/project_tagbot/PCB_preview.jpeg", "assets/projects/project_tagbot/PCB_real.jpg", "assets/projects/project_tagbot/backplate.jpeg", "assets/projects/project_tagbot/KiCAD.jpeg"] },
+        { type: "text", value: "Beyond the hardware, I also implemented a significant portion of the new programming logic using Object-Oriented Programming (OOP) in C. The project was continued by other team members, so my involvement was limited to these specific contributions.", align: "justify"},
+
+        { type: "text", value: "This project got a banner publication:", align: "justify"},
+        { type: "text", value: "https://www3.dti.ufv.br/sia/vicosa/2023/trabalhos/18185/arquivo", align: "justify"},
       ],
     },
+    
     {
       id: "machv1",
       title: "MACHv1 - Custom 5-inch FPV Drone Racer",
@@ -290,9 +286,7 @@ const SITE_CONFIG = {
   ],
 
   skills: [
-    "Python", "C", "ROS / ROS2", "ESP32",
-    "OpenCV", "Linux", "Git / GitHub", "SolidWorks",
-    "Electronics", "MQTT / IoT",
+    "Python", "C", "Firmware", "ESP32", "OpenCV", "Linux", "Git / GitHub", "SolidWorks","Electronics", "MQTT / IoT",
   ],
 
   languages: [
@@ -310,8 +304,7 @@ const SITE_CONFIG = {
    *
    * cover: path to the book cover image
    *        (e.g. "assets/images/books/clean-code.jpg").
-   *        Leave "" if you don't have the image yet — a placeholder
-   *        will show instead.
+   *        Leave "" if you don't have the image yet — a placeholder will show instead.
    */
   books: [
     {
@@ -333,7 +326,7 @@ const SITE_CONFIG = {
     {
       title: "C Programming Language",
       author: "Brian W. Kernighan, Dennis M. Ritchie",
-      status: "read",
+      status: "rec",
       stars: 5,
       cover: "/assets/books/C_Programming_Language_Kernighan.jpg",
       note: "Top1 must read book for low level programmer.",
@@ -370,7 +363,7 @@ const SITE_CONFIG = {
       { label: "Location",      value: "Minas Gerais, Brazil" },
       { label: "Major",         value: "Computer Engineering" },
       { label: "University",    value: "Univicosa" },
-      { label: "Interests",     value: "FPGA, Low-Level, Robotics, IoT, Hardware, RF" },
+      { label: "Interests",     value: "FPGA, Low-Level, IoT, Hardware, RF" },
     ],
   },
 
