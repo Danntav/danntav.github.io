@@ -75,6 +75,86 @@ const SITE_CONFIG = {
        and code however you like. Rename the "id" and title
        once you're done.
     ───────────────────────────────────────────────────── */
+
+    {
+  id: "wetlands",
+  title: "Wetlands Automation — IoT Reactor Monitoring",
+  year: "2025",
+  summary: "Master/Slave IoT system for monitoring wetland reactors over ESP-NOW and ACK-based.",
+  tags: ["C", "Firmware", "ESP-NOW", "ESP32", "I2C", "SPI", "IoT", "KiCAD", "SolidWorks"],
+  github: "https://github.com/Danntav/wetlands-automation",
+  feature: true,
+  coverImage: "assets/projects/project_wetlands/cover.jpg",
+  content: [
+    { type: "text", value: "Solo project, built from scratch: hardware, PCB, firmware, and enclosure. The goal was to automate data collection for a wetlands treatment system — 9 reactors, each needing voltage and temperature logged every 5 minutes, without anyone standing there with a notebook.", align: "justify" },
+
+    { type: "text", value: "The Big Picture", bold: true, size: "large" },
+    { type: "text", value: "One Master, nine Slaves. Each Slave is a standalone ESP32 sitting on its own reactor, reading a DS18B20 temperature probe and an ADS1115 16-bit ADC for voltage. Every 5 minutes the Master pings each Slave in turn, collects the reading, and writes it to a microSD card as CSV. No Wi-Fi router involved — the whole thing talks over ESP-NOW, Espressif's peer-to-peer radio protocol.", align: "justify" },
+
+    { type: "image", src: "assets/projects/project_wetlands/cover.jpg", caption: "The finished Master unit — 3D-printed enclosure, TFT display, joystick menu, status LEDs" },
+    { type: "text", value: "Slave Nodes", bold: true, size: "large" },
+    { type: "text", value: "Each of the 9 reactors gets its own Slave: an ESP32-DevKitV1, a waterproof DS18B20 for temperature (±0.5°C, one-wire), and an ADS1115 ADC for voltage — chosen over the ESP32's built-in 12-bit ADC because it gives 16-bit resolution and doesn't drift as much. Three status LEDs give a visual heartbeat in the field.", align: "justify" },
+    { type: "image", src: "assets/projects/project_wetlands/slave_schematic.png", caption: "Slave wiring — ESP32, DS18B20, ADS1115, status LEDs (Fritzing)" },
+
+    { type: "text", value: "Master Node", bold: true, size: "large" },
+    { type: "text", value: "The Master is the odd one out: a DS1307 RTC for real-time timestamps, a microSD module over SPI for logging, a 1.8\" ST7735 TFT for an on-device menu, and a KY-023 joystick to navigate it. It's the only thing the operator ever touches — the Slaves are meant to be sealed and forgotten.", align: "justify" },
+    { type: "image", src: "assets/projects/project_wetlands/master_schematic.png", caption: "Master wiring — ESP32, RTC, SD card, TFT display, joystick (Fritzing)" },
+
+    { type: "text", value: "From breadboard to PCB, I moved the Master onto a proper board in KiCAD to get rid of the nest of jumper wires since it has to survive being handled in the field.", align: "justify" },
+    { type: "images", srcs:["assets/projects/project_wetlands/pcb_schematic.png", "assets/projects/project_wetlands/pcb.png"] },
+    { type: "text", value: "KiCAD schematic (left) and routed 3D PCB render (right)", align: "center"},
+
+    { type: "text", value: "Enclosure", bold: true, size: "large" },
+    { type: "text", value: "Modeled in SolidWorks and printed on an Ender 3 V2 Neo — cutouts for the display, joystick, LEDs, SD card slot, and a coin-cell hatch for the RTC's backup battery.", align: "justify" },
+    { type: "gif", src: "assets/projects/project_wetlands/gif_sldprt.mp4", caption: "SolidWorks model of the enclosure" },
+
+    { type: "text", value: "Communication over ESP-NOW", bold: true, size: "large" },
+    { type: "text", value: "ESP-NOW skips the whole Wi-Fi handshake — Neither router nor IP addresses, just MAC-to-MAC packets. That matters here because 10 boards joining and dropping off a Wi-Fi network would be a headache. Each Slave's MAC is hardcoded into the Master as a peer, and vice versa.", align: "justify" },
+
+    { type: "text", value: "Data Checks", bold: true, size: "large" },
+    { type: "text", value: "A field sensor that lies is worse than one that's offline, so I layered in a few checks:", align: "justify" },
+    { type: "list", items: [
+        "Every reading is actually the average of 5 samples to smooth out noise;",
+        "Slave → Master delivery is confirmed with an ACK; no ACK within 5s triggers a resend up to 3x;",
+        "Master flags anything outside 0–80°C or ≤0V as a probable sensor fault, and calls out -127°C specifically (the DS18B20's own \"disconnected\" code);",
+        "A green LED tells the operator the system is working properlly;",
+        "A blinking yellow LED tells the system is sending/receving packets and it is NOT recommended interfere while this is happening since it can generate artificts and errors in the CSV;",
+        "A red LED indicates error in a specif part of the system. On the menu it is possible to see where."
+      ] },
+    { type: "code", lang: "cpp", value: "for (int i = 1; i <= MAX_RETRIES; i++) {\n  ackReceived = false;\n  esp_now_send(masterMacAddress, (uint8_t *)&myData, sizeof(myData));\n\n  unsigned long start = millis();\n  while (!ackReceived && (millis() - start) < ACK_TIMEOUT_MS) {\n    delay(100);\n  }\n  if (ackReceived) return;  // success, stop retrying\n}" },
+    { type: "text", value: "The retry loop from a Slave's sendData() — three attempts, five-second ACK window each." },
+
+    { type: "text", value: "Message Flow, Step by Step", bold: true, size: "large" },
+    { type: "text", value: "The report diagram (below) walks through one full request/response cycle between Master and a single Slave — this is the sequence I want redrawn cleaner, with the retry and error branches made explicit:", align: "justify" },
+    { type: "list", items: [
+        "Master's RTC-driven timer hits the 5-minute mark → Master sends a request packet (command=1) to Slave N;",
+        "Slave wakes on the ESP-NOW callback, takes 5 voltage + 5 temperature samples, averages them;",
+        "Slave sends back {id, voltage, temperature} to the Master and starts a 5s ACK timer;",
+        "Master receives the packet → checks it against valid ranges → buffers it with a timestamp;",
+        "Master sends an ACK{id, ok} back to that Slave;",
+        "Branch: if the Slave's ACK timer expires with no ACK, it resends the same reading — up to 3 attempts — before giving up and blinking red;",
+        "Master repeats the request cycle for Slaves 2 through 9, in order;",
+        "After the collection window closes (~20s), Master flushes the whole buffer to the SD card as CSV lines, then re-reads the last line to confirm the write;",
+        "In parallel: Master continuously checks for comm timeouts per Slave and lights the alarm LED if any reactor goes silent or reports an out-of-range value."
+      ] },
+    { type: "image", src: "assets/projects/project_wetlands/diagram.png", caption: "Sequence diagram: Master/Slave request cycle with ACK retry and SD write" },
+
+    { type: "text", value: "Storing data", bold: true, size: "large" },
+    { type: "text", value: "Everything lands in one CSV on the SD card, one line per reading: date, time, board ID, voltage, temperature. Plain enough to open straight in Excel or Sheets, no parsing script needed.", align: "justify" },
+    { type: "code", lang: "text", value: "Date,Time,BoardID,Voltage,Temperature\n19-07-2025,16:30:00,5,0.3420,25.71" },
+
+    { type: "text", value: "Improvements", bold: true, size: "large" },
+{ type: "text", value: "The current version logs locally and that's it — someone still has to walk out, pull the SD card, and bring it back to a computer. The next step is making this solution acessible from home.", align: "justify" },
+{ type: "list", items: [
+    "LoRa uplink: I want to use an RFM95W module bridging the Master out to the internet;",
+    "A small backend server to receive the LoRa data, store it, and serve a simple dashboard for live reactor readings;",
+    "A way to download the accumulated CSV remotely, without having to physically swap the SD card;",
+    "Server platform is still undecided."
+  ] },
+  { type: "text", value: "I did the full stack alone — schematic, PCB, firmware, enclosure — and the retry/ACK logic ended up being the part I iterated on most. A single dropped packet used to mean a missing 5-minute slot in the log; now it just costs a couple of seconds and a quiet retry.", align: "justify" },
+  ],
+},
+
     {
       id: "ur10-tcc",
       title: "Robotic Manipulation System Based on Computer Vision",
