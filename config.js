@@ -84,7 +84,6 @@ const SITE_CONFIG = {
   tags: ["Proxmox", "Virtualization", "LXC", "IP", "Proxy/DNS"],
   feature: true,
   coverImage: "assets/projects/project_server/proxmox.png",
-  //coverImage: "F:\\Users\\Daniel\\Desktop\\Projects\\website\\danntav.github.io\\assets\\projects\\project_server\\proxmox.png",
   content: [
     { type: "text", value: "Local Server to hold all my personal apps and info.", align: "justify"},
  ],

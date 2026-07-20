@@ -38,12 +38,20 @@ want. Mix them to tell the story of the project.
 Available block types:
 
 ```js
-{ type: "text",   value: "A paragraph of text." }
-{ type: "image",  src: "assets/images/<id>/photo.jpg", caption: "Optional caption" }
-{ type: "images", srcs: ["assets/images/<id>/a.jpg", "assets/images/<id>/b.jpg"] }  // side by side
+{ type: "text",   value: "A paragraph of text.", align: "justify", bold: false, size: "normal" }
+  // align: "center" | "justify"   bold: true   size: "large"  → all optional
+ 
+{ type: "list",   items: ["First point", "Second point"], ordered: false }
+{ type: "image",  src: "assets/projects/<id>/photo.jpg", caption: "Optional caption" }
+{ type: "images", srcs: ["assets/projects/<id>/a.jpg", "assets/projects/<id>/b.jpg"] }  // side by side
+{ type: "gif",    src: "assets/projects/<id>/demo.gif", caption: "Optional caption" }
+  // also accepts .mp4/.webm — autoplays muted on loop, same look as a gif but smaller file size
+ 
+{ type: "table",  headers: ["Col A", "Col B"], rows: [["a1","b1"], ["a2","b2"]], caption: "Optional caption" }
 { type: "code",   lang: "python", value: "print('hi')" }
 { type: "gist",   url: "https://gist.github.com/username/gist-id" }
 { type: "video",  src: "assets/videos/demo.mp4", caption: "Optional caption" }
+
 ```
 
 Full example:
@@ -115,13 +123,37 @@ Leave `url: ""` to hide this section.
 
 In both cases, just paste the full Gist URL (the same one shown the browser's address bar).
 
-### Add a video to a project
-
+### Resume
+ 
 ```js
-{ type: "video", src: "assets/videos/my-demo.mp4", caption: "Optional caption" }
+education: [  { period: "2021 — 2026", degree: "Degree name", institution: "School", description: "" },],
+ 
+experience: [  { period: "2025 — present", role: "Role", company: "Company", description: "" },],
+ 
+skills: ["Python", "C", "Firmware"],
+ 
+languages: [  { lang: "Portuguese", level: "Native" },],
+```
+ 
+The **Download CV** button uses `cvFile` (set above).
+ 
+### About page
+ 
+Same block system as Projects (`about.content`), plus two extra fields:
+ 
+```js
+about: {
+  content: [
+    { type: "text", value: "Hi, I'm..." },
+    { type: "image", src: "assets/images/general/profile.jpg", caption: "" },
+  ],
+  currentlyExploring: ["FPGA", "Embedded Systems"],   // shown as a small list
+  tableData: [
+    { label: "Location", value: "Minas Gerais, Brazil" },
+  ],
+},
 ```
 
-Drop the video file into `assets/videos/` first.
 
 ### Change the header background image
 
