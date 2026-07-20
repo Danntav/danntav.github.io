@@ -76,7 +76,21 @@ const SITE_CONFIG = {
        once you're done.
     ───────────────────────────────────────────────────── */
 
-    {
+  {
+  id: "server",
+  title: "Proxmox Server",
+  year: "2026",
+  summary: "Virtualization and local services",
+  tags: ["Proxmox", "Virtualization", "LXC", "IP", "Proxy/DNS"],
+  feature: true,
+  coverImage: "assets/projects/project_server/proxmox.png",
+  //coverImage: "F:\\Users\\Daniel\\Desktop\\Projects\\website\\danntav.github.io\\assets\\projects\\project_server\\proxmox.png",
+  content: [
+    { type: "text", value: "Local Server to hold all my personal apps and info.", align: "justify"},
+ ],
+  },
+
+  {
   id: "wetlands",
   title: "Wetlands Automation — IoT Reactor Monitoring",
   year: "2025",
@@ -159,7 +173,7 @@ const SITE_CONFIG = {
       id: "ur10-tcc",
       title: "Robotic Manipulation System Based on Computer Vision",
       year: "2025",
-      summary: "Simulated UR10 pick-and-place system combining PID/LQR control with an OpenCV vision pipeline for color-based object classification.",
+      summary: "Simulated UR10 pick-and-place system: PID/LQR control with an OpenCV vision pipeline for color-based object classification.",
       tags: ["Python", "OpenCV", "CoppeliaSim", "PID", "LQR", "Computer Vision", "Robotics"],
       github: "https://github.com/Danntav",
       feature: true,
@@ -418,26 +432,23 @@ const SITE_CONFIG = {
 
   /* ── ABOUT ──────────────────────────────────────────────── */
   /*
-   * Same flexible block system as Projects (see the comment above
-   * "projects:"). Mix text, photos, tables, etc. in any order —
+   * Same flexible block system as Projects. Mix text, photos, tables, etc. in any order —
    * e.g. paragraph → photo → paragraph → table → paragraph.
    *
    * Available block types: text, list, image, images, gif, table, code, gist, video.
-   * See the "PROJECTS" comment above for the exact syntax of each.
    */
+
   about: {
     content: [
-      { type: "text", value: "Hi! I'm Daniel, a Computer Engineering student, from Minas Gerais, Brazil." },
-      { type: "image", src: "", caption: "" },   /* e.g. src: "assets/images/general/me.jpg" */
-      { type: "text", value: "For me, understanding the low level world and how everything comes together as a whole, is the real magic." },
-      { type: "text", value: "Outside of engineering, I really enjoy camping and music. On my free time, sometimes I read philosophy/theology." },
+      { type: "text", value: "Hi! I'm Daniel, a M.Sc. Computer Engineering student, from Minas Gerais, Brazil\nFor me, understanding the low level world and how everything comes together as a whole, is the real magic.." },
+      { type: "image", src: "assets/images/general/profile.jpg", caption: "" },
+      { type: "text", value: "Outside of engineering, I really enjoy camping and going in some adventures. Music also fills part of my time.\n In my spare time during the week, I usually read philosophy/theology." },
     ],
     currentlyExploring: [
       "FPGA",
+      "Embedded System",
+      "Assembly/Low Level",
       "RF & HAM Radio",
-      "ROS2 Navigation Stack",
-      "SLAM & Mapping",
-      "Computer Vision",
     ],
     tableData: [
       { label: "Location",      value: "Minas Gerais, Brazil" },
