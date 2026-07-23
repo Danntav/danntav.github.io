@@ -67,13 +67,24 @@ const SITE_CONFIG = {
        and code however you like. Rename the "id" and title
        once you're done.
     ───────────────────────────────────────────────────── */
+  {
+  id: "mr3220",
+  title: " Custom OpenWRT Firmware",
+  year: "2026",
+  summary: "Custom Firmware for TP-Link MR-3220 router. New daemons, procd, services, API, custom GPIO, and making it a HTTP/MQTT and a small-scale gaming server.",
+  tags: ["Firmware", "Linux", "C", "Daemon", "procd", "Embedded"],
+  coverImage: "assets/projects/project_mr3220/cover.png",
+  content: [
+    { type: "text", value: "Development of custom firmware for embedded Linux devices using OpenWrt as a learning platform. The project explores firmware compilation, package creation, custom services and daemons, hardware control through GPIO, and low-level software architecture, progressing toward bootloader, driver, and hardware interface development.", align: "justify"},
+    ],
+  },
 
   {
   id: "server",
   title: "Proxmox Server",
   year: "2026",
-  summary: "Virtualization and local services",
-  tags: ["Proxmox", "Virtualization/VMs", "LXC", "IP", "Proxy/DNS", "Server"],
+  summary: "Local Server using Proxmox for Virtualization & Containerization and many services. Implemented VPNs, VLANs, services stacks and local apps.",
+  tags: ["Proxmox", "Virtualization/VMs", "Containers/LXC", "IP", "Proxy/DNS", "Server", "VPN", "VLAN"],
   coverImage: "assets/projects/project_server/proxmox.png",
   content: [
     { type: "text", value: "Something that really bother me nowadays is the fact that every app, every website, every service, (almost) everything is flooded with ads, subscription-based models, limited-rated products, endless stream of logins, but worse of all is terrible quality of service we get at the end.\n\nThere’s nothing wrong paying for a service, after all, that’s how the world works. The problem is that if we decide to subscribe for everything we need, the monthly bill would be enough to scare anyone. Not to mention that sometimes we need something super specific, only to end up never using it again.\n\nAnother point to add to the list is the fact that, nowadays, we don’t truly own anything. Files, photos, music, movies, accounts, and so on, everything lives in the cloud. If those services suddenly go down (or just offline), we lose it all. Of course, it is unlikely, but not impossible. In fact, it has happened a few times.\n\nIn short, my main issues with web applications in general are ads and ownership. That’s why I want to have my own applications, set up exactly how I like them and in the most convenient way possible. The solution was a local server. So, I built my own. ", align: "justify"},
@@ -82,9 +93,9 @@ const SITE_CONFIG = {
     { type: "text", value: "I worked for two years as a Network Engineer Intern in a multinational company side-by-side with CCIE-certified architectures planning, design and troubleshooting various network devices and protocols. Although I didn’t pursue this career path, the experience gave me a good understand and overview on how everything is being connected. And it definitely helped me set my server up, even though A LOT of things went wrong on the way.", align: "justify"},
 
     { type: "text", value: "Initial Idea", bold: true, size: "large" },
-    { type: "text", value: "At first, I was setting up my server the way that it came to my mind. Naturally, that quickly went wrong since I lost track of what I had done. So, I researched the topic online , found this diagram, and became interested in the idea of creating something very similar (I no longer have the link to the Reddit post where I got this diagram)", align: "justify"},
+    { type: "text", value: "At first, I was setting up my server the way that it came to my mind. Naturally, that quickly went wrong since I lost track of what I had done. So, I researched the topic, found this diagram, and became interested in the idea of creating something very similar (I no longer have the link to the Reddit post where I got this diagram)", align: "justify"},
     { type: "image", src: "assets/projects/project_server/diagramExample.png", caption: "Diagram example I found on Reddit" },
-    { type: "text", value: "Since my budget for building the server was somewhat restrict (and my personal demands were different) I had to modify some of the ideas of the diagram. To be honest, I didn’t plan EVERYTHING beforehand, I had test what worked best and then build something robust enough to meet my needs. [The diagram of my server is at the end of this post.]", align: "justify"},
+    { type: "text", value: "Since my budget for building the server was somewhat restrict (and my personal demands were different) I had to modify some of the ideas of the diagram. To be honest, I didn’t plan EVERYTHING beforehand, I had to test what worked best and then build something robust enough to meet my needs. [The diagram of my server is at the end of this post.]", align: "justify"},
 
     { type: "text", value: "Hardware", bold: true, size: "large" },
     { type: "text", value: "I didn’t use a specialized hardware for my server. I had laying down an (not so) old Intel Xeon X99, so I used it as the main component. The server also features 32GB of DDR4 RAM, a 256GB SSD for the OS; five 1TB HDD data storage and an old graphics card just for video output. I plan to get a better GPU in the future if I need to run an AI model, but for now, I’m keeping it as is.\n\nAs I mentioned, the initial idea is to keep everything as simple as possible. Later on, I want to use my own router, a L3 switch, NAS, and so on.", align: "justify"},
@@ -98,12 +109,12 @@ const SITE_CONFIG = {
             ["SSD","256GB ADATA"],
             ["HDDs","5x 1TB Seagate"]],
             caption: "Server components"},
-    { type: "images", srcs: ["assets/images/project_server/.png", "assets/images/project_server/.png"]},
+    { type: "images", srcs: ["assets/projects/project_server/hardware.png", "assets/projects/project_server/storage.png"]},
 
     { type: "text", value: "Setup", bold: true, size: "large" },
-    { type: "text", value: "I adapted a computer case to hold more HDDS.", align: "justify"},
-    { type: "image", src: "assets/projects/project_server/.png", caption: "Adaptation to hold more HDDs" },
-    { type: "text", value: "Initially, I dont need more storage. If I add another HDD, I'll have to add a SATA expasion card since this motherboard only supports 6 SATA connections. Also, I'll be in need for another power supply, this I'm using is operating in its limit.", align: "justify"},
+    { type: "text", value: "I adapted a computer case to hold all the HDDS. Initially, I dont need more storage. If I add another HDD, I'll have to add a SATA expasion card since this motherboard only supports 6 SATA connections. Also, I'll be in need for another power supply, this I'm using is operating in its limit.", align: "justify"},
+    { type: "image", src: "assets/projects/project_server/.png", caption: "Server case" },
+    { type: "text", value: "", align: "justify"},
 
     ],
   },
@@ -406,7 +417,7 @@ const SITE_CONFIG = {
       status: "read",
       stars: 3,
       cover: "/assets/books/Prog_Sistemas_Embarcados_Almeida_etal.jpg",
-      note: "Introduction to the topic, with glances of hard concepts. Many typos either in code and text, so I couldn't really trust on it.",
+      note: "Introduction to the topic, with glimpses of hard concepts. Many typos either in code and text, so I couldn't really trust in it.",
     },
     {
       title: "Low Level Programming",
@@ -416,13 +427,23 @@ const SITE_CONFIG = {
       cover: "/assets/books/Low_level_Zhirkov.jpg",
       note: "",
     },
+
+    {
+      title: "Digital Systems - Principles and Applications",
+      author: "Ronald J. Tocci, Neal S. Widmer, Gregory L. Moss",
+      status: "rec",
+      stars: 5,
+      cover: "/assets/books/Digital_Systems_Tocci.png",
+      note: "THE most important book for understanding the principles of every digital circuit and architecture. My personal favorite.",
+    },
+
     {
       title: "C Programming Language",
       author: "Brian W. Kernighan, Dennis M. Ritchie",
       status: "rec",
       stars: 5,
       cover: "/assets/books/C_Programming_Language_Kernighan.jpg",
-      note: "Top1 must read book for low level programmer.",
+      note: "Top 1 must read book for low level programmer.",
     },
 
 
@@ -441,7 +462,7 @@ const SITE_CONFIG = {
     content: [
       { type: "text", value: "Hi! I'm Daniel, a M.Sc. Computer Engineering student, from Minas Gerais, Brazil\nFor me, understanding the low level world and how everything comes together as a whole, is the real magic.." },
       { type: "image", src: "assets/images/general/profile.jpg", caption: "" },
-      { type: "text", value: "Outside of engineering, I really enjoy camping and going in some adventures. Music also fills part of my time.\n In my spare time during the week, I usually read philosophy/theology." },
+      { type: "text", value: "Outside of engineering, I really enjoy camping and going in some adventures. Music also fills part of my time.\n In my spare time during the week, I usually read and study philosophy/theology." },
     ],
     currentlyExploring: [
       "FPGA",
