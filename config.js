@@ -41,18 +41,13 @@ const SITE_CONFIG = {
    *     Renders as bullet points. Set ordered: true for a numbered list.
    *
    *   { type: "gif",    src: "assets/images/<id>/demo.gif", caption: "Optional caption" }
-   *     Also accepts a video file (src ending in .mp4/.webm/.mov) — it will
-   *     autoplay muted on loop with no controls, just like a gif but far
-   *     smaller in file size. Use this if your gif is a screen recording
-   *     or demo clip; real animated .gif files work fine too.
+   *     Also accepts a video file (src ending in .mp4/.webm/.mov) — it will autoplay muted on loop with no controls, 
+   *     just like a gif but far smaller in file size. Use this if your gif is a screen recording or demo clip; real animated .gif files work fine too.
    *
    *   { type: "image",  src: "assets/images/<id>/photo.jpg", caption: "Optional caption" }
    *   { type: "images", srcs: ["assets/images/<id>/a.jpg", "assets/images/<id>/b.jpg"] }  // side by side
-   *     Note: side-by-side images now keep their original proportions
-   *     (no more forced square crop). If the two images have very
-   *     different shapes/aspect ratios, they may look uneven sitting
-   *     next to each other — in that case, prefer two separate "image"
-   *     blocks stacked instead of one "images" block.
+   *     Note: side-by-side images now keep their original proportions (no more forced square crop). If the two images have very different shapes/aspect ratios,
+   *     they may look uneven sitting next to each other — in that case, prefer two separate "image" blocks stacked instead of one "images" block.
    *   { type: "table",  headers: ["Col A", "Col B"], rows: [["a1","b1"], ["a2","b2"]], caption: "Optional caption" }
    *   { type: "code",   lang: "python", value: "print('hi')" }
    *   { type: "gist",   url: "https://gist.github.com/username/gist-id" }
@@ -61,11 +56,8 @@ const SITE_CONFIG = {
    * This same block system also powers the "about.content" field below —
    * so you can mix text, photos, and tables on the About page too.
    *
-   * Mix as many blocks as liked, in whatever order tells the story
-   * of the project best. coverImage is the large image at the top of
-   * the project page (optional), and — if set — also shows as a small
-   * static thumbnail on this project's card on the Home page, but only
-   * for projects marked feature: true.
+   * Mix as many blocks as liked, in whatever order tells the story of the project best. coverImage is the large image at the top of the project page (optional),
+   * and — if set — also shows as a small static thumbnail on this project's card on the Home page, but only for projects marked feature: true.
    */
   projects: [
 
@@ -81,12 +73,39 @@ const SITE_CONFIG = {
   title: "Proxmox Server",
   year: "2026",
   summary: "Virtualization and local services",
-  tags: ["Proxmox", "Virtualization", "LXC", "IP", "Proxy/DNS"],
-  feature: true,
+  tags: ["Proxmox", "Virtualization/VMs", "LXC", "IP", "Proxy/DNS", "Server"],
   coverImage: "assets/projects/project_server/proxmox.png",
   content: [
-    { type: "text", value: "Local Server to hold all my personal apps and info.", align: "justify"},
- ],
+    { type: "text", value: "Something that really bother me nowadays is the fact that every app, every website, every service, (almost) everything is flooded with ads, subscription-based models, limited-rated products, endless stream of logins, but worse of all is terrible quality of service we get at the end.\n\nThere’s nothing wrong paying for a service, after all, that’s how the world works. The problem is that if we decide to subscribe for everything we need, the monthly bill would be enough to scare anyone. Not to mention that sometimes we need something super specific, only to end up never using it again.\n\nAnother point to add to the list is the fact that, nowadays, we don’t truly own anything. Files, photos, music, movies, accounts, and so on, everything lives in the cloud. If those services suddenly go down (or just offline), we lose it all. Of course, it is unlikely, but not impossible. In fact, it has happened a few times.\n\nIn short, my main issues with web applications in general are ads and ownership. That’s why I want to have my own applications, set up exactly how I like them and in the most convenient way possible. The solution was a local server. So, I built my own. ", align: "justify"},
+
+    { type: "text", value: "Background", bold: true, size: "large" },
+    { type: "text", value: "I worked for two years as a Network Engineer Intern in a multinational company side-by-side with CCIE-certified architectures planning, design and troubleshooting various network devices and protocols. Although I didn’t pursue this career path, the experience gave me a good understand and overview on how everything is being connected. And it definitely helped me set my server up, even though A LOT of things went wrong on the way.", align: "justify"},
+
+    { type: "text", value: "Initial Idea", bold: true, size: "large" },
+    { type: "text", value: "At first, I was setting up my server the way that it came to my mind. Naturally, that quickly went wrong since I lost track of what I had done. So, I researched the topic online , found this diagram, and became interested in the idea of creating something very similar (I no longer have the link to the Reddit post where I got this diagram)", align: "justify"},
+    { type: "image", src: "assets/projects/project_server/diagramExample.png", caption: "Diagram example I found on Reddit" },
+    { type: "text", value: "Since my budget for building the server was somewhat restrict (and my personal demands were different) I had to modify some of the ideas of the diagram. To be honest, I didn’t plan EVERYTHING beforehand, I had test what worked best and then build something robust enough to meet my needs. [The diagram of my server is at the end of this post.]", align: "justify"},
+
+    { type: "text", value: "Hardware", bold: true, size: "large" },
+    { type: "text", value: "I didn’t use a specialized hardware for my server. I had laying down an (not so) old Intel Xeon X99, so I used it as the main component. The server also features 32GB of DDR4 RAM, a 256GB SSD for the OS; five 1TB HDD data storage and an old graphics card just for video output. I plan to get a better GPU in the future if I need to run an AI model, but for now, I’m keeping it as is.\n\nAs I mentioned, the initial idea is to keep everything as simple as possible. Later on, I want to use my own router, a L3 switch, NAS, and so on.", align: "justify"},
+    { type: "table",  headers: ["Component", "Model"], rows: 
+            [["Power Supply","500W"],
+            ["Case","Custom"],
+            ["Motherboard","Machinist X99"],
+            ["CPU","Intel Xeon E2666"],
+            ["RAM","2x 16GB Machinist"],
+            ["GPU","Old ZOTAC"],
+            ["SSD","256GB ADATA"],
+            ["HDDs","5x 1TB Seagate"]],
+            caption: "Server components"},
+    { type: "images", srcs: ["assets/images/project_server/.png", "assets/images/project_server/.png"]},
+
+    { type: "text", value: "Setup", bold: true, size: "large" },
+    { type: "text", value: "I adapted a computer case to hold more HDDS.", align: "justify"},
+    { type: "image", src: "assets/projects/project_server/.png", caption: "Adaptation to hold more HDDs" },
+    { type: "text", value: "Initially, I dont need more storage. If I add another HDD, I'll have to add a SATA expasion card since this motherboard only supports 6 SATA connections. Also, I'll be in need for another power supply, this I'm using is operating in its limit.", align: "justify"},
+
+    ],
   },
 
   {
@@ -96,7 +115,6 @@ const SITE_CONFIG = {
   summary: "Master/Slave IoT system for monitoring wetland reactors over ESP-NOW and ACK-based.",
   tags: ["C", "Firmware", "ESP-NOW", "ESP32", "I2C", "SPI", "IoT", "KiCAD", "SolidWorks"],
   github: "https://github.com/Danntav/wetlands-automation",
-  feature: true,
   coverImage: "assets/projects/project_wetlands/cover.jpg",
   content: [
     { type: "text", value: "Solo project, built from scratch: hardware, PCB, firmware, and enclosure. The goal was to automate data collection for a wetlands treatment system — 9 reactors, each needing voltage and temperature logged every 5 minutes, without anyone standing there with a notebook.", align: "justify" },
@@ -175,14 +193,11 @@ const SITE_CONFIG = {
       summary: "Simulated UR10 pick-and-place system: PID/LQR control with an OpenCV vision pipeline for color-based object classification.",
       tags: ["Python", "OpenCV", "CoppeliaSim", "PID", "LQR", "Computer Vision", "Robotics"],
       github: "https://github.com/Danntav",
-      feature: true,
       coverImage: "assets/projects/project_ur10-tcc/cover.png",
       content: [
-        { type: "text", value: "My undergraduate capstone project (TCC) at college: a simulated UR10 robotic arm that picks up cubes and sorts them by color," +
-        " using a computer vision pipeline for perception and an optimal controller for motion.", align: "justify" },
+        { type: "text", value: "My undergraduate capstone project (TCC) at college: a simulated UR10 robotic arm that picks up cubes and sorts them by color, using a computer vision pipeline for perception and an optimal controller for motion.", align: "justify" },
         { type: "text", value: "Setup", bold: true, size: "large" },
-        { type: "text", value: "Everything runs in Python, connected to CoppeliaSim through its ZMQ remote API. There's some LUA scripts inside Coppelia, but they are just for configuration." +
-        " The UR10's kinematics were modeled with the Denavit-Hartenberg convention and cross-checked against the simulator's own pose data — errors came out under a millimeter, confirming the model matched reality closely enough to build on.", align: "justify"},
+        { type: "text", value: "Everything runs in Python, connected to CoppeliaSim through its ZMQ remote API. There's some LUA scripts inside Coppelia, but they are just for configuration. The UR10's kinematics were modeled with the Denavit-Hartenberg convention and cross-checked against the simulator's own pose data — errors came out under a millimeter, confirming the model matched reality closely enough to build on.", align: "justify"},
         { type: "image", src: "assets/projects/project_ur10-tcc/ur10-description.png", caption: "UR10 kinematic structure and coordinate frames" },
 
         { type: "text", value: "Choosing a controller: PID vs. LQR", bold: true, size: "large" },
@@ -223,7 +238,6 @@ const SITE_CONFIG = {
       summary: "Improving an education robot used on public school competition.",
       tags: ["C", "ESP32", "Firmware", "PID", "Electronics", "IR Sensors", "Line Follower"],
       github: "https://github.com/MutantHardware/TagBot",
-      feature: true,
       coverImage: "assets/projects/project_tagbot/KiCAD.jpeg",
       content: [
         { type: "text", value: "Built robotics competitions. The challenge: build the fastest robot that can follow a line in the shortest time.", align: "justify"},
@@ -235,10 +249,7 @@ const SITE_CONFIG = {
         { type: "image", src: "assets/projects/project_tagbot/Connections.jpeg", caption: "Connections" },
         { type: "text", value: "However, there was room for improvement: adding an accelerometer and a fallback mechanism, optimizing component layout on the PCB, designing a PCB that was easier to assemble, using more durable boards and connectors suitable for children and teenagers, adding IR sensors, and so on. Since the aim was to keep costs low, the PCB was fabricated manually using copper-clad board and transparency film; as a result, the PCB traces ended up being quite wide—some were 1mm thick, if I recall correctly.", align: "justify"},
         { type: "images", srcs: ["assets/projects/project_tagbot/PCB_preview.jpeg", "assets/projects/project_tagbot/PCB_real.jpg", "assets/projects/project_tagbot/backplate.jpeg", "assets/projects/project_tagbot/KiCAD.jpeg"] },
-        { type: "text", value: "Beyond the hardware, I also implemented a significant portion of the new programming logic using Object-Oriented Programming (OOP) in C. The project was continued by other team members, so my involvement was limited to these specific contributions.", align: "justify"},
-
-        { type: "text", value: "This project got a banner publication:", align: "justify"},
-        { type: "text", value: "https://www3.dti.ufv.br/sia/vicosa/2023/trabalhos/18185/arquivo", align: "justify"},
+        { type: "text", value: "Beyond the hardware, I also implemented a significant portion of the new programming logic using Object-Oriented Programming (OOP) in C. The project was continued by other team members, so my involvement was limited to these specific contributions.\n\nThis project got a banner publication:\nhttps://www3.dti.ufv.br/sia/vicosa/2023/trabalhos/18185/arquivo", align: "justify"},
       ],
     },
     
@@ -249,17 +260,13 @@ const SITE_CONFIG = {
       summary: "Drone built from scratch for High-Speed and (future) ArduPilot",
       tags: ["Drone", "PID", "BetaFlight", "ArduPilot", "QGroundControl"],
       github: "https://github.com/Danntav",
-      feature: true,
       coverImage: "assets/projects/project_machv1/closeup.jpg",
       content: [
         { type: "text", value: "Nicknamed 'MACHv1', this is a drone built from scratch with the aim of achieving high speeds while also being highly maneuverable.", align: "justify"},
         { type: "text", value: "Build", bold: true, size: "large" },
-        { type: "text", value: "'MACHv1' stands for 'Maneuverable Aerial Craft for High-Speed', and the 'v1' refers to the first version built. Therefore, improvements or a v2 are being considered.", align: "justify"},
+        { type: "text", value: "'MACHv1' stands for 'Maneuverable Aerial Craft for High-Speed'. Therefore, v1 implies that improvements or a v2 are being considered.", align: "justify"},
         { type: "image", src: "assets/projects/project_machv1/drone_workspace.jpg", caption: "Workspace" },
-        { type: "text", value: "The MACHv1 was inspired by a video where I first discovered the world of drones back in 2022. I don't recall exactly which video was, but" +
-          " it featured a guy performing various maneuvers and flying at high speeds inside an abandoned factory. I had always liked the concept but didn't think building a drone was actually feasible." +
-          " Drones like the DJI Phantom 3 seemed a bit boring—too sluggish and unexciting—which is why speed was a key factor for me.", align: "justify"},
-        { type: "text", value: "Initially I bought a super cheap drone on Aliexpress, those 'E99' for a few bucks. Crashed the same day and recycle the pieces for future projects." , align: "justify"},
+        { type: "text", value: "The MACHv1 was inspired by a video where I first discovered the world of drones back in 2022. I don't recall exactly which video was, but it featured a guy performing various maneuvers and flying at high speeds inside an abandoned factory. I had always liked the concept but didn't think building a drone was actually feasible. Drones like the DJI Phantom 3 seemed a bit boring—too sluggish and unexciting—which is why speed was a key factor for me.\n\nInitially I bought a super cheap drone on Aliexpress, those 'E99' for a few bucks. Crashed the same day and recycle the pieces for future projects.", align: "justify"},
         { type: "text", value: "Parts List", bold: true, size: "large" },
         { type: "text", value: "The majority of the pieces I bought for this project was from Aliexpress. The list below shows most part of the components used:", align: "justify" },      
         { type: "table",  headers: ["Part", "Model"], rows: 
@@ -278,27 +285,20 @@ const SITE_CONFIG = {
             ["Finder Buzzer","IFlight YR50B_S"],
             ["Smart Smoke Stopper","iFlight XT60 Smart Smoke"],
             ["Antenna Cable adapter","SMA-F to MMCX M90"]],
-            caption: "Used parts in my drone"},
+            caption: "Parts used in my drone"},
         { type: "text", value: "The component connections followed the diagrams below (official images of the SpeedyBee FC+ESC stack):", align: "justify" },
         { type: "images", srcs: ["assets/projects/project_machv1/diagram.jpg", "assets/projects/project_machv1/layout.jpg"]},
-        { type: "text", value: "If you want to build your drone based on mine, just follow the shopping list and build your own. I encourage you to do so." +
-        " Remember, even though the process to build it is 'simple', it requires some experience with solder, since you can damage your Flight Controller. So be careful while doing so." , align: "justify"},
+        { type: "text", value: "If you want to build your drone based on mine, just follow the shopping list and build your own. I encourage you to do so. Remember, even though the process to build it is 'simple', it requires some experience with solder, since you can damage your Flight Controller. So be careful while doing so." , align: "justify"},
         { type: "image", src: "assets/projects/project_machv1/ESC.jpg", caption: "ESC" },
         { type: "image", src: "assets/projects/project_machv1/FC.jpg", caption: "Drone in construction" },
-        { type: "text", value: "This frame didn't come with a GPS mount, so I designed and 3D-printed a support for it. The support includes 2 more spaces, one for the battery connector" +
-        " and another for the antenna holder. I will upload the STL and SLDPRT file soon." , align: "justify"},
+        { type: "text", value: "This frame didn't come with a GPS mount, so I designed and 3D-printed a support for it. The support includes 2 more spaces, one for the battery connector and another for the antenna holder. I will upload the STL and SLDPRT file soon." , align: "justify"},
         { type: "gif",    src: "assets/projects/project_machv1/gif_sldprt.mp4", caption: "3D mount part in SolidWorks" },
         { type: "text", value: "Flight Test", bold: true, size: "large" },
-        { type: "text", value: "Since I'm using an analog video transmitter (VTX), the image is not so crispy as a digital VTX, but it fits my budget and my taste this way." +
-        " This video shows a flight test I took after the drone being assembled. Also, this VTX doesn't have the pin for SmartAudio, so the video has no audio." },
+        { type: "text", value: "Since I'm using an analog video transmitter (VTX), the image is not so crispy as a digital VTX, but it fits my budget and my taste this way. This video shows a flight test I took after the drone being assembled. Also, this VTX doesn't have the pin for SmartAudio, so the video has no audio." },
         { type: "video", src: "assets/projects/project_machv1/test_flight.mp4", caption: "Flight Test" },
-        { type: "text", value: "If you pay attention on the bottom left of the screen, those informations were a little wrong, either the direction and the altitude." +
-        " I have ajusted that since the last flight.", align: "justify" },
+        { type: "text", value: "If you pay attention on the bottom left of the screen, those informations were a little wrong, either the direction and the altitude. I have ajusted that since the last flight.", align: "justify" },
         { type: "text", value: "Results", bold: true, size: "large" },
-        { type: "text", value: "I got some issues with the drone's receiver, the antenna plug broke and I had to use an alternative receiver, but the quality isn't that great." +
-        " As for the results of this project, the drone's top speed reached so far was around 115kmh (~71.5mph) and distance around 1km. The two main components causing problems are the VTX" +
-        " and the receiver. There's some kind of interference making me lose connection over and over that I haven't figured out yet. Soon I'll buy better versions of these two components." , align: "justify"},
-        { type: "text", value: "I used BetaFlight to set most of the drone's config. Much has being done, much still needs to be fine-tuned. Next steps Id say to add automation, like waypoints, via ArduPilot or QGroundControl." , align: "justify"},
+        { type: "text", value: "I got some issues with the drone's receiver, the antenna plug broke and I had to use an alternative receiver, but the quality isn't that great. As for the results of this project, the drone's top speed reached so far was around 115kmh (~71.5mph) and distance around 1km. The two main components causing problems are the VTX and the receiver. There's some kind of interference making me lose connection over and over that I haven't figured out yet. Soon I'll buy better versions of these two components.\n\nI used BetaFlight to set most of the drone's config. Much has being done, much still needs to be fine-tuned. Next steps Id say to add automation, like waypoints, via ArduPilot or QGroundControl." , align: "justify"},
         { type: "gif",    src: "assets/projects/project_machv1/gif_assembling_drone.mp4", caption: "Assembling process" },
       ],
     },
@@ -313,7 +313,7 @@ const SITE_CONFIG = {
   snippet: {
     title: "Win 10 / 11 debloat script",
     description: "Created this snippet to automate removing all win10/11 garbage that comes pre-installed. Just have to run it on privillege powershell.",
-    url: "https://gist.github.com/Danntav/89c987fa4f38316d2ad1c35134075970",   /* e.g. "https://gist.github.com/Danntav/abcd1234efgh" */
+    url: "https://gist.github.com/Danntav/89c987fa4f38316d2ad1c35134075970",
   },
 
 

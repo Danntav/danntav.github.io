@@ -191,24 +191,24 @@ img { display: block; max-width: 100%; }
 
 .recent-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
 }
 
 .recent-card {
   border: 1px solid var(--line);
   background: var(--white);
-  padding: 20px;
+  padding: 22px;
   cursor: pointer;
   transition: border-color .15s, box-shadow .15s;
 }
 
 .recent-card-thumb {
   width: 100%;
-  height: 120px;
+  aspect-ratio: 16/9;
   object-fit: cover;
   border: 1px solid var(--line);
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   display: block;
 }
 
@@ -238,6 +238,13 @@ img { display: block; max-width: 100%; }
   font-size: 14px;
   color: var(--gray);
   line-height: 1.55;
+}
+
+.recent-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
 }
 
 /* ── Standalone snippet / Gist (Home page) ── */
@@ -380,7 +387,7 @@ img { display: block; max-width: 100%; }
 
 .proj-detail-cover {
   width: 100%;
-  aspect-ratio: 16/7;
+  aspect-ratio: 16/9;
   object-fit: cover;
   border: 1px solid var(--line);
   margin-bottom: 32px;
@@ -946,7 +953,6 @@ img { display: block; max-width: 100%; }
 <nav id="site-nav">
   <div class="nav-inner">
     <span class="nav-link active" data-page="home">Home</span>
-    <span class="nav-link" data-page="projects">Projects</span>
     <span class="nav-link" data-page="resume">Resume</span>
     <span class="nav-link" data-page="about">About</span>
     <span class="nav-link" data-page="books">Books</span>
@@ -963,23 +969,17 @@ img { display: block; max-width: 100%; }
       <div class="bio-block">
         <p id="bio-text"></p>
       </div>
-      <p class="recent-heading">Recent projects</p>
+      <p class="recent-heading">Projects</p>
       <div class="recent-grid" id="recent-grid"></div>
 
       <div id="snippet-section"></div>
-    </section>
-
-    <!-- PROJECTS (list) -->
-    <section class="page" id="page-projects">
-      <h1 class="page-title">Projects</h1>
-      <div class="proj-list" id="proj-list"></div>
     </section>
 
     <!-- PROJECT (detail) -->
     <section class="page" id="page-proj-detail">
       <span class="proj-back" id="proj-back">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        Back to projects
+        Back to home
       </span>
       <div id="proj-detail-content"></div>
     </section>
@@ -1068,15 +1068,19 @@ C.social.forEach(s => {
 /* ── Bio ── */
 document.getElementById('bio-text').textContent = C.bio;
 
-/* ── Recent grid (projects marked featured: true in config.js) ── */
+/* ── Project grid (all projects, shown as cards right on Home) ── */
 const recentGrid = document.getElementById('recent-grid');
-C.projects.filter(p => p.feature).forEach(p => {
+C.projects.forEach(p => {
   const card = document.createElement('div');
   card.className = 'recent-card';
   const thumb = p.coverImage ? `<img class="recent-card-thumb" src="${p.coverImage}" alt="${p.title}">` : '';
+  const tags = p.tags && p.tags.length
+    ? `<div class="recent-card-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>`
+    : '';
   card.innerHTML = `${thumb}<div class="recent-card-tag">${p.year}</div>
     <h3>${p.title}</h3>
-    <p>${p.summary}</p>`;
+    <p>${p.summary}</p>
+    ${tags}`;
   card.onclick = () => { location.hash = '#project/' + p.id; };
   recentGrid.appendChild(card);
 });
@@ -1091,23 +1095,6 @@ if (C.snippet && C.snippet.url) {
       ${renderGistBlock(C.snippet.url)}
     </div>`;
 }
-
-/* ── Project list ── */
-const projList = document.getElementById('proj-list');
-C.projects.forEach(p => {
-  const row = document.createElement('div');
-  row.className = 'proj-row';
-  row.innerHTML = `
-    <span class="proj-year">${p.year}</span>
-    <div class="proj-row-body">
-      <div class="proj-row-title">${p.title}</div>
-      <div class="proj-row-summary">${p.summary}</div>
-      <div class="proj-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
-    </div>
-    <span class="proj-arrow">→</span>`;
-  row.onclick = () => { location.hash = '#project/' + p.id; };
-  projList.appendChild(row);
-});
 
 /* ── Render a single content block (used inside project detail) ── */
 function renderBlock(block) {
@@ -1384,7 +1371,6 @@ document.getElementById('site-footer').textContent =
 ══════════════════════════════════════
    URLs now look like:
      #home
-     #projects
      #project/robotic-arm   (a specific project's detail page)
      #resume
      #about
@@ -1397,7 +1383,7 @@ document.getElementById('site-footer').textContent =
    all done with the URL hash (the part after #).
 ══════════════════════════════════════ */
 
-const VALID_PAGES = ['home', 'projects', 'resume', 'about', 'books', 'contact'];
+const VALID_PAGES = ['home', 'resume', 'about', 'books', 'contact'];
 
 function showPage(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1424,15 +1410,15 @@ function routeFromHash() {
     if (exists) {
       renderProjectDetail(id);
       showPage('page-proj-detail');
-      setActiveNavLink('projects');
+      setActiveNavLink('home');
       return;
     }
-    /* Unknown project id — fall back to the projects list */
-    location.hash = '#projects';
+    /* Unknown project id — fall back to Home */
+    location.hash = '#home';
     return;
   }
 
-  /* #home, #projects, #resume, #about, #books, #contact */
+  /* #home, #resume, #about, #books, #contact */
   const page = VALID_PAGES.includes(hash) ? hash : 'home';
   showPage('page-' + page);
   setActiveNavLink(page);
@@ -1447,7 +1433,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
 });
 
 document.getElementById('proj-back').addEventListener('click', () => {
-  location.hash = '#projects';
+  location.hash = '#home';
 });
 
 window.addEventListener('hashchange', routeFromHash);
