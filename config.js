@@ -67,40 +67,91 @@ const SITE_CONFIG = {
        and code however you like. Rename the "id" and title
        once you're done.
     ───────────────────────────────────────────────────── */
-  {
-  id: "mr3220",
-  title: " Custom OpenWRT Firmware",
-  year: "2026",
-  summary: "Custom Firmware for TP-Link MR-3220 router. New daemons, procd, services, API, custom GPIO, and making it a HTTP/MQTT and a small-scale gaming server.",
-  tags: ["Firmware", "Linux", "C", "Daemon", "procd", "Embedded"],
-  coverImage: "assets/projects/project_mr3220/cover.png",
-  content: [
-    { type: "text", value: "Development of custom firmware for embedded Linux devices using OpenWrt as a learning platform. The project explores firmware compilation, package creation, custom services and daemons, hardware control through GPIO, and low-level software architecture, progressing toward bootloader, driver, and hardware interface development.", align: "justify"},
-    ],
-  },
+    {
+      id: "mr3220",
+      title: " Custom OpenWRT Firmware",
+      year: "2026",
+      summary: "Custom Firmware for TP-Link MR-3220 router. New daemons, procd, services, API, custom GPIO, and making it a HTTP/MQTT and a small-scale gaming server.",
+      tags: ["Firmware", "Linux", "C", "daemon", "procd", "Embedded"],
+      coverImage: "assets/projects/project_mr3220/cover.png",
+      content: [
+        { type: "text", value: "Hardware Specification", bold: true, size: "large" },
+        { type: "text", value: "This router is the TP-Link TL-MR3220 v2, released in 2012. I used it as a platform for developing embedded Linux, daemons, processes, etc. The following table summarizes its specifications.", align: "justify"},
+        { type: "table", rows: 
+          [["Model","TL-MR3220 v2"],
+            ["CPU","Atheros AR9331 400 MHz"],
+            ["Flash","4MB (Eon Q32B-104HIP)"],
+            ["RAM","32MB (Zentel A3S56D40FTP-G5)"],
+            ["RAM","2x 16GB Machinist"],
+            ["WLAN","2.4 GHz  b/g/n"],
+            ["WLAN","5.0 GHz  -"],
+            ["LAN speed / ports","100M / 4"],
+            ["WAN speed / ports","100M / 1"],
+            ["USB ports","1"],
+            ["Power","9 VDC, 0.85 A"],
+            ["Launched year","2012"],
+            ["EOL support OpenWRT","2019"]],
+          caption: "Server components"},
 
-  {
-  id: "server",
-  title: "Proxmox Server",
-  year: "2026",
-  summary: "Local Server using Proxmox for Virtualization & Containerization and many services. Implemented VPNs, VLANs, services stacks and local apps.",
-  tags: ["Proxmox", "Virtualization/VMs", "Containers/LXC", "IP", "Proxy/DNS", "Server", "VPN", "VLAN"],
-  coverImage: "assets/projects/project_server/proxmox.png",
-  content: [
-    { type: "text", value: "Something that really bother me nowadays is the fact that every app, every website, every service, (almost) everything is flooded with ads, subscription-based models, limited-rated products, endless stream of logins, but worse of all is terrible quality of service we get at the end.\n\nThere’s nothing wrong paying for a service, after all, that’s how the world works. The problem is that if we decide to subscribe for everything we need, the monthly bill would be enough to scare anyone. Not to mention that sometimes we need something super specific, only to end up never using it again.\n\nAnother point to add to the list is the fact that, nowadays, we don’t truly own anything. Files, photos, music, movies, accounts, and so on, everything lives in the cloud. If those services suddenly go down (or just offline), we lose it all. Of course, it is unlikely, but not impossible. In fact, it has happened a few times.\n\nIn short, my main issues with web applications in general are ads and ownership. That’s why I want to have my own applications, set up exactly how I like them and in the most convenient way possible. The solution was a local server. So, I built my own. ", align: "justify"},
+        { type: "text", value: "Highlight", bold: true, size: "large" },
+        { type: "text", value: "First of all, the plan was to install a Linux build specifically designed for this router. I initially used DD-WRT, but I found the community and support to be much weaker compared to OpenWrt, so I switched to the latter. It is important to note that this product has already reached its EOL (End of life)! The last available version was v19.07.10-ar71xx-tiny.bin.", align: "justify"},
+        { type: "text", value: "IMPORTANT: I'd like to highlight the following blogs; they were super helpful and served as the foundation for getting my custom firmware working, even though I ended up doing some things my own way.", align: "justify"},
+        { type: "list", items: [
+            "https://vladikoms.livejournal.com/9059.html",
+            "https://www.pcsuggest.com/configuring-extroot-with-openwrt-on-tp-link-mr-3220/"
+        ]},
 
-    { type: "text", value: "Background", bold: true, size: "large" },
-    { type: "text", value: "I worked for two years as a Network Engineer Intern in a multinational company side-by-side with CCIE-certified architectures planning, design and troubleshooting various network devices and protocols. Although I didn’t pursue this career path, the experience gave me a good understand and overview on how everything is being connected. And it definitely helped me set my server up, even though A LOT of things went wrong on the way.", align: "justify"},
+        { type: "text", value: "First steps", bold: true, size: "large" },
+        { type: "text", value: "The initial idea was to use extroot to expand the router's internal storage. I used a 32GB SD card to ensure plenty of space for new opkg packages, an HTTP/MQTT server, gaming, etc. 32GB is massive overkill, but it was the only SD card I had on hand.", align: "justify"},
+        { type: "text", value: "Standard OpenWrt versions are too large to fit into the hardware's limited 4MB of flash memory. The 'tiny' versions of this firmware often lack the opkg modules for USB and ext4 filesystem support. The ones that supposedly include them have broken download links, as this hardware has already reached its EOL. So, I had to create my own minimal custom build.", align: "justify"},
 
-    { type: "text", value: "Initial Idea", bold: true, size: "large" },
-    { type: "text", value: "At first, I was setting up my server the way that it came to my mind. Naturally, that quickly went wrong since I lost track of what I had done. So, I researched the topic, found this diagram, and became interested in the idea of creating something very similar (I no longer have the link to the Reddit post where I got this diagram)", align: "justify"},
-    { type: "image", src: "assets/projects/project_server/diagramExample.png", caption: "Diagram example I found on Reddit" },
-    { type: "text", value: "Since my budget for building the server was somewhat restrict (and my personal demands were different) I had to modify some of the ideas of the diagram. To be honest, I didn’t plan EVERYTHING beforehand, I had to test what worked best and then build something robust enough to meet my needs. [The diagram of my server is at the end of this post.]", align: "justify"},
+        { type: "text", value: "Custom Build steps", bold: true, size: "large" },
+        { type: "text", value: "NOTE: I had to actually first format the router with the default openwrt-tiny version and only then upgraded with my version. That's the only way I got it to work.", align: "justify"},
+        { type: "text", value: "First, download ImageBuilder\nhttps://downloads.openwrt.org/releases/19.07.10/targets/ar71xx/generic/", align: "justify"}, 
+        { type: "text", value: "Extract to a known folder", align: "justify"}, 
+        { type: "code", lang: "bash", value: "tar -xf openwrt-imagebuilder-19.07.10-ar71xx-generic.Linux-x86_64.tar.xz\ncd openwrt-imagebuilder-19.07.10-ar71xx-generic" }, 
+        { type: "text", value: "With the help of the 'pcsuggest' blog, I identified the packages I could safely remove. I removed everything related to LuCI (the web interface) and IPv6, and added the packages required for extroot.", align: "justify"},
+        { type: "image", src: "assets/projects/project_mr3220/.png", caption: "[image of 'make build' code]"},
+        { type: "text", value: "Note: Just a reminder, I didn't use the ‘squashfs factory image’; I had to use the ‘sysupgrade’ one.", align: "justify"},
+        { type: "text", value: "Check that the hardware booted correctly and loaded the necessary packages. Everything is done via SSH using PuTTY, since the web GUI has been removed.", align: "justify"},
+        { type: "image", src: "assets/projects/project_mr3220/bash-overlay.jpeg", caption: "OpenWrt terminal via SSH"},
+        { type: "code", lang: "bash", value: "opkg list-installed" },
 
-    { type: "text", value: "Hardware", bold: true, size: "large" },
-    { type: "text", value: "I didn’t use a specialized hardware for my server. I had laying down an (not so) old Intel Xeon X99, so I used it as the main component. The server also features 32GB of DDR4 RAM, a 256GB SSD for the OS; five 1TB HDD data storage and an old graphics card just for video output. I plan to get a better GPU in the future if I need to run an AI model, but for now, I’m keeping it as is.\n\nAs I mentioned, the initial idea is to keep everything as simple as possible. Later on, I want to use my own router, a L3 switch, NAS, and so on.", align: "justify"},
-    { type: "table",  headers: ["Component", "Model"], rows: 
-            [["Power Supply","500W"],
+        { type: "text", value: "SD Card", bold: true, size: "large" },
+        { type: "text", value: "The SD card was adapted for USB using the generic adapter that came with my 3D printer and mounted to the router's casing using double-sided gel tape.", align: "justify"},
+        { type: "image", src: "assets/projects/project_mr3220/.png", caption: "SD card adaptation"},
+        { type: "text", value: "Some people formatted the SD card directly on the router, but I preferred doing it on my PC since it saves flash memory space (and build issues) and in the end works exactly the same way.", align: "justify"},
+        { type: "code", lang: "bash", value: "lsblk\nmkfs.ext4 /dev/sdX1" },
+        { type: "text", value: "The next steps are described in detail in \"vladikoms-livejournal\" blog. Please visit it for more information of the process.", align: "justify"},
+
+        { type: "text", value: "Overlay", bold: true, size: "large" },
+        { type: "text", value: "Basically, the overlay is the RW (Read-Write) part of the flash. Before:", align: "justify"},
+
+      ],
+    },
+
+    {
+      id: "server",
+      title: "Proxmox Server",
+      year: "2026",
+      summary: "Local Server using Proxmox for Virtualization & Containerization and many services. Implemented VPNs, VLANs, services stacks and local apps.",
+      tags: ["Proxmox", "Virtualization/VMs", "Containers/LXC", "IP", "Proxy/DNS", "Server", "VPN", "VLAN"],
+      coverImage: "assets/projects/project_server/proxmox.png",
+      content: [
+        { type: "text", value: "Something that really bother me nowadays is the fact that every app, every website, every service, (almost) everything is flooded with ads, subscription-based models, limited-rated products, endless stream of logins, but worse of all is terrible quality of service we get at the end.\n\nThere’s nothing wrong paying for a service, after all, that’s how the world works. The problem is that if we decide to subscribe for everything we need, the monthly bill would be enough to scare anyone. Not to mention that sometimes we need something super specific, only to end up never using it again.\n\nAnother point to add to the list is the fact that, nowadays, we don’t truly own anything. Files, photos, music, movies, accounts, and so on, everything lives in the cloud. If those services suddenly go down (or just offline), we lose it all. Of course, it is unlikely, but not impossible. In fact, it has happened a few times.\n\nIn short, my main issues with web applications in general are ads and ownership. That’s why I want to have my own applications, set up exactly how I like them and in the most convenient way possible. The solution was a local server. So, I built my own. ", align: "justify"},
+
+        { type: "text", value: "Background", bold: true, size: "large" },
+        { type: "text", value: "I worked for two years as a Network Engineer Intern in a multinational company side-by-side with CCIE-certified architectures planning, design and troubleshooting various network devices and protocols. Although I didn’t pursue this career path, the experience gave me a good understand and overview on how everything is being connected. And it definitely helped me set my server up, even though A LOT of things went wrong on the way.", align: "justify"},
+
+        { type: "text", value: "Initial Idea", bold: true, size: "large" },
+        { type: "text", value: "At first, I was setting up my server the way that it came to my mind. Naturally, that quickly went wrong since I lost track of what I had done. So, I researched the topic, found this diagram, and became interested in the idea of creating something very similar (I no longer have the link to the Reddit post where I got this diagram)", align: "justify"},
+        { type: "image", src: "assets/projects/project_server/diagramExample.png", caption: "Diagram example I found on Reddit" },
+        { type: "text", value: "Since my budget for building the server was somewhat restrict (and my personal demands were different) I had to modify some of the ideas of the diagram. To be honest, I didn’t plan EVERYTHING beforehand, I had to test what worked best and then build something robust enough to meet my needs. [The diagram of my server is at the end of this post.]", align: "justify"},
+
+        { type: "text", value: "Hardware", bold: true, size: "large" },
+        { type: "text", value: "I didn’t use a specialized hardware for my server. I had laying down an (not so) old Intel Xeon X99, so I used it as the main component. The server also features 32GB of DDR4 RAM, a 256GB SSD for the OS; five 1TB HDD data storage and an old graphics card just for video output. I plan to get a better GPU in the future if I need to run an AI model, but for now, I’m keeping it as is.\n\nAs I mentioned, the initial idea is to keep everything as simple as possible. Later on, I want to use my own router, a L3 switch, NAS, and so on.", align: "justify"},
+        { type: "table",  headers: ["Component", "Model"], rows: 
+          [["Power Supply","500W"],
             ["Case","Custom"],
             ["Motherboard","Machinist X99"],
             ["CPU","Intel Xeon E2666"],
@@ -108,94 +159,92 @@ const SITE_CONFIG = {
             ["GPU","Old ZOTAC"],
             ["SSD","256GB ADATA"],
             ["HDDs","5x 1TB Seagate"]],
-            caption: "Server components"},
-    { type: "images", srcs: ["assets/projects/project_server/hardware.png", "assets/projects/project_server/storage.png"]},
+          caption: "Server components"},
+        { type: "images", srcs: ["assets/projects/project_server/hardware.png", "assets/projects/project_server/storage.png"]},
 
-    { type: "text", value: "Setup", bold: true, size: "large" },
-    { type: "text", value: "I adapted a computer case to hold all the HDDS. Initially, I dont need more storage. If I add another HDD, I'll have to add a SATA expasion card since this motherboard only supports 6 SATA connections. Also, I'll be in need for another power supply, this I'm using is operating in its limit.", align: "justify"},
-    { type: "image", src: "assets/projects/project_server/.png", caption: "Server case" },
-    { type: "text", value: "", align: "justify"},
+        { type: "text", value: "Setup", bold: true, size: "large" },
+        { type: "text", value: "I adapted a computer case to hold all the HDDS. Initially, I dont need more storage. If I add another HDD, I'll have to add a SATA expasion card since this motherboard only supports 6 SATA connections. Also, I'll be in need for another power supply, this I'm using is operating in its limit.", align: "justify"},
+        { type: "image", src: "assets/projects/project_server/.png", caption: "Server case" },
+        { type: "text", value: "", align: "justify"},
 
-    ],
-  },
+      ],
+    },
 
-  {
-  id: "wetlands",
-  title: "Wetlands Automation — IoT Reactor Monitoring",
-  year: "2025",
-  summary: "Master/Slave IoT system for monitoring wetland reactors over ESP-NOW and ACK-based.",
-  tags: ["C", "Firmware", "ESP-NOW", "ESP32", "I2C", "SPI", "IoT", "KiCAD", "SolidWorks"],
-  github: "https://github.com/Danntav/wetlands-automation",
-  coverImage: "assets/projects/project_wetlands/cover.jpg",
-  content: [
-    { type: "text", value: "Solo project, built from scratch: hardware, PCB, firmware, and enclosure. The goal was to automate data collection for a wetlands treatment system — 9 reactors, each needing voltage and temperature logged every 5 minutes, without anyone standing there with a notebook.", align: "justify" },
+    {
+      id: "wetlands",
+      title: "Wetlands Automation — IoT Reactor Monitoring",
+      year: "2025",
+      summary: "Master/Slave IoT system for monitoring wetland reactors over ESP-NOW and ACK-based.",
+      tags: ["C", "Firmware", "ESP-NOW", "ESP32", "I2C", "SPI", "IoT", "KiCAD", "SolidWorks"],
+      github: "https://github.com/Danntav/wetlands-automation",
+      coverImage: "assets/projects/project_wetlands/cover.jpg",
+      content: [
+        { type: "text", value: "Solo project, built from scratch: hardware, PCB, firmware, and enclosure. The goal was to automate data collection for a wetlands treatment system — 9 reactors, each needing voltage and temperature logged every 5 minutes, without anyone standing there with a notebook.", align: "justify" },
 
-    { type: "text", value: "The Big Picture", bold: true, size: "large" },
-    { type: "text", value: "One Master, nine Slaves. Each Slave is a standalone ESP32 sitting on its own reactor, reading a DS18B20 temperature probe and an ADS1115 16-bit ADC for voltage. Every 5 minutes the Master pings each Slave in turn, collects the reading, and writes it to a microSD card as CSV. No Wi-Fi router involved — the whole thing talks over ESP-NOW, Espressif's peer-to-peer radio protocol.", align: "justify" },
+        { type: "text", value: "The Big Picture", bold: true, size: "large" },
+        { type: "text", value: "One Master, nine Slaves. Each Slave is a standalone ESP32 sitting on its own reactor, reading a DS18B20 temperature probe and an ADS1115 16-bit ADC for voltage. Every 5 minutes the Master pings each Slave in turn, collects the reading, and writes it to a microSD card as CSV. No Wi-Fi router involved — the whole thing talks over ESP-NOW, Espressif's peer-to-peer radio protocol.", align: "justify" },
 
-    { type: "image", src: "assets/projects/project_wetlands/cover.jpg", caption: "The finished Master unit — 3D-printed enclosure, TFT display, joystick menu, status LEDs" },
-    { type: "text", value: "Slave Nodes", bold: true, size: "large" },
-    { type: "text", value: "Each of the 9 reactors gets its own Slave: an ESP32-DevKitV1, a waterproof DS18B20 for temperature (±0.5°C, one-wire), and an ADS1115 ADC for voltage — chosen over the ESP32's built-in 12-bit ADC because it gives 16-bit resolution and doesn't drift as much. Three status LEDs give a visual heartbeat in the field.", align: "justify" },
-    { type: "image", src: "assets/projects/project_wetlands/slave_schematic.png", caption: "Slave wiring — ESP32, DS18B20, ADS1115, status LEDs (Fritzing)" },
+        { type: "image", src: "assets/projects/project_wetlands/cover.jpg", caption: "The finished Master unit — 3D-printed enclosure, TFT display, joystick menu, status LEDs" },
+        { type: "text", value: "Slave Nodes", bold: true, size: "large" },
+        { type: "text", value: "Each of the 9 reactors gets its own Slave: an ESP32-DevKitV1, a waterproof DS18B20 for temperature (±0.5°C, one-wire), and an ADS1115 ADC for voltage — chosen over the ESP32's built-in 12-bit ADC because it gives 16-bit resolution and doesn't drift as much. Three status LEDs give a visual heartbeat in the field.", align: "justify" },
+        { type: "image", src: "assets/projects/project_wetlands/slave_schematic.png", caption: "Slave wiring — ESP32, DS18B20, ADS1115, status LEDs (Fritzing)" },
 
-    { type: "text", value: "Master Node", bold: true, size: "large" },
-    { type: "text", value: "The Master is the odd one out: a DS1307 RTC for real-time timestamps, a microSD module over SPI for logging, a 1.8\" ST7735 TFT for an on-device menu, and a KY-023 joystick to navigate it. It's the only thing the operator ever touches — the Slaves are meant to be sealed and forgotten.", align: "justify" },
-    { type: "image", src: "assets/projects/project_wetlands/master_schematic.png", caption: "Master wiring — ESP32, RTC, SD card, TFT display, joystick (Fritzing)" },
+        { type: "text", value: "Master Node", bold: true, size: "large" },
+        { type: "text", value: "The Master is the odd one out: a DS1307 RTC for real-time timestamps, a microSD module over SPI for logging, a 1.8\" ST7735 TFT for an on-device menu, and a KY-023 joystick to navigate it. It's the only thing the operator ever touches — the Slaves are meant to be sealed and forgotten.", align: "justify" },
+        { type: "image", src: "assets/projects/project_wetlands/master_schematic.png", caption: "Master wiring — ESP32, RTC, SD card, TFT display, joystick (Fritzing)" },
 
-    { type: "text", value: "From breadboard to PCB, I moved the Master onto a proper board in KiCAD to get rid of the nest of jumper wires since it has to survive being handled in the field.", align: "justify" },
-    { type: "images", srcs:["assets/projects/project_wetlands/pcb_schematic.png", "assets/projects/project_wetlands/pcb.png"] },
-    { type: "text", value: "KiCAD schematic (left) and routed 3D PCB render (right)", align: "center"},
+        { type: "text", value: "From breadboard to PCB, I moved the Master onto a proper board in KiCAD to get rid of the nest of jumper wires since it has to survive being handled in the field.", align: "justify" },
+        { type: "images", srcs:["assets/projects/project_wetlands/pcb_schematic.png", "assets/projects/project_wetlands/pcb.png"] },
+        { type: "text", value: "KiCAD schematic (left) and routed 3D PCB render (right)", align: "center"},
 
-    { type: "text", value: "Enclosure", bold: true, size: "large" },
-    { type: "text", value: "Modeled in SolidWorks and printed on an Ender 3 V2 Neo — cutouts for the display, joystick, LEDs, SD card slot, and a coin-cell hatch for the RTC's backup battery.", align: "justify" },
-    { type: "gif", src: "assets/projects/project_wetlands/gif_sldprt.mp4", caption: "SolidWorks model of the enclosure" },
+        { type: "text", value: "Enclosure", bold: true, size: "large" },
+        { type: "text", value: "Modeled in SolidWorks and printed on an Ender 3 V2 Neo — cutouts for the display, joystick, LEDs, SD card slot, and a coin-cell hatch for the RTC's backup battery.", align: "justify" },
+        { type: "gif", src: "assets/projects/project_wetlands/gif_sldprt.mp4", caption: "SolidWorks model of the enclosure" },
 
-    { type: "text", value: "Communication over ESP-NOW", bold: true, size: "large" },
-    { type: "text", value: "ESP-NOW skips the whole Wi-Fi handshake — Neither router nor IP addresses, just MAC-to-MAC packets. That matters here because 10 boards joining and dropping off a Wi-Fi network would be a headache. Each Slave's MAC is hardcoded into the Master as a peer, and vice versa.", align: "justify" },
+        { type: "text", value: "Communication over ESP-NOW", bold: true, size: "large" },
+        { type: "text", value: "ESP-NOW skips the whole Wi-Fi handshake — Neither router nor IP addresses, just MAC-to-MAC packets. That matters here because 10 boards joining and dropping off a Wi-Fi network would be a headache. Each Slave's MAC is hardcoded into the Master as a peer, and vice versa.", align: "justify" },
 
-    { type: "text", value: "Data Checks", bold: true, size: "large" },
-    { type: "text", value: "A field sensor that lies is worse than one that's offline, so I layered in a few checks:", align: "justify" },
-    { type: "list", items: [
-        "Every reading is actually the average of 5 samples to smooth out noise;",
-        "Slave → Master delivery is confirmed with an ACK; no ACK within 5s triggers a resend up to 3x;",
-        "Master flags anything outside 0–80°C or ≤0V as a probable sensor fault, and calls out -127°C specifically (the DS18B20's own \"disconnected\" code);",
-        "A green LED tells the operator the system is working properlly;",
-        "A blinking yellow LED tells the system is sending/receving packets and it is NOT recommended interfere while this is happening since it can generate artificts and errors in the CSV;",
-        "A red LED indicates error in a specif part of the system. On the menu it is possible to see where."
-      ] },
-    { type: "code", lang: "cpp", value: "for (int i = 1; i <= MAX_RETRIES; i++) {\n  ackReceived = false;\n  esp_now_send(masterMacAddress, (uint8_t *)&myData, sizeof(myData));\n\n  unsigned long start = millis();\n  while (!ackReceived && (millis() - start) < ACK_TIMEOUT_MS) {\n    delay(100);\n  }\n  if (ackReceived) return;  // success, stop retrying\n}" },
-    { type: "text", value: "The retry loop from a Slave's sendData() — three attempts, five-second ACK window each." },
+        { type: "text", value: "Data Checks", bold: true, size: "large" },
+        { type: "text", value: "A field sensor that lies is worse than one that's offline, so I layered in a few checks:", align: "justify" },
+        { type: "list", items: [
+            "Every reading is actually the average of 5 samples to smooth out noise;",
+            "Slave → Master delivery is confirmed with an ACK; no ACK within 5s triggers a resend up to 3x;",
+            "Master flags anything outside 0–80°C or ≤0V as a probable sensor fault, and calls out -127°C specifically (the DS18B20's own \"disconnected\" code);",
+            "A green LED tells the operator the system is working properlly;",
+            "A blinking yellow LED tells the system is sending/receving packets and it is NOT recommended interfere while this is happening since it can generate artificts and errors in the CSV;",
+            "A red LED indicates error in a specif part of the system. On the menu it is possible to see where."
+          ] },
+        { type: "code", lang: "cpp", value: "for (int i = 1; i <= MAX_RETRIES; i++) {\n  ackReceived = false;\n  esp_now_send(masterMacAddress, (uint8_t *)&myData, sizeof(myData));\n\n  unsigned long start = millis();\n  while (!ackReceived && (millis() - start) < ACK_TIMEOUT_MS) {\n    delay(100);\n  }\n  if (ackReceived) return;  // success, stop retrying\n}" },
+        { type: "text", value: "The retry loop from a Slave's sendData() — three attempts, five-second ACK window each." },
 
-    { type: "text", value: "Message Flow, Step by Step", bold: true, size: "large" },
-    { type: "text", value: "The report diagram (below) walks through one full request/response cycle between Master and a single Slave — this is the sequence I want redrawn cleaner, with the retry and error branches made explicit:", align: "justify" },
-    { type: "list", items: [
-        "Master's RTC-driven timer hits the 5-minute mark → Master sends a request packet (command=1) to Slave N;",
-        "Slave wakes on the ESP-NOW callback, takes 5 voltage + 5 temperature samples, averages them;",
-        "Slave sends back {id, voltage, temperature} to the Master and starts a 5s ACK timer;",
-        "Master receives the packet → checks it against valid ranges → buffers it with a timestamp;",
-        "Master sends an ACK{id, ok} back to that Slave;",
-        "Branch: if the Slave's ACK timer expires with no ACK, it resends the same reading — up to 3 attempts — before giving up and blinking red;",
-        "Master repeats the request cycle for Slaves 2 through 9, in order;",
-        "After the collection window closes (~20s), Master flushes the whole buffer to the SD card as CSV lines, then re-reads the last line to confirm the write;",
-        "In parallel: Master continuously checks for comm timeouts per Slave and lights the alarm LED if any reactor goes silent or reports an out-of-range value."
-      ] },
-    { type: "image", src: "assets/projects/project_wetlands/diagram.png", caption: "Sequence diagram: Master/Slave request cycle with ACK retry and SD write" },
+        { type: "text", value: "Message Flow, Step by Step", bold: true, size: "large" },
+        { type: "text", value: "The report diagram (below) walks through one full request/response cycle between Master and a single Slave — this is the sequence I want redrawn cleaner, with the retry and error branches made explicit:", align: "justify" },
+        { type: "list", items: [
+            "Master's RTC-driven timer hits the 5-minute mark → Master sends a request packet (command=1) to Slave N;",
+            "Slave wakes on the ESP-NOW callback, takes 5 voltage + 5 temperature samples, averages them;",
+            "Slave sends back {id, voltage, temperature} to the Master and starts a 5s ACK timer;",
+            "Master receives the packet → checks it against valid ranges → buffers it with a timestamp;",
+            "Master sends an ACK{id, ok} back to that Slave;",
+            "Branch: if the Slave's ACK timer expires with no ACK, it resends the same reading — up to 3 attempts — before giving up and blinking red;",
+            "Master repeats the request cycle for Slaves 2 through 9, in order;",
+            "After the collection window closes (~20s), Master flushes the whole buffer to the SD card as CSV lines, then re-reads the last line to confirm the write;",
+            "In parallel: Master continuously checks for comm timeouts per Slave and lights the alarm LED if any reactor goes silent or reports an out-of-range value."
+          ] },
+        { type: "image", src: "assets/projects/project_wetlands/diagram.png", caption: "Sequence diagram: Master/Slave request cycle with ACK retry and SD write" },
 
-    { type: "text", value: "Storing data", bold: true, size: "large" },
-    { type: "text", value: "Everything lands in one CSV on the SD card, one line per reading: date, time, board ID, voltage, temperature. Plain enough to open straight in Excel or Sheets, no parsing script needed.", align: "justify" },
-    { type: "code", lang: "text", value: "Date,Time,BoardID,Voltage,Temperature\n19-07-2025,16:30:00,5,0.3420,25.71" },
+        { type: "text", value: "Storing data", bold: true, size: "large" },
+        { type: "text", value: "Everything lands in one CSV on the SD card, one line per reading: date, time, board ID, voltage, temperature. Plain enough to open straight in Excel or Sheets, no parsing script needed.", align: "justify" },
+        { type: "code", lang: "text", value: "Date,Time,BoardID,Voltage,Temperature\n19-07-2025,16:30:00,5,0.3420,25.71" },
 
-    { type: "text", value: "Improvements", bold: true, size: "large" },
-{ type: "text", value: "The current version logs locally and that's it — someone still has to walk out, pull the SD card, and bring it back to a computer. The next step is making this solution acessible from home.", align: "justify" },
-{ type: "list", items: [
-    "LoRa uplink: I want to use an RFM95W module bridging the Master out to the internet;",
-    "A small backend server to receive the LoRa data, store it, and serve a simple dashboard for live reactor readings;",
-    "A way to download the accumulated CSV remotely, without having to physically swap the SD card;",
-    "Server platform is still undecided."
-  ] },
-  { type: "text", value: "I did the full stack alone — schematic, PCB, firmware, enclosure — and the retry/ACK logic ended up being the part I iterated on most. A single dropped packet used to mean a missing 5-minute slot in the log; now it just costs a couple of seconds and a quiet retry.", align: "justify" },
-  ],
-},
+        { type: "text", value: "Improvements", bold: true, size: "large" },
+        { type: "text", value: "The current version logs locally and that's it — someone still has to walk out, pull the SD card, and bring it back to a computer. The next step is making this solution acessible from home.", align: "justify" },
+        { type: "list", items: [
+            "LoRa uplink: I want to use an RFM95W module bridging the Master out to the internet;",
+            "A small backend server to receive the LoRa data, store it, and serve a simple dashboard for live reactor readings;",
+          ] },
+        { type: "text", value: "I did the full stack alone — schematic, PCB, firmware, enclosure — and the retry/ACK logic ended up being the part I iterated on most. A single dropped packet used to mean a missing 5-minute slot in the log; now it just costs a couple of seconds and a quiet retry.", align: "justify" },
+      ],
+    },
 
     {
       id: "ur10-tcc",
@@ -263,7 +312,7 @@ const SITE_CONFIG = {
         { type: "text", value: "Beyond the hardware, I also implemented a significant portion of the new programming logic using Object-Oriented Programming (OOP) in C. The project was continued by other team members, so my involvement was limited to these specific contributions.\n\nThis project got a banner publication:\nhttps://www3.dti.ufv.br/sia/vicosa/2023/trabalhos/18185/arquivo", align: "justify"},
       ],
     },
-    
+
     {
       id: "machv1",
       title: "MACHv1 - Custom 5-inch FPV Drone Racer",
@@ -281,7 +330,7 @@ const SITE_CONFIG = {
         { type: "text", value: "Parts List", bold: true, size: "large" },
         { type: "text", value: "The majority of the pieces I bought for this project was from Aliexpress. The list below shows most part of the components used:", align: "justify" },      
         { type: "table",  headers: ["Part", "Model"], rows: 
-            [["Frame","PhiSital Mark5 MK5 DC DeadCat"],
+          [["Frame","PhiSital Mark5 MK5 DC DeadCat"],
             ["Motor","Rcinpower EX2306 Plus 1800kv"],
             ["Battery","CNHL Lipo Battery 4S 1500mah 100C"],
             ["Stack ESC+FC","SpeedyBee F405 V3 50A"],
@@ -296,7 +345,7 @@ const SITE_CONFIG = {
             ["Finder Buzzer","IFlight YR50B_S"],
             ["Smart Smoke Stopper","iFlight XT60 Smart Smoke"],
             ["Antenna Cable adapter","SMA-F to MMCX M90"]],
-            caption: "Parts used in my drone"},
+          caption: "Parts used in my drone"},
         { type: "text", value: "The component connections followed the diagrams below (official images of the SpeedyBee FC+ESC stack):", align: "justify" },
         { type: "images", srcs: ["assets/projects/project_machv1/diagram.jpg", "assets/projects/project_machv1/layout.jpg"]},
         { type: "text", value: "If you want to build your drone based on mine, just follow the shopping list and build your own. I encourage you to do so. Remember, even though the process to build it is 'simple', it requires some experience with solder, since you can damage your Flight Controller. So be careful while doing so." , align: "justify"},
@@ -330,7 +379,7 @@ const SITE_CONFIG = {
 
   /* ── RESUME ─────────────────────────────────────────────── */
   education: [
-      {
+    {
       period: "2026 — 2028",
       degree: "M.Sc. Computer Science",
       institution: "Federal University of Viçosa",
@@ -429,12 +478,30 @@ const SITE_CONFIG = {
     },
 
     {
+      title: "Shell Script Profissional",
+      author: "Aurelio Marinho Jargas",
+      status: "reading",
+      stars: 4,
+      cover: "/assets/books/Shell_script_Aurelio.jpg",
+      note: "",
+    },
+
+    {
       title: "Digital Systems - Principles and Applications",
       author: "Ronald J. Tocci, Neal S. Widmer, Gregory L. Moss",
       status: "rec",
       stars: 5,
       cover: "/assets/books/Digital_Systems_Tocci.png",
       note: "THE most important book for understanding the principles of every digital circuit and architecture. My personal favorite.",
+    },
+
+    {
+      title: "Python Crash Course",
+      author: "Eric Matthes",
+      status: "read",
+      stars: 5,
+      cover: "/assets/books/Python_crash_course_Eric.jpg",
+      note: "",
     },
 
     {
