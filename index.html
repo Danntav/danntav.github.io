@@ -17,7 +17,8 @@
   --bg:      #fafafa;
   --white:   #ffffff;
   --accent:  #c0392b;   /* muted red accent — change to any color you like */
-  --max:     1100px;
+  --max:     1240px;
+  --content: 880px;
   --serif:   'Lora', Georgia, serif;
   --sans:    'DM Sans', system-ui, sans-serif;
 }
@@ -38,9 +39,17 @@ img { display: block; max-width: 100%; }
 
 /* ── LAYOUT WRAPPER ── */
 .wrap {
-  max-width: var(--max);
+  max-width: var(--content);
   margin: 0 auto;
   padding: 0 24px;
+}
+
+/* Home, About & Books use wider layouts (card grid / sidebar / grid)
+   that benefit from more room than the plain reading pages. */
+.wrap:has(#page-home.active),
+.wrap:has(#page-about.active),
+.wrap:has(#page-books.active) {
+  max-width: 1100px;
 }
 
 /* ══════════════════════════════════════
@@ -66,7 +75,10 @@ img { display: block; max-width: 100%; }
 .header-content {
   position: relative;
   z-index: 1;
-  padding: 0 28px 28px;
+  max-width: var(--max);
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 24px 28px;
   color: var(--white);
 }
 
@@ -93,16 +105,16 @@ img { display: block; max-width: 100%; }
 
 .header-social a {
   color: rgba(255,255,255,.8);
-  font-size: 13px;
+  font-size: 14px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 7px;
   transition: color .15s;
 }
 
 .header-social a:hover { color: #fff; }
 
-.header-social svg { flex-shrink: 0; }
+.header-social svg { flex-shrink: 0; width: 19px; height: 19px; }
 
 /* ══════════════════════════════════════
    NAV
@@ -169,8 +181,7 @@ img { display: block; max-width: 100%; }
    HOME
 ══════════════════════════════════════ */
 .bio-block {
-  max-width: 620px;
-  margin-bottom: 36px;
+  margin-bottom: 20px;
 }
 
 .bio-block p {
@@ -191,14 +202,17 @@ img { display: block; max-width: 100%; }
 
 .recent-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 28px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
+
+@media (max-width: 760px) { .recent-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .recent-grid { grid-template-columns: 1fr; } }
 
 .recent-card {
   border: 1px solid var(--line);
   background: var(--white);
-  padding: 22px;
+  padding: 18px;
   cursor: pointer;
   transition: border-color .15s, box-shadow .15s;
 }
@@ -395,7 +409,7 @@ img { display: block; max-width: 100%; }
 }
 
 .proj-body-text {
-  max-width: 720px;
+  max-width: 100%;
 }
 
 /* ── Content blocks (used inside proj-body-text) ── */
@@ -437,6 +451,12 @@ img { display: block; max-width: 100%; }
   color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+.block-text strong,
+.block-text b {
+  font-weight: 700;
+  color: var(--black);
 }
 
 .block-text a:hover {
@@ -865,7 +885,6 @@ img { display: block; max-width: 100%; }
   font-size: 16px;
   color: var(--gray);
   line-height: 1.7;
-  max-width: 540px;
   margin-bottom: 36px;
 }
 
@@ -889,8 +908,8 @@ img { display: block; max-width: 100%; }
 .contact-row:hover { color: var(--accent); }
 
 .contact-icon {
-  width: 36px;
-  height: 36px;
+  width: 46px;
+  height: 46px;
   background: #f0f0f0;
   display: flex;
   align-items: center;
@@ -898,6 +917,8 @@ img { display: block; max-width: 100%; }
   flex-shrink: 0;
   transition: background .15s;
 }
+
+.contact-icon svg { width: 20px; height: 20px; }
 
 .contact-row:hover .contact-icon { background: #fdecea; }
 
@@ -969,7 +990,6 @@ img { display: block; max-width: 100%; }
       <div class="bio-block">
         <p id="bio-text"></p>
       </div>
-      <p class="recent-heading">Projects</p>
       <div class="recent-grid" id="recent-grid"></div>
 
       <div id="snippet-section"></div>
@@ -1092,7 +1112,7 @@ if (C.snippet && C.snippet.url) {
     <div class="snippet-card">
       ${C.snippet.title ? `<div class="snippet-card-title">${C.snippet.title}</div>` : ''}
       ${C.snippet.description ? `<div class="snippet-card-desc">${C.snippet.description}</div>` : ''}
-      ${renderGistBlock(C.snippet.url)}
+      ${renderGistBlock(C.snippet.url, 320)}
     </div>`;
 }
 
@@ -1197,8 +1217,9 @@ function renderTableBlock(block) {
 
 /* Embeds a GitHub Gist using its official embed script inside an iframe,
    so it doesn't conflict with the rest of the page's styles/scripts. */
-function renderGistBlock(gistUrl) {
+function renderGistBlock(gistUrl, height) {
   if (!gistUrl) return '';
+  const h = height || 450;
 
   const cleanUrl = gistUrl.split('#')[0];
   const iframeId = 'gist-frame-' + Math.random().toString(36).slice(2, 9);
@@ -1224,7 +1245,7 @@ function renderGistBlock(gistUrl) {
 
   // Alterado scrolling para "auto" e definida uma altura fixa de 450px com scrollbar
   return `<div class="block-gist">
-    <iframe id="${iframeId}" frameborder="0" scrolling="auto" style="width:100%; height:450px; display:block;"></iframe>
+    <iframe id="${iframeId}" frameborder="0" scrolling="auto" style="width:100%; height:${h}px; display:block;"></iframe>
   </div>`;
 }
 
